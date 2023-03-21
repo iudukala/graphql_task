@@ -1,4 +1,4 @@
-import { products, categories } from './products.ts';
+import { products, categories } from './data.ts';
 import { typeDefs } from './schema.ts';
 
 // const { ApolloServer, gql } = require('apollo-server');
