@@ -1,33 +1,8 @@
 import { products, categories } from './products.ts';
+import { typeDefs } from './schema.ts';
+
 // const { ApolloServer, gql } = require('apollo-server');
-import { ApolloServer, gql } from 'apollo-server';
-
-const typeDefs = gql`
-	type Query {
-		hello: [String]
-
-		products: [Product!]!
-		product(id: ID!): Product
-
-		categories: [Category!]!
-		category(id: ID!): Category
-	}
-	type Product {
-		id: String!
-		name: String!
-		description: String!
-		quantity: Int!
-		price: Float!
-		onSale: Boolean!
-		image: String!
-		category: Category
-	}
-	type Category {
-		id: ID!
-		name: String!
-		products: [Product!]!
-	}
-`;
+import { ApolloServer } from 'apollo-server';
 
 const resolvers = {
 	Query: {
@@ -48,7 +23,7 @@ const resolvers = {
 		},
 	},
 	Product: {
-		category: (parent: { categoryID: string}, args: { id: string }, context: object) => {
+		category: (parent: { categoryID: string }, args: { id: string }, context: object) => {
 			return categories.find((category: { id: string }) => category.id === parent.categoryID);
 		},
 	},
