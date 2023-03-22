@@ -19,10 +19,19 @@ export const typeDefs = gql`
 		onSale: Boolean!
 		image: String!
 		category: Category
+        reviews: [Review!]!
 	}
 	type Category {
 		id: ID!
 		name: String!
 		products: [Product!]!
 	}
+    type Review {
+        id: ID!
+        date: String!
+        title: String!
+        comment: String!
+        rating: Int!
+        product: Product!
+    }
 `;

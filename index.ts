@@ -1,4 +1,4 @@
-import { products, categories } from './data.ts';
+import { products, categories, reviews } from './data.ts';
 import { Category } from './resolvers/category.ts';
 import { Product } from './resolvers/product.ts';
 import { Query } from './resolvers/query.ts';
@@ -17,6 +17,7 @@ const server = new ApolloServer({
 	context: {
 		products,
 		categories,
+		reviews,
 	},
 });
 

@@ -118,7 +118,15 @@ export const categories: Array<CategoryType> = [
 	},
 ];
 
-const reviews = [
+export type ReviewType = {
+	id: string;
+	date: string;
+	title: string;
+	comment: string;
+	rating: number;
+	productId: string;
+};
+export const reviews: Array<ReviewType> = [
 	{
 		id: 'b22da5d4-6a4b-4db5-8ec3-acc228c36260',
 		date: '2021-01-01',
