@@ -4,7 +4,7 @@ export const typeDefs = gql`
 	type Query {
 		hello: [String]
 
-		products: [Product!]!
+		products(filter: ProductsFilterInput): [Product!]!
 		product(id: ID!): Product
 
 		categories: [Category!]!
@@ -33,5 +33,8 @@ export const typeDefs = gql`
         comment: String!
         rating: Int!
         product: Product!
-    }
+	}
+	input ProductsFilterInput {
+		onSale: Boolean
+	}
 `;
