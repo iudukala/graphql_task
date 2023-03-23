@@ -19,22 +19,23 @@ export const typeDefs = gql`
 		onSale: Boolean!
 		image: String!
 		category: Category
-        reviews: [Review!]!
+		reviews: [Review!]!
 	}
 	type Category {
 		id: ID!
 		name: String!
 		products(filter: ProductsFilterInput): [Product!]!
 	}
-    type Review {
-        id: ID!
-        date: String!
-        title: String!
-        comment: String!
-        rating: Int!
-        product: Product!
+	type Review {
+		id: ID!
+		date: String!
+		title: String!
+		comment: String!
+		rating: Int!
+		product: Product!
 	}
 	input ProductsFilterInput {
 		onSale: Boolean
+		avgRating: Int
 	}
 `;

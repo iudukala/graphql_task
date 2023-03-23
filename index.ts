@@ -1,4 +1,4 @@
-import { products, categories, reviews } from './data.ts';
+import { products, categories, reviews, ProductType, CategoryType, ReviewType } from './data.ts';
 import { Category } from './resolvers/category.ts';
 import { Product } from './resolvers/product.ts';
 import { Query } from './resolvers/query.ts';
@@ -14,7 +14,7 @@ const server = new ApolloServer({
 		Category,
 		Product,
 	},
-	context: {
+	context: <GQLContextType>{
 		products,
 		categories,
 		reviews,
@@ -24,3 +24,10 @@ const server = new ApolloServer({
 server.listen().then(({ url }: { url: string }) => {
 	console.log('server is ready at ' + url);
 });
+
+
+export type GQLContextType = {
+	products: Array<ProductType>;
+	categories: Array<CategoryType>;
+	reviews: Array<ReviewType>;
+};

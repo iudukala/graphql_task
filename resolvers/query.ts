@@ -1,28 +1,21 @@
-import { ProductType, CategoryType } from '../data.ts';
+import { ProductType } from '../data.ts';
+import { GQLContextType } from '../index.ts';
 
 export const Query = {
 	hello: () => ['World!'],
 
-	products: (
-		parent: object,
-		args: { filter: { onSale: boolean } },
-		context: { products: Array<ProductType> },
-	) => {
+	products: (parent: object, args: { filter: { onSale: boolean } }, context: GQLContextType) => {
 		if (!args.filter) return context.products;
-		else {
-			// if (args.filter.onSale != undefined) {
-			return context.products.filter((product: ProductType) => product.onSale === args.filter.onSale);
-			// }
-		}
+		else return context.products.filter((product: ProductType) => product.onSale === args.filter.onSale);
+
+		// return context.reviews.filter((review: ReviewType) => review.productId === parent.id);
 	},
-	product: (parent: object, args: { id: string }, context: { products: Array<ProductType> }) => {
+	product: (parent: object, args: { id: string }, context: GQLContextType) => {
 		return context.products.find((product: { id: string }) => product.id === args.id) || null;
 	},
 
-	categories: (parent: object, args: { id: string }, context: { categories: Array<CategoryType> }) =>
-		context.categories,
-	// category: (parent: object, args: { id: string }, context: object) => {
-	category: (parent: object, args: { id: string }, context: { categories: Array<CategoryType> }) => {
+	categories: (parent: object, args: { id: string }, context: GQLContextType) => context.categories,
+	category: (parent: object, args: { id: string }, context: GQLContextType) => {
 		return context.categories.find((category: { id: string }) => category.id === args.id) || null;
 	},
 };
