@@ -8,13 +8,12 @@ export const Query = {
 		args: { filter: { onSale: boolean } },
 		context: { products: Array<ProductType> },
 	) => {
-		if (args.filter?.onSale) {
-			return context.products.filter(
-				(product: ProductType) => product.onSale === args.filter.onSale,
-			);
+		if (!args.filter) return context.products;
+		else {
+			// if (args.filter.onSale != undefined) {
+			return context.products.filter((product: ProductType) => product.onSale === args.filter.onSale);
+			// }
 		}
-
-		return context.products;
 	},
 	product: (parent: object, args: { id: string }, context: { products: Array<ProductType> }) => {
 		return context.products.find((product: { id: string }) => product.id === args.id) || null;

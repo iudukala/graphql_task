@@ -1,11 +1,18 @@
+import { parseConstValue } from 'graphql';
 import { ProductType } from '../data.ts';
 
 export const Category = {
 	products: (
 		parent: { id: string; name: string },
-		args: { id: string },
+		args: { filter: { onSale: boolean } },
 		context: { products: Array<ProductType> },
 	) => {
-		return context.products.filter((product: { categoryID: string }) => product.categoryID === parent.id);
+		const filteredProducts = context.products.filter(
+			(product: ProductType) => product.categoryID === parent.id,
+		);
+		if (!args.filter) return filteredProducts;
+		else {
+			return filteredProducts.filter((product: ProductType) => product.onSale === args.filter.onSale);
+		}
 	},
 };
