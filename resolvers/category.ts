@@ -1,4 +1,3 @@
-import { parseConstValue } from 'graphql';
 import { ProductType } from '../data.ts';
 
 export const Category = {
@@ -14,5 +13,7 @@ export const Category = {
 		else {
 			return filteredProducts.filter((product: ProductType) => product.onSale === args.filter.onSale);
 		}
+
+		return filteredProducts;
 	},
 };
