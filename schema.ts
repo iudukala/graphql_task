@@ -50,4 +50,8 @@ export const typeDefs = gql`
 	input AddCategoryInput{
 		name: String!
 	}
+
+	input AddProductInput{
+		input:
+	}
 `;
