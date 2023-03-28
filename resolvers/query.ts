@@ -30,7 +30,6 @@ export const Query = {
 			return average > args.filter.avgRating;
 		};
 
-
 		// if (!args.filter) return context.products;
 		// else return context.products.filter((product: ProductType) => product.onSale === args.filter.onSale);
 
