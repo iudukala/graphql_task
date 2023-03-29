@@ -51,7 +51,7 @@ export const typeDefs = gql`
 		name: String!
 	}
 
-	input AddProductInput{
-		input:
-	}
+	# input AddProductInput{
+	# 	input:
+	# }
 `;
