@@ -13,6 +13,7 @@ export const typeDefs = gql`
 
 	type Mutation {
 		addCategory(input: AddCategoryInput!): Category!
+		addProduct(input: AddProductInput!): Product!
 	}
 
 	type Product {
@@ -47,11 +48,17 @@ export const typeDefs = gql`
 		avgRating: Int
 	}
 
-	input AddCategoryInput{
+	input AddCategoryInput {
 		name: String!
 	}
 
-	# input AddProductInput{
-	# 	input:
-	# }
+	input AddProductInput {
+		name: String!
+		description: String!
+		quantity: Int!
+		price: Float!
+		onSale: Boolean!
+		image: String!
+		categoryID: String!
+	}
 `;
