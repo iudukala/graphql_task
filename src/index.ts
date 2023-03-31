@@ -2,11 +2,19 @@ import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 
 import gql_schema from './graphql_schema';
-
+import { tempDataFruit } from './tempData';
+import { FruitType } from './fruitType';
 
 const root = {
 	hello: () => {
 		return 'hello world';
+	},
+
+	fruits: (parent: Record<string, never>, args: Record<string, never>, context: GQLContextType) => {
+		// console.log(context.fruits);
+		console.log(tempDataFruit);
+		return tempDataFruit;
+		// return context.fruits;
 	},
 };
 
@@ -17,8 +25,15 @@ app.use(
 		schema: gql_schema,
 		rootValue: root,
 		graphiql: true,
+		context: <GQLContextType>{
+			fruits: tempDataFruit,
+		},
 	}),
 );
 app.listen(4000);
 
 console.log('running');
+
+export type GQLContextType = {
+	fruits: Array<FruitType>;
+};

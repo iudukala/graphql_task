@@ -12,5 +12,4 @@ type Fruit {
     description: String
     amount: Int
 }
-
 `);

@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { FruitType } from './fruitType';
 
-export const fruit: Array<FruitType> = [
+export const tempDataFruit: Array<FruitType> = [
 	{
 		id: uuid(),
 		name: 'apple',
