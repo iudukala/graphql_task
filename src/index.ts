@@ -11,8 +11,8 @@ const root = {
 	},
 
 	fruits: (parent: Record<string, never>, args: Record<string, never>, context: GQLContextType) => {
-		// console.log(context.fruits);
-		console.log(tempDataFruit);
+		console.log(context.fruits);
+		// console.log(tempDataFruit);
 		return tempDataFruit;
 		// return context.fruits;
 	},
@@ -32,7 +32,7 @@ app.use(
 );
 app.listen(4000);
 
-console.log('running');
+console.log('running on :4000/graphql');
 
 export type GQLContextType = {
 	fruits: Array<FruitType>;
