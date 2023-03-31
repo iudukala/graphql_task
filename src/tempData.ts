@@ -14,4 +14,34 @@ export const tempDataFruit: Array<FruitType> = [
 		description: 'oranges the fruit',
 		amount: 15,
 	},
+	{
+		id: uuid(),
+		name: 'pineapple',
+		description: 'apples the fruit',
+		amount: 1,
+	},
+	{
+		id: uuid(),
+		name: 'some other apple',
+		description: 'apples the fruit',
+		amount: 1,
+	},
+	{
+		id: uuid(),
+		name: 'different orange',
+		description: 'apples the fruit',
+		amount: 1,
+	},
+	{
+		id: uuid(),
+		name: 'some fruit',
+		description: 'apples the fruit',
+		amount: 1,
+	},
+	{
+		id: uuid(),
+		name: 'tomato',
+		description: 'apples the fruit',
+		amount: 1,
+	},
 ];
