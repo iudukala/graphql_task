@@ -5,7 +5,7 @@ import { Fruit } from './Fruit';
 
 const AUTOGEN_DIR = 'nexus_autogen';
 
-export const schema = makeSchema({
+export default makeSchema({
 	types: [Fruit],
 	outputs: {
 		typegen: join(__dirname, AUTOGEN_DIR, 'nexus-typegen.ts'),
