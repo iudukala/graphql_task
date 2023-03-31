@@ -1,7 +1,8 @@
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 
-import gql_schema from './graphql_schema';
+// import gql_schema from './graphql_schema';
+import { schema } from './graphql/schema';
 import { tempDataFruit } from './tempData';
 import { FruitType } from './fruitType';
 
@@ -22,7 +23,8 @@ const app = express();
 app.use(
 	'/graphql',
 	graphqlHTTP({
-		schema: gql_schema,
+		// schema: gql_schema,
+		schema: schema,
 		rootValue: root,
 		graphiql: true,
 		context: <GQLContextType>{
