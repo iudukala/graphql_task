@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { FruitType } from './fruitType';
+import { FruitType } from './types/FruitType';
 
 export const tempDataFruit: Array<FruitType> = [
 	{

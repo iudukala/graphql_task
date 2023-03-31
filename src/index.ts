@@ -3,7 +3,7 @@ import { graphqlHTTP } from 'express-graphql';
 
 import gql_schema from './graphql/schema';
 import { tempDataFruit } from './tempData';
-import { FruitType } from './fruitType';
+import { FruitType } from './types/FruitType';
 
 const root = {
 	hello: () => {
