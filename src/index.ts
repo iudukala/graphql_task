@@ -34,6 +34,7 @@ app.use(
 		context: <GQLContextType>{
 			fruits: tempDataFruit,
 		},
+		pretty: false,
 	}),
 );
 app.listen(4000);
