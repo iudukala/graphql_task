@@ -10,4 +10,7 @@ export default makeSchema({
 		typegen: join(__dirname, AUTOGEN_DIR, 'nexus-typegen.ts'),
 		schema: join(__dirname, AUTOGEN_DIR, 'schema.graphql'),
 	},
+
+	// prettier config to apply to output artifacts
+	prettierConfig: join(__dirname, '../../.prettierrc'),
 });
