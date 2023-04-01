@@ -4,10 +4,10 @@ import { graphqlHTTP } from 'express-graphql';
 import gql_schema from './graphql/schema';
 import { tempDataFruit } from './tempData';
 import { NexusGenObjects } from './graphql/nexus_autogen/nexus-typegen';
-import { GQLNexusType } from './graphql/nexus_type_keys';
+import { GQLNexusTypeName } from './graphql/nexus_type_keys';
 
 export type GQLContextType = {
-	fruits: Array<NexusGenObjects[GQLNexusType.Fruit]>;
+	fruits: Array<NexusGenObjects[GQLNexusTypeName.Fruit]>;
 };
 
 const root = {

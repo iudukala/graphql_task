@@ -1,3 +1,3 @@
-export enum GQLNexusType {
+export enum GQLNexusTypeName {
 	Fruit = 'Fruit',
 }
