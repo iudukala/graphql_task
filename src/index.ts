@@ -10,26 +10,11 @@ export type GQLContextType = {
 	fruits: Array<NexusGenObjects[GQLNexusTypeName.Fruit]>;
 };
 
-const root = {
-	hello: () => {
-		return 'hello world';
-	},
-
-	fruits: (parent: Record<string, never>, args: Record<string, never>, context: GQLContextType) => {
-		// console.log(context.fruits);
-		// console.log(tempDataFruit);
-		// return context.fruits;
-
-		return tempDataFruit;
-	},
-};
-
 const app = express();
 app.use(
 	'/graphql',
 	graphqlHTTP({
 		schema: GQLNXSchema,
-		// rootValue: root,
 		graphiql: true,
 		context: <GQLContextType>{
 			fruits: tempDataFruit,
