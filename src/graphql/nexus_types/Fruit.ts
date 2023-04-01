@@ -1,7 +1,8 @@
 import { objectType } from 'nexus';
+import { GQLNexusTypeName } from '../nexus_type_keys';
 
 export const Fruit = objectType({
-	name: 'Fruit',
+	name: GQLNexusTypeName.Fruit,
 	definition(t) {
 		t.string('id');
 		t.string('name');
