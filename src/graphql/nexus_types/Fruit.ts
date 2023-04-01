@@ -1,5 +1,5 @@
 import { objectType } from 'nexus';
-import { GQLNexusTypeName } from '../nexus_type_keys';
+import { GQLNexusTypeName } from '../enum_nexus_type_keys';
 
 export const Fruit = objectType({
 	name: GQLNexusTypeName.Fruit,

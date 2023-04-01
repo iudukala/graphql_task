@@ -1,9 +1,10 @@
 import { extendType } from 'nexus';
-import { GQLNexusTypeName } from '../nexus_type_keys';
+import { GQLNexusTypeName } from '../enum_nexus_type_keys';
 import { tempDataFruit } from '../../tempData';
 
 export const FruitQuery = extendType({
-	type: 'Query',
+	type: GQLNexusTypeName.Query,
+
 	definition(t) {
 		t.nonNull.list.field('fruits', {
 			type: GQLNexusTypeName.Fruit,

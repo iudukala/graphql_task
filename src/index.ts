@@ -4,25 +4,25 @@ import { graphqlHTTP } from 'express-graphql';
 import GQLNXSchema from './graphql/schema_graphql_nexus';
 import { tempDataFruit } from './tempData';
 import { NexusGenObjects } from './graphql/nexus_autogen/nexus-typegen';
-import { GQLNexusTypeName } from './graphql/nexus_type_keys';
+import { GQLNexusTypeName } from './graphql/enum_nexus_type_keys';
 
 export type GQLContextType = {
 	fruits: Array<NexusGenObjects[GQLNexusTypeName.Fruit]>;
 };
 
-// const root = {
-// 	hello: () => {
-// 		return 'hello world';
-// 	},
+const root = {
+	hello: () => {
+		return 'hello world';
+	},
 
-// 	fruits: (parent: Record<string, never>, args: Record<string, never>, context: GQLContextType) => {
-// 		// console.log(context.fruits);
-// 		// console.log(tempDataFruit);
-// 		// return context.fruits;
+	fruits: (parent: Record<string, never>, args: Record<string, never>, context: GQLContextType) => {
+		// console.log(context.fruits);
+		// console.log(tempDataFruit);
+		// return context.fruits;
 
-// 		return tempDataFruit;
-// 	},
-// };
+		return tempDataFruit;
+	},
+};
 
 const app = express();
 app.use(

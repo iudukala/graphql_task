@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { NexusGenObjects } from './graphql/nexus_autogen/nexus-typegen';
-import { GQLNexusTypeName } from './graphql/nexus_type_keys';
+import { GQLNexusTypeName } from './graphql/enum_nexus_type_keys';
 
 export const tempDataFruit: Array<NexusGenObjects[GQLNexusTypeName.Fruit]> = [
 	{
