@@ -1,0 +1,3 @@
+enum GQLNexusType {
+	Fruit = 'Fruit',
+}
