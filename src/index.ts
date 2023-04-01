@@ -1,7 +1,7 @@
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 
-import gql_schema from './graphql/schema';
+import GQLNXSchema from './graphql/schema';
 import { tempDataFruit } from './tempData';
 import { NexusGenObjects } from './graphql/nexus_autogen/nexus-typegen';
 import { GQLNexusTypeName } from './graphql/nexus_type_keys';
@@ -28,7 +28,7 @@ const app = express();
 app.use(
 	'/graphql',
 	graphqlHTTP({
-		schema: gql_schema,
+		schema: GQLNXSchema,
 		// rootValue: root,
 		graphiql: true,
 		context: <GQLContextType>{
