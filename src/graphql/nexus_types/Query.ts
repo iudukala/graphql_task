@@ -5,7 +5,7 @@ import { tempDataFruit } from '../../tempData';
 export const FruitQuery = extendType({
 	type: 'Query',
 	definition(t) {
-		t.field('fruits', {
+		t.nonNull.list.field('fruits', {
 			type: GQLNexusTypeName.Fruit,
 			resolve: () => tempDataFruit,
 		});

@@ -1,7 +1,7 @@
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 
-import GQLNXSchema from './graphql/schema';
+import GQLNXSchema from './graphql/schema_graphql_nexus';
 import { tempDataFruit } from './tempData';
 import { NexusGenObjects } from './graphql/nexus_autogen/nexus-typegen';
 import { GQLNexusTypeName } from './graphql/nexus_type_keys';
