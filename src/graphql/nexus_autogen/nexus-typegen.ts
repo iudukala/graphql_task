@@ -48,7 +48,7 @@ export interface NexusGenFieldTypes {
 	};
 	Query: {
 		// field return type
-		ok: boolean; // Boolean!
+		fruits: Array<NexusGenRootTypes['Fruit'] | null>; // [Fruit]!
 	};
 }
 
@@ -62,7 +62,7 @@ export interface NexusGenFieldTypeNames {
 	};
 	Query: {
 		// field return type name
-		ok: 'Boolean';
+		fruits: 'Fruit';
 	};
 }
 

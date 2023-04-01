@@ -9,5 +9,5 @@ type Fruit {
 }
 
 type Query {
-	ok: Boolean!
+	fruits: [Fruit]!
 }
