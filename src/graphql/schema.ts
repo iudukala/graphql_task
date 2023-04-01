@@ -1,7 +1,6 @@
 import { makeSchema } from 'nexus';
 import { join } from 'path';
-
-import { Fruit } from './Fruit';
+import { Fruit } from './nexus_types/Fruit';
 
 const AUTOGEN_DIR = 'nexus_autogen';
 
