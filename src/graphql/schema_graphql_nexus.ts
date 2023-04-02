@@ -4,7 +4,7 @@ import * as nexusTypes from './nexus_types';
 
 const AUTOGEN_DIR = 'nexus_autogen';
 
-export default makeSchema({
+const nexusSchema = makeSchema({
 	types: nexusTypes,
 	outputs: {
 		typegen: join(__dirname, AUTOGEN_DIR, 'nexus-typegen.ts'),
@@ -14,3 +14,5 @@ export default makeSchema({
 	// prettier config to apply to output artifacts
 	prettierConfig: join(__dirname, '../../.prettierrc'),
 });
+
+export default nexusSchema;
