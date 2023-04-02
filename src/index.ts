@@ -10,18 +10,19 @@ export type GQLContextType = {
 	fruits: Array<NexusGenObjects[GQLNexusTypeName.Fruit]>;
 };
 
-const app = express();
-app.use(
-	'/graphql',
-	graphqlHTTP({
-		schema: GQLNXSchema,
-		graphiql: true,
-		context: <GQLContextType>{
-			fruits: tempDataFruit,
-		},
-		pretty: false,
-	}),
-);
-app.listen(4000);
+express()
+	.use(
+		'/graphql',
+		graphqlHTTP({
+			schema: GQLNXSchema,
+			graphiql: true,
+			context: <GQLContextType>{
+				fruits: tempDataFruit,
+			},
+			pretty: false,
+		}),
+	)
+	.listen(4000);
+// app.listen(4000);
 
 console.log('running on :4000/graphql');
