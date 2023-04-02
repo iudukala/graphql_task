@@ -1,2 +1,2 @@
-export { Fruit } from './Fruit';
+export { FruitNX } from './Fruit';
 export { FruitQueryExt } from './FruitQueryExt';
