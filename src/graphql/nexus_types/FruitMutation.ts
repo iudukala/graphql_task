@@ -5,20 +5,19 @@ import { GQL_IDKEY } from '../constants/gqlIDKey';
 import { AllNexusArgsDefs } from 'nexus/dist/core';
 import { randomUUID } from 'crypto';
 import { GQLContextType } from '../..';
+import { IDOmittedNexusType } from './IDOmittedNexusType';
 
-// todo: replace with generic type that builds the type for mutator arg object
-type IDOmittedFruitType = Omit<NexusGenObjects[GQLNexusTypeName.Fruit], typeof GQL_IDKEY>;
 export const FruitMutation = extendType({
 	type: 'Mutation',
 	definition(t) {
 		t.nonNull.field('createFruit', {
 			type: GQLNexusTypeName.Fruit,
-			args: <Record<keyof IDOmittedFruitType, AllNexusArgsDefs>>{
+			args: <Record<keyof IDOmittedNexusType<GQLNexusTypeName.Fruit>, AllNexusArgsDefs>>{
 				name: nonNull(stringArg()),
 				description: nonNull(stringArg()),
 				amount: nonNull(intArg()),
 			},
-			resolve: (_, args: IDOmittedFruitType, context: GQLContextType) => {
+			resolve: (_, args: IDOmittedNexusType<GQLNexusTypeName.Fruit>, context: GQLContextType) => {
 				const newFruit: NexusGenObjects[GQLNexusTypeName.Fruit] = {
 					[GQL_IDKEY]: randomUUID(),
 					...args,
