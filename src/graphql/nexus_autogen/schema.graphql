@@ -2,14 +2,15 @@
 ### Do not make changes to this file directly
 
 type Fruit {
-	amount: Int!
+	count: Int!
 	description: String
 	id: String!
+	limit: Int!
 	name: String!
 }
 
 type Mutation {
-	createFruit(amount: Int!, description: String!, name: String!): Fruit!
+	createFruitForFruitStorage(amount: Int!, description: String!, name: String!): Fruit!
 }
 
 type Query {

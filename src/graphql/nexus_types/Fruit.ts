@@ -7,6 +7,7 @@ export const FruitNX = objectType({
 		t.nonNull.string('id');
 		t.nonNull.string('name');
 		t.string('description');
-		t.nonNull.int('amount');
+		t.nonNull.int('limit');
+		t.nonNull.int('count');
 	},
 });

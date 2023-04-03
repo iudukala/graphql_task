@@ -24,9 +24,10 @@ export interface NexusGenScalars {
 export interface NexusGenObjects {
 	Fruit: {
 		// root type
-		amount: number; // Int!
+		count: number; // Int!
 		description?: string | null; // String
 		id: string; // String!
+		limit: number; // Int!
 		name: string; // String!
 	};
 	Mutation: {};
@@ -44,14 +45,15 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
 export interface NexusGenFieldTypes {
 	Fruit: {
 		// field return type
-		amount: number; // Int!
+		count: number; // Int!
 		description: string | null; // String
 		id: string; // String!
+		limit: number; // Int!
 		name: string; // String!
 	};
 	Mutation: {
 		// field return type
-		createFruit: NexusGenRootTypes['Fruit']; // Fruit!
+		createFruitForFruitStorage: NexusGenRootTypes['Fruit']; // Fruit!
 	};
 	Query: {
 		// field return type
@@ -62,14 +64,15 @@ export interface NexusGenFieldTypes {
 export interface NexusGenFieldTypeNames {
 	Fruit: {
 		// field return type name
-		amount: 'Int';
+		count: 'Int';
 		description: 'String';
 		id: 'String';
+		limit: 'Int';
 		name: 'String';
 	};
 	Mutation: {
 		// field return type name
-		createFruit: 'Fruit';
+		createFruitForFruitStorage: 'Fruit';
 	};
 	Query: {
 		// field return type name
@@ -79,7 +82,7 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
 	Mutation: {
-		createFruit: {
+		createFruitForFruitStorage: {
 			// args
 			amount: number; // Int!
 			description: string; // String!
