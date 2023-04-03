@@ -20,8 +20,7 @@ export const createFruitForFruitStorage = extendType({
 				limit: nonNull(intArg()),
 			},
 
-			resolve: (_, args: IDOmittedNexusType<GQLType.Fruit>, context: GQLContextType) => {
-				console.log('query');
+			resolve: (_, args: Omit<IDOmittedNexusType<GQLType.Fruit>, 'amount'>, context: GQLContextType) => {
 				const newFruit: NexusGenObjects[GQLType.Fruit] = {
 					[GQL_IDKEY]: randomUUID(),
 					amount: 0,
