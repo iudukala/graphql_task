@@ -3,11 +3,11 @@ import { graphqlHTTP } from 'express-graphql';
 
 import GQLNXSchema from './graphql/schema_graphql_nexus';
 import { NexusGenObjects } from './graphql/nexus_autogen/nexus-typegen';
-import { GQLNexusTypeName } from './graphql/constants/enum_nexus_type_keys';
+import { GQLType } from './graphql/constants/enum_nexus_type_keys';
 import { gqlContext } from './gql_context';
 
 export type GQLContextType = {
-	fruits: Array<NexusGenObjects[GQLNexusTypeName.Fruit]>;
+	fruits: Array<NexusGenObjects[GQLType.Fruit]>;
 };
 
 express()

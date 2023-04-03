@@ -1,9 +1,9 @@
 import { NexusGenObjects } from './graphql/nexus_autogen/nexus-typegen';
-import { GQLNexusTypeName } from './graphql/constants/enum_nexus_type_keys';
+import { GQLType } from './graphql/constants/enum_nexus_type_keys';
 import { GQL_IDKEY } from './graphql/constants/gqlIDKey';
 import { randomUUID } from 'crypto';
 
-export const tempDataFruit: Array<NexusGenObjects[GQLNexusTypeName.Fruit]> = [
+export const tempDataFruit: Array<NexusGenObjects[GQLType.Fruit]> = [
 	{
 		[GQL_IDKEY]: 'bb6b88fa-ac50-4c7e-9aa8-74c41d145e59',
 		name: 'apple',

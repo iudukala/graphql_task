@@ -1,8 +1,8 @@
 import { objectType } from 'nexus';
-import { GQLNexusTypeName } from '../constants/enum_nexus_type_keys';
+import { GQLType } from '../constants/enum_nexus_type_keys';
 
 export const FruitNX = objectType({
-	name: GQLNexusTypeName.Fruit,
+	name: GQLType.Fruit,
 	definition(t) {
 		t.nonNull.string('id');
 		t.nonNull.string('name');

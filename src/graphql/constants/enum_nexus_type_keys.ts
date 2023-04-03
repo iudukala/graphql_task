@@ -1,4 +1,4 @@
-export enum GQLNexusTypeName {
+export enum GQLType {
 	Query = 'Query',
 
 	Fruit = 'Fruit',
