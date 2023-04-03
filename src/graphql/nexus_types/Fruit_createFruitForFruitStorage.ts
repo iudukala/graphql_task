@@ -22,6 +22,8 @@ export const createFruitForFruitStorage = extendType({
 					[GQL_IDKEY]: randomUUID(),
 					...args,
 				};
+				// todo
+				// store limit and count count separately. change gql schema
 
 				context.fruits.push(newFruit);
 				return newFruit;
