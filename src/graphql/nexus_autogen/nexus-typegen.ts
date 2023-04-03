@@ -24,10 +24,10 @@ export interface NexusGenScalars {
 export interface NexusGenObjects {
 	Fruit: {
 		// root type
-		amount?: number | null; // Int
+		amount: number; // Int!
 		description?: string | null; // String
-		id?: string | null; // String
-		name?: string | null; // String
+		id: string; // String!
+		name: string; // String!
 	};
 	Query: {};
 }
@@ -43,10 +43,10 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
 export interface NexusGenFieldTypes {
 	Fruit: {
 		// field return type
-		amount: number | null; // Int
+		amount: number; // Int!
 		description: string | null; // String
-		id: string | null; // String
-		name: string | null; // String
+		id: string; // String!
+		name: string; // String!
 	};
 	Query: {
 		// field return type

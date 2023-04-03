@@ -4,9 +4,9 @@ import { GQLNexusTypeName } from '../enum_nexus_type_keys';
 export const FruitNX = objectType({
 	name: GQLNexusTypeName.Fruit,
 	definition(t) {
-		t.string('id');
-		t.string('name');
+		t.nonNull.string('id');
+		t.nonNull.string('name');
 		t.string('description');
-		t.int('amount');
+		t.nonNull.int('amount');
 	},
 });
