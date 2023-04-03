@@ -16,7 +16,8 @@ express()
 		graphqlHTTP({
 			schema: GQLNXSchema,
 			graphiql: true,
-			context: <GQLContextType>{
+			// context: <GQLContextType>{
+			context: {
 				fruits: tempDataFruit,
 			},
 			pretty: false,
