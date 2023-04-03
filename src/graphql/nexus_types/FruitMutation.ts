@@ -4,7 +4,6 @@ import { NexusGenObjects } from '../nexus_autogen/nexus-typegen';
 import { GQL_IDKEY } from '../const/gqlIDKey';
 import { AllNexusArgsDefs } from 'nexus/dist/core';
 import { randomUUID } from 'crypto';
-import { context } from '../../gql_context';
 import { GQLContextType } from '../..';
 
 // todo: replace with generic type that builds the type for mutator arg object

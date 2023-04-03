@@ -1,6 +1,6 @@
 import { GQLContextType } from '.';
 import { tempDataFruit } from './tempData';
 
-export const context: GQLContextType = {
+export const gqlContext: GQLContextType = {
 	fruits: tempDataFruit,
 };
