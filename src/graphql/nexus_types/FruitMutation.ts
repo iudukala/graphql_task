@@ -1,4 +1,4 @@
-import { extendType, stringArg, nonNull } from 'nexus';
+import { extendType, stringArg, intArg, nonNull } from 'nexus';
 import { GQLNexusTypeName } from '../enum_nexus_type_keys';
 import { NexusGenObjects } from '../nexus_autogen/nexus-typegen';
 
@@ -12,6 +12,7 @@ export const FruitMutation = extendType({
 			args: {
 				name: nonNull(stringArg()),
 				description: nonNull(stringArg()),
+				amount: nonNull(intArg()),
 			},
 			resolve: () => {
 				return null;

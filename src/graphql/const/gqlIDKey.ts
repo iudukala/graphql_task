@@ -1,1 +1,1 @@
-export const GQLIDKEY = 'id';
+export const GQL_IDKEY = 'id';
