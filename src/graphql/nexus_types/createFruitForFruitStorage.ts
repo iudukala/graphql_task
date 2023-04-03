@@ -12,14 +12,20 @@ export const createFruitForFruitStorage = extendType({
 	definition(t) {
 		t.nonNull.field('createFruitForFruitStorage', {
 			type: GQLType.Fruit,
-			args: <Record<keyof IDOmittedNexusType<GQLType.Fruit>, AllNexusArgsDefs>>{
+
+			args: <Record<keyof Omit<IDOmittedNexusType<GQLType.Fruit>, 'amount'>, AllNexusArgsDefs>>{
+				// args: {
 				name: nonNull(stringArg()),
 				description: nonNull(stringArg()),
-				amount: nonNull(intArg()),
+				limit: nonNull(intArg()),
 			},
+
 			resolve: (_, args: IDOmittedNexusType<GQLType.Fruit>, context: GQLContextType) => {
+				console.log('query');
 				const newFruit: NexusGenObjects[GQLType.Fruit] = {
 					[GQL_IDKEY]: randomUUID(),
+					amount: 0,
+
 					...args,
 				};
 				// todo

@@ -2,7 +2,7 @@
 ### Do not make changes to this file directly
 
 type Fruit {
-	count: Int!
+	amount: Int!
 	description: String
 	id: String!
 	limit: Int!
@@ -10,7 +10,7 @@ type Fruit {
 }
 
 type Mutation {
-	createFruitForFruitStorage(amount: Int!, description: String!, name: String!): Fruit!
+	createFruitForFruitStorage(description: String!, limit: Int!, name: String!): Fruit!
 }
 
 type Query {

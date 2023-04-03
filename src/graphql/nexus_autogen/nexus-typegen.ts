@@ -24,7 +24,7 @@ export interface NexusGenScalars {
 export interface NexusGenObjects {
 	Fruit: {
 		// root type
-		count: number; // Int!
+		amount: number; // Int!
 		description?: string | null; // String
 		id: string; // String!
 		limit: number; // Int!
@@ -45,7 +45,7 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
 export interface NexusGenFieldTypes {
 	Fruit: {
 		// field return type
-		count: number; // Int!
+		amount: number; // Int!
 		description: string | null; // String
 		id: string; // String!
 		limit: number; // Int!
@@ -64,7 +64,7 @@ export interface NexusGenFieldTypes {
 export interface NexusGenFieldTypeNames {
 	Fruit: {
 		// field return type name
-		count: 'Int';
+		amount: 'Int';
 		description: 'String';
 		id: 'String';
 		limit: 'Int';
@@ -84,8 +84,8 @@ export interface NexusGenArgTypes {
 	Mutation: {
 		createFruitForFruitStorage: {
 			// args
-			amount: number; // Int!
 			description: string; // String!
+			limit: number; // Int!
 			name: string; // String!
 		};
 	};
