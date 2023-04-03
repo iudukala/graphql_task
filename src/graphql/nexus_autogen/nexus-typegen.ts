@@ -29,6 +29,7 @@ export interface NexusGenObjects {
 		id: string; // String!
 		name: string; // String!
 	};
+	Mutation: {};
 	Query: {};
 }
 
@@ -48,6 +49,10 @@ export interface NexusGenFieldTypes {
 		id: string; // String!
 		name: string; // String!
 	};
+	Mutation: {
+		// field return type
+		createFruit: NexusGenRootTypes['Fruit']; // Fruit!
+	};
 	Query: {
 		// field return type
 		fruits: Array<NexusGenRootTypes['Fruit'] | null>; // [Fruit]!
@@ -62,13 +67,26 @@ export interface NexusGenFieldTypeNames {
 		id: 'String';
 		name: 'String';
 	};
+	Mutation: {
+		// field return type name
+		createFruit: 'Fruit';
+	};
 	Query: {
 		// field return type name
 		fruits: 'Fruit';
 	};
 }
 
-export interface NexusGenArgTypes {}
+export interface NexusGenArgTypes {
+	Mutation: {
+		createFruit: {
+			// args
+			amount: number; // Int!
+			description: string; // String!
+			name: string; // String!
+		};
+	};
+}
 
 export interface NexusGenAbstractTypeMembers {}
 

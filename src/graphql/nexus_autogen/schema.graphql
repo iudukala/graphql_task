@@ -8,6 +8,10 @@ type Fruit {
 	name: String!
 }
 
+type Mutation {
+	createFruit(amount: Int!, description: String!, name: String!): Fruit!
+}
+
 type Query {
 	fruits: [Fruit]!
 }
