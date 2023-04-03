@@ -1,3 +1,3 @@
 export { FruitNX } from './Fruit';
 export { FruitQueryExt } from './FruitQueryExt';
-export { FruitMutation } from './FruitMutation';
+export { createFruitForFruitStorage as FruitMutation } from './FruitMutation';

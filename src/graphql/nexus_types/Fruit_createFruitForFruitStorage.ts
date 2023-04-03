@@ -7,10 +7,10 @@ import { randomUUID } from 'crypto';
 import { GQLContextType } from '../..';
 import { IDOmittedNexusType } from './IDOmittedNexusType';
 
-export const FruitMutation = extendType({
+export const createFruitForFruitStorage = extendType({
 	type: 'Mutation',
 	definition(t) {
-		t.nonNull.field('createFruit', {
+		t.nonNull.field('createFruitForFruitStorage', {
 			type: GQLType.Fruit,
 			args: <Record<keyof IDOmittedNexusType<GQLType.Fruit>, AllNexusArgsDefs>>{
 				name: nonNull(stringArg()),
