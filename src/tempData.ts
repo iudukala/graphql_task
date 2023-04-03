@@ -21,6 +21,12 @@ export const tempDataFruit: Array<NexusGenObjects[GQLNexusTypeName.Fruit]> = [
 		description: 'apples the fruit',
 		amount: 1,
 	},
+	{
+		id: uuid(),
+		name: 'some other apple',
+		description: 'apples the fruit',
+		amount: 1,
+	},
 ];
 // 	{
 // 		id: uuid(),

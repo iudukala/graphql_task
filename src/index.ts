@@ -16,14 +16,12 @@ express()
 		graphqlHTTP({
 			schema: GQLNXSchema,
 			graphiql: true,
-			// context: <GQLContextType>{
-			context: {
+			context: <GQLContextType>{
 				fruits: tempDataFruit,
 			},
 			pretty: false,
 		}),
 	)
 	.listen(4000);
-// app.listen(4000);
 
 console.log('running on :4000/graphql');
