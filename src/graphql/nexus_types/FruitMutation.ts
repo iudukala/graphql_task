@@ -1,7 +1,7 @@
 import { extendType, stringArg, intArg, nonNull } from 'nexus';
-import { GQLNexusTypeName } from '../enum_nexus_type_keys';
+import { GQLNexusTypeName } from '../constants/enum_nexus_type_keys';
 import { NexusGenObjects } from '../nexus_autogen/nexus-typegen';
-import { GQL_IDKEY } from '../const/gqlIDKey';
+import { GQL_IDKEY } from '../constants/gqlIDKey';
 import { AllNexusArgsDefs } from 'nexus/dist/core';
 import { randomUUID } from 'crypto';
 import { GQLContextType } from '../..';

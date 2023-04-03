@@ -1,5 +1,5 @@
 import { extendType } from 'nexus';
-import { GQLNexusTypeName } from '../enum_nexus_type_keys';
+import { GQLNexusTypeName } from '../constants/enum_nexus_type_keys';
 import { GQLContextType } from '../..';
 
 export const FruitQueryExt = extendType({
@@ -8,7 +8,7 @@ export const FruitQueryExt = extendType({
 	definition(t) {
 		t.nonNull.list.field('fruits', {
 			type: GQLNexusTypeName.Fruit,
-			resolve: (parent: object, args: object, context: GQLContextType) => context.fruits,
+			resolve: (_, __, context: GQLContextType) => context.fruits,
 		});
 	},
 });
