@@ -1,16 +1,13 @@
 import { extendType, stringArg, intArg, nonNull } from 'nexus';
 import { GQLType } from '../../constants/enum_nexusTypeKey';
-import { NexusGenObjects } from '../../nexus_autogen/nexus-typegen';
 import { AllNexusArgsDefs } from 'nexus/dist/core';
 import { randomUUID } from 'crypto';
 import { GQLContextType } from '../../..';
 import { FruitKey } from '../../constants/enum_fruitKey';
+import { FruitType } from '../FruitType';
 
-type FruitArgs = Pick<
-	// todo: figure out why omit isn't working
-	NexusGenObjects[GQLType.Fruit],
-	FruitKey.Name | FruitKey.Description | FruitKey.Limit
->;
+// todo: figure out why omit isn't working
+type FruitArgs = Pick<FruitType, FruitKey.Name | FruitKey.Description | FruitKey.Limit>;
 
 export const createFruitForFruitStorage = extendType({
 	type: 'Mutation',
@@ -27,12 +24,13 @@ export const createFruitForFruitStorage = extendType({
 			resolve: (_, args: FruitArgs, context: GQLContextType) => {
 				// type Y = Omit<temp, FruitKey.Amount> & Partial<Record<FruitKey.Amount, never>>;
 
-				const newFruit: NexusGenObjects[GQLType.Fruit] = {
-					[FruitKey.ID]: randomUUID(),
-					[FruitKey.Amount]: 0,
+				// const newFruit: FruitType = {
+				// 	[FruitKey.ID]: randomUUID(),
+				// 	[FruitKey.Amount]: 0,
 
-					...args,
-				};
+				// 	...args,
+				// };
+				const newFruit: FruitType = FruitFactory(args);
 
 				context.fruits.push(newFruit);
 				return newFruit;
@@ -54,5 +52,11 @@ export const createFruitForFruitStorage = extendType({
 // args: Omit<NexusGenObjects[GQLType.Fruit], FruitKey.ID | FruitKey.Amount>,
 // args: Omit<IDOmittedNexusType<GQLType.Fruit>, 'amount'>,
 
+function FruitFactory(constructionProps: FruitArgs): FruitType {
+	return {
+		[FruitKey.ID]: randomUUID(),
+		[FruitKey.Amount]: 0,
 
-// function FruitFactory(constructionPrps: FruitArgs):
+		...constructionProps,
+	};
+}
