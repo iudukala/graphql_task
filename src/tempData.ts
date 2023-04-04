@@ -1,6 +1,6 @@
 import { NexusGenObjects } from './graphql/nexus_autogen/nexus-typegen';
 import { GQLType } from './graphql/constants/enum_nexusTypeKey';
-import { GQL_IDKEY } from './graphql/constants/GQL_IDKey';
+import { GQL_IDKEY } from './graphql/constants/const_GQLIDKey';
 import { randomUUID } from 'crypto';
 
 export const tempDataFruit: Array<NexusGenObjects[GQLType.Fruit]> = [

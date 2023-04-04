@@ -1,4 +1,4 @@
-import { GQL_IDKEY } from '../constants/GQL_IDKey';
+import { GQL_IDKEY } from './const_GQLIDKey';
 
 export enum FruitKey {
 	ID = GQL_IDKEY,
