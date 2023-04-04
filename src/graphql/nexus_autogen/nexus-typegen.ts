@@ -135,7 +135,10 @@ export interface NexusGenTypes {
 	interfaceNames: NexusGenInterfaceNames;
 	scalarNames: NexusGenScalarNames;
 	unionNames: NexusGenUnionNames;
-	allInputTypes: NexusGenTypes['inputNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['scalarNames'];
+	allInputTypes:
+		| NexusGenTypes['inputNames']
+		| NexusGenTypes['enumNames']
+		| NexusGenTypes['scalarNames'];
 	allOutputTypes:
 		| NexusGenTypes['objectNames']
 		| NexusGenTypes['enumNames']

@@ -1,4 +1,4 @@
-import { GQLType } from '../constants/enum_nexus_type_keys';
+import { GQLType } from '../constants/enum_nexusTypeKey';
 import { NexusGenObjects } from '../nexus_autogen/nexus-typegen';
 import { GQL_IDKEY } from '../constants/GQL_IDKey';
 

@@ -1,11 +1,10 @@
 import { extendType, stringArg, intArg, nonNull } from 'nexus';
-import { GQLType } from '../constants/enum_nexus_type_keys';
+import { GQLType } from '../constants/enum_nexusTypeKey';
 import { NexusGenObjects } from '../nexus_autogen/nexus-typegen';
 import { GQL_IDKEY } from '../constants/GQL_IDKey';
 import { AllNexusArgsDefs } from 'nexus/dist/core';
 import { randomUUID } from 'crypto';
 import { GQLContextType } from '../..';
-// import { IDOmittedNexusType } from './IDOmittedNexusType';
 
 export type IDOmittedNexusType<T extends GQLType> = Omit<NexusGenObjects[T], typeof GQL_IDKEY>;
 export const createFruitForFruitStorage = extendType({

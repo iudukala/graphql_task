@@ -3,7 +3,7 @@ import { graphqlHTTP } from 'express-graphql';
 
 import GQLNXSchema from './graphql/schema_graphql_nexus';
 import { NexusGenObjects } from './graphql/nexus_autogen/nexus-typegen';
-import { GQLType } from './graphql/constants/enum_nexus_type_keys';
+import { GQLType } from './graphql/constants/enum_nexusTypeKey';
 import { gqlContext } from './gql_context';
 
 export type GQLContextType = {

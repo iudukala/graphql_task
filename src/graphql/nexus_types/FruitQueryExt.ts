@@ -1,5 +1,5 @@
 import { extendType } from 'nexus';
-import { GQLType } from '../constants/enum_nexus_type_keys';
+import { GQLType } from '../constants/enum_nexusTypeKey';
 import { GQLContextType } from '../..';
 
 export const FruitQueryExt = extendType({
