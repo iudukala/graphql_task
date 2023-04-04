@@ -4,7 +4,7 @@ import { graphqlHTTP } from 'express-graphql';
 import GQLNXSchema from './graphql/schema_graphql_nexus';
 import { NexusGenObjects } from './graphql/nexus_autogen/nexus-typegen';
 import { GQLType } from './graphql/constants/enum_nexusTypeKey';
-import { gqlContext } from './graphql/gql_context';
+import { gqlContext } from './graphql/gqlContext';
 
 export type GQLContextType = {
 	fruits: Array<NexusGenObjects[GQLType.Fruit]>;

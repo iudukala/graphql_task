@@ -18,11 +18,11 @@ export const createFruitForFruitStorage = extendType({
 		t.nonNull.field('createFruitForFruitStorage', {
 			type: GQLType.Fruit,
 
-			args: (<Record<keyof FruitArgs, AllNexusArgsDefs>>{
+			args: <Record<keyof FruitArgs, AllNexusArgsDefs>>{
 				name: nonNull(stringArg()),
 				description: nonNull(stringArg()),
 				limit: nonNull(intArg()),
-			}) as Record<keyof FruitArgs, AllNexusArgsDefs>,
+			},
 
 			resolve: (_, args: FruitArgs, context: GQLContextType) => {
 				// type Y = Omit<temp, FruitKey.Amount> & Partial<Record<FruitKey.Amount, never>>;

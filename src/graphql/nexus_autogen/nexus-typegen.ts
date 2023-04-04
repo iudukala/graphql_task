@@ -3,7 +3,7 @@
  * Do not make changes to this file directly
  */
 
-import type { context } from '../gql_context';
+import type { context } from './../gqlContext';
 
 declare global {
 	interface NexusGen extends NexusGenTypes {}
