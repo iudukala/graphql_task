@@ -2,6 +2,7 @@ import { extendType } from 'nexus';
 import { GQLType } from '../../constants/enum_nexusTypeKey';
 import { GQLContextType } from '../../..';
 
+// todo: change to 'findFruit()'
 export const FruitQueryExt = extendType({
 	type: GQLType.Query,
 

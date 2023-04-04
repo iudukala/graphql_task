@@ -5,6 +5,7 @@ import { GQL_IDKEY } from '../../constants/const_GQLIDKey';
 import { AllNexusArgsDefs } from 'nexus/dist/core';
 import { randomUUID } from 'crypto';
 import { GQLContextType } from '../../..';
+import { FruitKey } from '../../constants/enum_fruitKey';
 
 export type IDOmittedNexusType<T extends GQLType> = Omit<NexusGenObjects[T], typeof GQL_IDKEY>;
 export const createFruitForFruitStorage = extendType({
@@ -12,9 +13,12 @@ export const createFruitForFruitStorage = extendType({
 	definition(t) {
 		t.nonNull.field('createFruitForFruitStorage', {
 			type: GQLType.Fruit,
-
-			args: <Record<keyof Omit<IDOmittedNexusType<GQLType.Fruit>, 'amount'>, AllNexusArgsDefs>>{
-				// args: {
+			args: <
+				Record<
+					keyof Omit<NexusGenObjects[GQLType.Fruit], FruitKey.ID | FruitKey.Amount>,
+					AllNexusArgsDefs
+				>
+			>{
 				name: nonNull(stringArg()),
 				description: nonNull(stringArg()),
 				limit: nonNull(intArg()),
@@ -22,12 +26,14 @@ export const createFruitForFruitStorage = extendType({
 
 			resolve: (
 				_,
+				args: Omit<NexusGenObjects[GQLType.Fruit], typeof FruitKey.ID | typeof FruitKey.Amount>,
 				args: Omit<IDOmittedNexusType<GQLType.Fruit>, 'amount'>,
+				// args: Omit<IDOmittedNexusType<GQLType.Fruit>, 'amount'>,
 				context: GQLContextType,
 			) => {
 				const newFruit: NexusGenObjects[GQLType.Fruit] = {
-					[GQL_IDKEY]: randomUUID(),
-					amount: 0,
+					[FruitKey.ID]: randomUUID(),
+					[FruitKey.Amount]: 0,
 
 					...args,
 				};
