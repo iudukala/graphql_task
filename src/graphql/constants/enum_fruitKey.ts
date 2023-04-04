@@ -1,6 +1,6 @@
 import { GQL_IDKEY } from './const_GQLIDKey';
 
-export enum FruitKey {
+export const enum FruitKey {
 	ID = GQL_IDKEY,
 	Name = 'name',
 	Description = 'description',
