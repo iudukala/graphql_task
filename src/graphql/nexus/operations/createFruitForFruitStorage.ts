@@ -53,3 +53,6 @@ export const createFruitForFruitStorage = extendType({
 // 	AllNexusArgsDefs
 // args: Omit<NexusGenObjects[GQLType.Fruit], FruitKey.ID | FruitKey.Amount>,
 // args: Omit<IDOmittedNexusType<GQLType.Fruit>, 'amount'>,
+
+
+// function FruitFactory(constructionPrps: FruitArgs):
