@@ -7,9 +7,11 @@ import { GQLContextType } from '../../..';
 import { FruitKey } from '../../constants/enum_fruitKey';
 
 type FruitArgs = Pick<
+// todo: figure out why omit isn't working
 	NexusGenObjects[GQLType.Fruit],
 	FruitKey.Name | FruitKey.Description | FruitKey.Limit
 >;
+
 export const createFruitForFruitStorage = extendType({
 	type: 'Mutation',
 	definition(t) {
