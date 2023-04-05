@@ -1,7 +1,7 @@
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 
-import GQLNXSchema from './graphql/schema_graphql_nexus';
+import GQLNXSchema from './graphql/schemaConfigNexus';
 import { gqlContext } from './graphql/gqlContext';
 
 express()
