@@ -1,5 +1,5 @@
 import { objectType } from 'nexus';
-import { GQLType } from '../../constants/enum_nexusTypeKey';
+import { GQLType } from '../constants/enum_nexusTypeKey';
 
 export const FruitNX = objectType({
 	name: GQLType.Fruit,

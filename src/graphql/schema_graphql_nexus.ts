@@ -1,6 +1,6 @@
 import { makeSchema } from 'nexus';
 import { join } from 'path';
-import * as nexusTypes from './nexus';
+import * as nexusTypes from '.';
 
 const AUTOGEN_DIR = join(__dirname, 'nexus_autogen');
 const nexusSchema = makeSchema({

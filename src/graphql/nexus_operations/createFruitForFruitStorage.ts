@@ -1,10 +1,11 @@
 import { extendType, stringArg, intArg, nonNull } from 'nexus';
-import { GQLType } from '../../constants/enum_nexusTypeKey';
+import { GQLType } from '../constants/enum_nexusTypeKey';
 import { AllNexusArgsDefs } from 'nexus/dist/core';
 import { randomUUID } from 'crypto';
-import { GQLContextType } from '../../../types/GQLContextType';
-import { FruitKey } from '../../constants/enum_fruitKey';
-import { FruitType } from '../FruitType';
+import { GQLContextType } from '../../types/GQLContextType';
+import { FruitKey } from '../constants/enum_fruitKey';
+import { FruitType } from '../nexus_types/FruitType';
+
 
 // todo: figure out why omit isn't working
 type FruitArgs = Pick<FruitType, FruitKey.Name | FruitKey.Description | FruitKey.Limit>;
