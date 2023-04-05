@@ -2,7 +2,7 @@ import { extendType, stringArg, intArg, nonNull } from 'nexus';
 import { GQLType } from '../../constants/enum_nexusTypeKey';
 import { AllNexusArgsDefs } from 'nexus/dist/core';
 import { randomUUID } from 'crypto';
-import { GQLContextType } from '../../..';
+import { GQLContextType } from '../../../types/GQLContextType';
 import { FruitKey } from '../../constants/enum_fruitKey';
 import { FruitType } from '../FruitType';
 
