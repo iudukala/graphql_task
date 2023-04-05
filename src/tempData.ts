@@ -1,4 +1,4 @@
-import { NexusGenObjects } from './graphql/nexus_autogen/nexus-typegen';
+import { NexusGenObjects } from './graphql/nexus_autogen_artifacts/nexus_typegen.ts';
 import { GQLType } from './graphql/constants/enum_nexusTypeKey';
 import { GQL_IDKEY } from './graphql/constants/const_GQLIDKey';
 import { randomUUID } from 'crypto';
