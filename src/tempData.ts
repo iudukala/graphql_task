@@ -1,9 +1,8 @@
-import { NexusGenObjects } from './graphql/nexus_autogen_artifacts/nexus_typegen';
-import { GQLType } from './graphql/constants/enum_nexusTypeKey';
 import { GQL_IDKEY } from './graphql/constants/const_GQLIDKey';
 import { randomUUID } from 'crypto';
-import { FruitType } from './graphql/nexus_types/FruitType';
 import { FruitKey } from './graphql/constants/enum_fruitKey';
+
+import type { FruitType } from './graphql/nexus_types/FruitType';
 
 export const tempDataFruit: Array<FruitType> = [
 	{
