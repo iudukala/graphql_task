@@ -1,11 +1,13 @@
-import { NexusGenObjects } from './graphql/nexus_autogen_artifacts/nexus_typegen.ts';
+import { NexusGenObjects } from './graphql/nexus_autogen_artifacts/nexus_typegen';
 import { GQLType } from './graphql/constants/enum_nexusTypeKey';
 import { GQL_IDKEY } from './graphql/constants/const_GQLIDKey';
 import { randomUUID } from 'crypto';
+import { FruitType } from './graphql/nexus_types/FruitType';
+import { FruitKey } from './graphql/constants/enum_fruitKey';
 
-export const tempDataFruit: Array<NexusGenObjects[GQLType.Fruit]> = [
+export const tempDataFruit: Array<FruitType> = [
 	{
-		[GQL_IDKEY]: 'bb6b88fa-ac50-4c7e-9aa8-74c41d145e59',
+		[FruitKey.ID]: 'bb6b88fa-ac50-4c7e-9aa8-74c41d145e59',
 		name: 'apple',
 		description: 'apples the fruit',
 		amount: 1,
