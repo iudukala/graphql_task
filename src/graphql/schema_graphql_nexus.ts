@@ -1,16 +1,13 @@
-import { makeSchema } from 'nexus';
 import { join } from 'path';
+import { makeSchema } from 'nexus';
 import * as nexusTypes from '.';
 
-import { NEXUS_AUTOGEN_DIR_NAME } from '../globals/NEXUS_AUTOGEN_DIR';
-import { NEXUS_ARTIFACT_TYPE_NAME } from '../globals/NEXUS_ARTIFACT_TYPE_NAME';
-
-// switch to dynamic import for context file as well
+const NEXUS_AUTOGEN_DIR_NAME = 'nexus_autogen_artifacts';
 
 const nexusSchema = makeSchema({
 	types: nexusTypes,
 	outputs: {
-		typegen: join(__dirname, NEXUS_AUTOGEN_DIR_NAME, NEXUS_ARTIFACT_TYPE_NAME),
+		typegen: join(__dirname, NEXUS_AUTOGEN_DIR_NAME, 'nexus_typegen.ts'),
 		schema: join(__dirname, NEXUS_AUTOGEN_DIR_NAME, 'schema.graphql'),
 	},
 	contextType: {
