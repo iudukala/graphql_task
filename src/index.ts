@@ -2,7 +2,7 @@ import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 
 import { nexusSchema } from './graphql/schemaConfigNexus';
-import { gqlContext } from './graphql/gqlContext';
+import { contextGQL } from './graphql/contextGQL';
 
 express()
 	.use(
@@ -10,7 +10,7 @@ express()
 		graphqlHTTP({
 			schema: nexusSchema,
 			graphiql: true,
-			context: gqlContext,
+			context: contextGQL,
 			pretty: false,
 		}),
 	)
