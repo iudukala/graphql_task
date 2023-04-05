@@ -1,14 +1,14 @@
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 
-import GQLNXSchema from './graphql/schemaConfigNexus';
+import { nexusSchema } from './graphql/schemaConfigNexus';
 import { gqlContext } from './graphql/gqlContext';
 
 express()
 	.use(
 		'/graphql',
 		graphqlHTTP({
-			schema: GQLNXSchema,
+			schema: nexusSchema,
 			graphiql: true,
 			context: gqlContext,
 			pretty: false,
