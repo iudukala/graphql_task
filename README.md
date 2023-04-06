@@ -10,5 +10,5 @@
 - this could be partially fixed by storing the name in the 'id' field and exposing it outside the class as 'name' through a getter. or declare a new field in the subclass Fruit and add a new field `name` that mirrors `id`
 
 - ideally, the approach to take would be to cater to the lowest common denominator. since there exist no entities in the system that use an identifier like a uuid, we could get rid of the `id` field in the entitiy base-class/superclass and use 'name'. but that would also violate the ddd principles since the entire objective is to have a structure that is extendable and scalable.
-  <br />
+
 - another option was to copy the name from the fruit field to the id field and maintain two copies. not a major issue since all objects are immutable and fields are not changed individually.

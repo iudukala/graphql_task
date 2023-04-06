@@ -4,12 +4,14 @@ import { Entity } from './Entity';
 // import { FruitKey } from '../graphql/constants/enum_fruitKey';
 // import _ from 'lodash';
 
+/** @template FruitType */
 class Fruit extends Entity<FruitType> {
+	/**
+	 *
+	 * @param {FruitType} propsFruitGQL
+	 */
 	constructor(propsFruitGQL: FruitType) {
-		/**
-		 * since the object is immutable, the fact that the field 'name' is duplicated as "id" and the field 'name' inside the props object is a non issue. since fields aren't modified individually
-		 */
-		super(propsFruitGQL.name, propsFruitGQL);
+		super(() => this.props.name, propsFruitGQL);
 	}
 }
 
