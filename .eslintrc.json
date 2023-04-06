@@ -24,6 +24,7 @@
 			{
 				"code": 110,
 				"tabWidth": 4,
+				"ignoreComments": true,
 				"ignorePattern": "(^imports*.*$|^s*export function.*$)"
 			}
 		],
