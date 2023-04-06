@@ -5,9 +5,9 @@ import type { FruitType } from '../graphql/nexus_types/FruitType';
 
 /**
  *
- * @param constructionProps: an object containing the data required to build a new fruit object.
- * (all fields excluding the ID and amount)
- * @returns a Fruit object
+ * @param {FruitConstructArgs} constructionProps an object containing the data required to build a
+ * new fruit object (all fields excluding the ID and amount)
+ * @returns {FruitType} a Fruit object
  */
 export function FruitFactory(constructionProps: FruitConstructArgs): FruitType {
 	return {
