@@ -3,17 +3,16 @@ import { FruitType } from '../graphql/nexus_types/FruitType';
 import { Entity } from './Entity';
 import _ from 'lodash';
 
-type ModifiedFruitType = Omit<FruitType, 'id'>;
+// type ModifiedFruitType = Omit<FruitType, 'name'>;
+// class Fruit extends Entity<ModifiedFruitType> {
 class Fruit extends Entity<FruitType> {
 	constructor(propsFruitGQL: FruitType) {
-		// super(propsGQL.name, { ...propsGQL, [FruitKey.Name]: undefined });
-		const { name, ...fruitProps } = _.cloneDeep(propsFruitGQL);
-		super(propsGQL.name, fruitProps);
-		// super(propsGQL.name, propsGQL);
-		// _.cloneDeepWith(propsGQL, (_, key: string | number | undefined) => {
-		//     if
-		// }))
-		// );
+		// const { name, ...fruitProps } = _.cloneDeep(propsFruitGQL);
+
+		/**
+		 * since the object is immutable, the fact that there are now two references to the field 'name' is not an issue and is also
+		 */
+		super(propsFruitGQL.name, propsFruitGQL);
 	}
 }
 

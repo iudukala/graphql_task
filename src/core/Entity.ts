@@ -4,6 +4,6 @@ export abstract class Entity<T> {
 
 	constructor(id: string, propsArg: T) {
 		this._id = id;
-		this.props = propsArg;
+		this.props = Object.freeze(propsArg);
 	}
 }
