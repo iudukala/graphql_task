@@ -16,6 +16,7 @@
 		"@typescript-eslint/parser": "^5.56.0",
 		"eslint": "^8.36.0",
 		"eslint-config-prettier": "^8.8.0",
+		"eslint-plugin-jsdoc": "^40.1.1",
 		"nodemon": "^2.0.21",
 		"prettier": "^2.8.6",
 		"ts-node": "^10.9.1",
