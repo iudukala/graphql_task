@@ -7,7 +7,7 @@ import { Entity } from './Entity';
 class Fruit extends Entity<FruitType> {
 	constructor(propsFruitGQL: FruitType) {
 		/**
-		 * since the object is immutable, the fact that there are now two references to the field 'name' is not an issue
+		 * since the object is immutable, the fact that the field 'name' is duplicated as "id" and the field 'name' inside the props object is a non issue. since fields aren't modified individually
 		 */
 		super(propsFruitGQL.name, propsFruitGQL);
 	}
