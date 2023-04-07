@@ -12,15 +12,22 @@ class Fruit extends Entity<FruitInternal> {
 	 *
 	 * @param {FruitType} propsFruitGQL fruit data object. probably
 	 */
-	constructor(propsFruitGQL: FruitType) {
+	private constructor(propsFruitGQL: FruitType) {
 		// const descOverridden = Object.assign({}, )
 		const { description, ...noDescription } = propsFruitGQL;
+		const newO: FruitInternal = {
+			amount,
+		};
 
 		super(() => this.props.name, {
 			[FruitKey.Description]: new DescriptionValueObject(propsFruitGQL.description ?? null),
 			...propsFruitGQL,
 		});
 		const p = super.props;
+	}
+
+	static createFruit(fruitPropsGQL: FruitType) {
+
 	}
 }
 
