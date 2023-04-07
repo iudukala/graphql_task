@@ -3,11 +3,13 @@ import { GQLType } from '../constants/enum_nexusTypeKey';
 import { AllNexusArgsDefs } from 'nexus/dist/core';
 import { GQLContextType } from '../../types/GQLContextType';
 import { FruitFactory } from '../../Fruit/FruitFactory';
+import { FruitKey } from '../constants/enum_fruitKey';
 
 import type { FruitType } from '../nexus_types/FruitType';
-import type { FruitConstructArgs } from '../../Fruit/FruitConstructArgs';
 
-// todo: figure out why omit isn't working
+// todo: figure out why omit isn't working [done]
+
+export type FruitConstructArgs = Omit<FruitType, typeof FruitKey.ID | typeof FruitKey.Amount>;
 
 export const createFruitForFruitStorage = extendType({
 	type: 'Mutation',
