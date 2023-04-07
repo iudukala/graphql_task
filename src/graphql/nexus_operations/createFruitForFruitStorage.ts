@@ -2,11 +2,11 @@ import { extendType, stringArg, intArg, nonNull } from 'nexus';
 import { GQLType } from '../constants/enum_nexusTypeKey';
 import { AllNexusArgsDefs } from 'nexus/dist/core';
 import { GQLContextType } from '../../types/GQLContextType';
-import { FruitKey } from '../constants/enum_fruitKey';
 
 import type { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX';
+import type { FruitConstructArgs } from '../../Fruit/types';
+import { xFruitFactory } from '../../Fruit/FruitFactory';
 
-export type FruitConstructArgs = Omit<FruitTypeGQL, typeof FruitKey.ID | typeof FruitKey.Amount>;
 
 export const createFruitForFruitStorage = extendType({
 	type: 'Mutation',
@@ -21,7 +21,7 @@ export const createFruitForFruitStorage = extendType({
 			},
 
 			resolve: (_, args: FruitConstructArgs, context: GQLContextType) => {
-				const newFruit: FruitTypeGQL = FruitFactory(args);
+				const newFruit: FruitTypeGQL = xFruitFactory(args);
 
 				context.fruits.push(newFruit);
 				return newFruit;
