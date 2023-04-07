@@ -16,4 +16,4 @@
 - the issue with omit is not an issue with the behaviour of omit. it's to do with the behaviour in enums.
   https://github.com/microsoft/TypeScript/issues/40944
 
-- explain the switch to cons asserted object from enum. allows for a single source of truth and typescript compiler checks
+- switched to cons asserted object from enum. allows for a single source of truth and additional compiler checks. also avoids issues related to unexpected behaviours from enums
