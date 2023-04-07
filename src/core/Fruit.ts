@@ -7,7 +7,7 @@ type FruitInternalProps = Omit<FruitTypeGQL, typeof FruitKey.Description> & {
 	[FruitKey.Description]: DescriptionValueObject;
 };
 
-/** @template FruitInternal*/
+/** @template FruitInternal, FruitTypeGQL */
 class Fruit extends Entity<FruitInternalProps> {
 	/**
 	 *
@@ -17,13 +17,20 @@ class Fruit extends Entity<FruitInternalProps> {
 		super(() => this.props.name, propsFruit);
 	}
 
+	/**
+	 *
+	 * @param {FruitTypeGQL} fruitPropsGQL object containing the necessary data
+	 * @returns {Fruit} a new immutable Fruit object
+	 */
 	static createFruit(fruitPropsGQL: FruitTypeGQL) {
-		return new Fruit({
-			[FruitKey.Description]: new DescriptionValueObject(fruitPropsGQL.description ?? null),
-			[FruitKey.Name]: fruitPropsGQL.name,
-			[FruitKey.Amount]: fruitPropsGQL.amount,
-			[FruitKey.Limit]: fruitPropsGQL.limit,
-			[FruitKey.ID]: fruitPropsGQL.id,
-		});
+		return new Fruit(
+			Object.freeze({
+				[FruitKey.Description]: new DescriptionValueObject(fruitPropsGQL.description ?? null),
+				[FruitKey.Name]: fruitPropsGQL.name,
+				[FruitKey.Amount]: fruitPropsGQL.amount,
+				[FruitKey.Limit]: fruitPropsGQL.limit,
+				[FruitKey.ID]: fruitPropsGQL.id,
+			}),
+		);
 	}
 }
