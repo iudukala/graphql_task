@@ -10,7 +10,7 @@ import type { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX';
  * new fruit object (all fields excluding the ID and amount)
  * @returns {FruitTypeGQL} a Fruit object
  */
-export function xFruitFactory(constructionProps: FruitConstructArgs): FruitTypeGQL {
+export function obsolete_FruitFactory(constructionProps: FruitConstructArgs): FruitTypeGQL {
 	return {
 		[FruitKey.ID]: randomUUID(),
 		[FruitKey.Amount]: 0,
