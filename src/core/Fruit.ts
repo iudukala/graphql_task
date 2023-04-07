@@ -15,6 +15,21 @@ class Fruit extends Entity<FruitType> {
 	 */
 	constructor(propsFruitGQL: FruitType) {
 		super(() => 'x', propsFruitGQL);
+
+		interface X extends Omit<FruitType, 'description'> {
+			description: DescriptionValueObject;
+		}
+
+		type Z = Omit<FruitType, 'description'> & { description: DescriptionValueObject };
+
+		const one: Z = {
+			description: new DescriptionValueObject('s'),
+			id: 's',
+			amount: 10,
+			limit: 100,
+			name: 'asdf'
+		};
+
 		// super(propsFruitGQL);
 		// type X = {[Key in keyof {'description': any}]?{[Key]: DescriptionValueObject}: {[Key]: FruitType[Key]} }
 		// type new  = {[Key in keyof {'description': any}]?{[Key]:DescriptionValueObject}:{[Key]:boolean}}
