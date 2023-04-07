@@ -3,5 +3,5 @@ import type { FruitType } from '../graphql/nexus_types/FruitType';
 
 export type FruitConstructArgs = Pick<
 	FruitType,
-	FruitKey.Name | FruitKey.Description | FruitKey.Limit
+	typeof FruitKey.Name | typeof FruitKey.Description | typeof FruitKey.Limit
 >;
