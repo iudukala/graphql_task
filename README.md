@@ -14,4 +14,6 @@
 - another option was to copy the name from the fruit field to the id field and maintain two copies. not a major issue since all objects are immutable and fields are not changed individually.
 
 - the issue with omit is not an issue with the behaviour of omit. it's to do with the behaviour in enums.
-https://github.com/microsoft/TypeScript/issues/40944
+  https://github.com/microsoft/TypeScript/issues/40944
+
+- explain the switch to cons asserted object from enum
