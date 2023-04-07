@@ -1,5 +1,5 @@
-export enum GQLType {
-	Query = 'Query',
+export const GQLType = {
+	Query: 'Query',
 
-	Fruit = 'Fruit',
-}
+	Fruit: 'Fruit',
+} as const;
