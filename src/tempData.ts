@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
 import { FruitKey } from './graphql/constants/enum_fruitKey';
 
-import type { FruitTypeGQL } from './graphql/nexus_types/FruitType';
+import type { FruitTypeGQL } from './graphql/nexus_types/FruitTypeGQLNX';
 
 export const tempDataFruit: Array<FruitTypeGQL> = [
 	{

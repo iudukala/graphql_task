@@ -2,10 +2,10 @@ import { extendType, stringArg, intArg, nonNull } from 'nexus';
 import { GQLType } from '../constants/enum_nexusTypeKey';
 import { AllNexusArgsDefs } from 'nexus/dist/core';
 import { GQLContextType } from '../../types/GQLContextType';
-import { FruitFactory } from '../../Fruit/FruitFactory';
 import { FruitKey } from '../constants/enum_fruitKey';
 
-import type { FruitTypeGQL } from '../nexus_types/FruitType';
+import type { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX';
+
 export type FruitConstructArgs = Omit<FruitTypeGQL, typeof FruitKey.ID | typeof FruitKey.Amount>;
 
 export const createFruitForFruitStorage = extendType({
