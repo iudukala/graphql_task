@@ -1,30 +1,9 @@
-import { booleanArg } from 'nexus';
 import { FruitKey } from '../graphql/constants/enum_fruitKey';
 import { FruitType } from '../graphql/nexus_types/FruitType';
 import { Entity } from './Entity';
-import { xor } from 'lodash';
-
-// import { FruitKey } from '../graphql/constants/enum_fruitKey';
-// import _ from 'lodash';
-
-// type CustomOmit<T> =
-
-// declare module 'TodoPossibleKeys' { export const TITLE = 'title';
-// 	export type TITLE = typeof TITLE;
-// 	export const DESCRIPTION = 'description';
-// 	export type DESCRIPTION = typeof DESCRIPTION;
-// }
-
-export const FK = {
-	Name: 'name',
-	Description: 'description',
-	Limit: 'limit',
-	Amount: 'amount',
-} as const;
 
 /** @template FruitType */
-// class Fruit extends Entity<FruitType &  { 'description': DescriptionValueObject }> {
-class Fruit extends Entity<FruitType> {
+class Fruit extends Entity<Omit<FruitType, typeof FruitKey.Description>> {
 	/**
 	 *
 	 * @param {FruitType} propsFruitGQL fruit data object. probably
@@ -39,10 +18,10 @@ class Fruit extends Entity<FruitType> {
 		// enumlike thing
 		type TodoPossibleKeys = (typeof TodoPossibleKeys)[keyof typeof TodoPossibleKeys];
 
-		x
+		x;
 		// export const DES = 'description';
 		// type Z = Omit<FruitType, 'description'> & { description: DescriptionValueObject };
-		type Z = Omit<FruitType, typeof FK.Description > & { description: DescriptionValueObject };
+		type Z = Omit<FruitType, typeof FK.Description> & { description: DescriptionValueObject };
 
 		const one: Z = {
 			description: new DescriptionValueObject('s'),
