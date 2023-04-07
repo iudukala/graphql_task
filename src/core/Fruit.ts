@@ -2,32 +2,28 @@ import { FruitKey } from '../graphql/constants/enum_fruitKey';
 import { FruitTypeGQL } from '../graphql/nexus_types/FruitType';
 import { Entity } from './Entity';
 
-type FruitInternal = Omit<FruitTypeGQL, typeof FruitKey.Description> & {
+type FruitInternalProps = Omit<FruitTypeGQL, typeof FruitKey.Description> & {
 	[FruitKey.Description]: DescriptionValueObject;
 };
 
-/** @template FruitType */
-class Fruit extends Entity<FruitInternal> {
+/** @template FruitInternal*/
+class Fruit extends Entity<FruitInternalProps> {
 	/**
 	 *
-	 * @param {FruitTypeGQL} propsFruitGQL fruit data object. probably
+	 * @param {FruitInternalProps} propsFruit Fruit data
 	 */
-	private constructor(propsFruitGQL: FruitTypeGQL) {
-		// const descOverridden = Object.assign({}, )
-		const { description, ...noDescription } = propsFruitGQL;
-		const newO: FruitInternal = {
-			amount,
-		};
-
-		super(() => this.props.name, {
-			[FruitKey.Description]: new DescriptionValueObject(propsFruitGQL.description ?? null),
-			...propsFruitGQL,
-		});
-		const p = super.props;
+	private constructor(propsFruit: FruitInternalProps) {
+		super(() => this.props.name, propsFruit);
 	}
 
 	static createFruit(fruitPropsGQL: FruitTypeGQL) {
-
+		return new Fruit({
+			[FruitKey.Description]: new DescriptionValueObject(fruitPropsGQL.description ?? null),
+			[FruitKey.Name]: fruitPropsGQL.name,
+			[FruitKey.Amount]: fruitPropsGQL.amount,
+			[FruitKey.Limit]: fruitPropsGQL.limit,
+			[FruitKey.ID]: fruitPropsGQL.id,
+		});
 	}
 }
 
