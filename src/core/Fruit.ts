@@ -13,8 +13,11 @@ class Fruit extends Entity<FruitInternal> {
 	 * @param {FruitType} propsFruitGQL fruit data object. probably
 	 */
 	constructor(propsFruitGQL: FruitType) {
+		// const descOverridden = Object.assign({}, )
+		const { description, ...noDescription } = propsFruitGQL;
+
 		super(() => this.props.name, {
-			[FruitKey.Description]: new DescriptionValueObject(propsFruitGQL.description),
+			[FruitKey.Description]: new DescriptionValueObject(propsFruitGQL.description ?? null),
 			...propsFruitGQL,
 		});
 		const p = super.props;
@@ -22,15 +25,15 @@ class Fruit extends Entity<FruitInternal> {
 }
 
 abstract class ValueObject<T> {
-	public readonly value: T;
+	public readonly value: T | null;
 
-	constructor(valueArg: T) {
+	constructor(valueArg: T | null) {
 		// making value immutable
 		this.value = Object.freeze(valueArg);
 	}
 }
 class DescriptionValueObject extends ValueObject<string> {
-	constructor(nameArg: string) {
+	constructor(nameArg: string | null) {
 		super(nameArg);
 	}
 }
