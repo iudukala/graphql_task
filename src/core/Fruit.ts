@@ -1,3 +1,5 @@
+import { booleanArg } from 'nexus';
+import { FruitKey } from '../graphql/constants/enum_fruitKey';
 import { FruitType } from '../graphql/nexus_types/FruitType';
 import { Entity } from './Entity';
 
@@ -5,13 +7,32 @@ import { Entity } from './Entity';
 // import _ from 'lodash';
 
 /** @template FruitType */
+// class Fruit extends Entity<FruitType &  { 'description': DescriptionValueObject }> {
 class Fruit extends Entity<FruitType> {
 	/**
 	 *
-	 * @param {FruitType} propsFruitGQL
+	 * @param {FruitType} propsFruitGQL fruit data object. probably
 	 */
 	constructor(propsFruitGQL: FruitType) {
-		super(() => this.props.name, propsFruitGQL);
+		super(() => 'x', propsFruitGQL);
+		// super(propsFruitGQL);
+		// type X = {[Key in keyof {'description': any}]?{[Key]: DescriptionValueObject}: {[Key]: FruitType[Key]} }
+		// type new  = {[Key in keyof {'description': any}]?{[Key]:DescriptionValueObject}:{[Key]:boolean}}
+
+		// type X = {
+		// 	[Key in keyof FruitType]: Key in keyof {'description':any}?string:boolean;
+		// }
+
+		// type MapDbObject<T> = {
+		// [Property in keyof T]: T[Property] extends FruitType ? string : T[Property];
+		// [Property in keyof FruitType]: Property === 'description' ? string : T[Property];
+		// };
+
+		// super(() => this.props.name, {
+		// 	[FruitKey.Description]: new DescriptionValueObject(propsFruitGQL.description),
+		// 	...propsFruitGQL,
+		// });
+		const p = super.props;
 	}
 }
 
@@ -23,7 +44,7 @@ abstract class ValueObject<T> {
 		this.value = Object.freeze(valueArg);
 	}
 }
-class NameValueObject extends ValueObject<string> {
+class DescriptionValueObject extends ValueObject<string> {
 	constructor(nameArg: string) {
 		super(nameArg);
 	}
