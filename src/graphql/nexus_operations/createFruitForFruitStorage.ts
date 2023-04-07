@@ -6,9 +6,6 @@ import { FruitFactory } from '../../Fruit/FruitFactory';
 import { FruitKey } from '../constants/enum_fruitKey';
 
 import type { FruitType } from '../nexus_types/FruitType';
-
-// todo: figure out why omit isn't working [done]
-
 export type FruitConstructArgs = Omit<FruitType, typeof FruitKey.ID | typeof FruitKey.Amount>;
 
 export const createFruitForFruitStorage = extendType({
@@ -32,14 +29,3 @@ export const createFruitForFruitStorage = extendType({
 		});
 	},
 });
-
-// type Y = Omit<temp, FruitKey.Amount> & Partial<Record<FruitKey.Amount, never>>;
-// export type IDOmittedNexusType<T extends GQLType> = Omit<FruitType, typeof GQL_IDKEY>;
-// type FruitArgs = Pick<
-// 	N[GQLType.Fruit],
-// 	FruitKey.Name | FruitKey.Description | FruitKey.Limit
-// >,
-// } as Record< keyof Omit<[GQLType.Fruit], FruitKey.ID | FruitKey.Amount>,
-// 	AllNexusArgsDefs
-// args: Omit<N[GQLType.Fruit], FruitKey.ID | FruitKey.Amount>,
-// args: Omit<IDOmittedNexusType<GQLType.Fruit>, 'amount'>,
