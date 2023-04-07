@@ -1,8 +1,8 @@
 import { FruitKey } from '../graphql/constants/enum_fruitKey';
-import { FruitType } from '../graphql/nexus_types/FruitType';
+import { FruitTypeGQL } from '../graphql/nexus_types/FruitType';
 import { Entity } from './Entity';
 
-type FruitInternal = Omit<FruitType, typeof FruitKey.Description> & {
+type FruitInternal = Omit<FruitTypeGQL, typeof FruitKey.Description> & {
 	[FruitKey.Description]: DescriptionValueObject;
 };
 
@@ -10,9 +10,9 @@ type FruitInternal = Omit<FruitType, typeof FruitKey.Description> & {
 class Fruit extends Entity<FruitInternal> {
 	/**
 	 *
-	 * @param {FruitType} propsFruitGQL fruit data object. probably
+	 * @param {FruitTypeGQL} propsFruitGQL fruit data object. probably
 	 */
-	private constructor(propsFruitGQL: FruitType) {
+	private constructor(propsFruitGQL: FruitTypeGQL) {
 		// const descOverridden = Object.assign({}, )
 		const { description, ...noDescription } = propsFruitGQL;
 		const newO: FruitInternal = {
@@ -26,7 +26,7 @@ class Fruit extends Entity<FruitInternal> {
 		const p = super.props;
 	}
 
-	static createFruit(fruitPropsGQL: FruitType) {
+	static createFruit(fruitPropsGQL: FruitTypeGQL) {
 
 	}
 }

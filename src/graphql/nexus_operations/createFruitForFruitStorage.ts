@@ -5,8 +5,8 @@ import { GQLContextType } from '../../types/GQLContextType';
 import { FruitFactory } from '../../Fruit/FruitFactory';
 import { FruitKey } from '../constants/enum_fruitKey';
 
-import type { FruitType } from '../nexus_types/FruitType';
-export type FruitConstructArgs = Omit<FruitType, typeof FruitKey.ID | typeof FruitKey.Amount>;
+import type { FruitTypeGQL } from '../nexus_types/FruitType';
+export type FruitConstructArgs = Omit<FruitTypeGQL, typeof FruitKey.ID | typeof FruitKey.Amount>;
 
 export const createFruitForFruitStorage = extendType({
 	type: 'Mutation',
@@ -21,7 +21,7 @@ export const createFruitForFruitStorage = extendType({
 			},
 
 			resolve: (_, args: FruitConstructArgs, context: GQLContextType) => {
-				const newFruit: FruitType = FruitFactory(args);
+				const newFruit: FruitTypeGQL = FruitFactory(args);
 
 				context.fruits.push(newFruit);
 				return newFruit;

@@ -1,5 +1,5 @@
-import { FruitType } from '../graphql/nexus_types/FruitType';
+import { FruitTypeGQL } from '../graphql/nexus_types/FruitType';
 
 export type GQLContextType = {
-	fruits: Array<FruitType>;
+	fruits: Array<FruitTypeGQL>;
 };
