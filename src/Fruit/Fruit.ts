@@ -1,7 +1,7 @@
 import { FruitKey } from '../graphql/constants/enum_fruitKey';
 import { FruitTypeGQL } from '../graphql/nexus_types/FruitType';
 import { DescriptionValueObject } from './DescriptionValueObject';
-import { Entity } from './Entity';
+import { Entity } from '../core/Entity';
 
 type FruitInternalProps = Omit<FruitTypeGQL, typeof FruitKey.Description> & {
 	[FruitKey.Description]: DescriptionValueObject;
