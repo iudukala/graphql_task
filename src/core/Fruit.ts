@@ -1,5 +1,6 @@
 import { FruitKey } from '../graphql/constants/enum_fruitKey';
 import { FruitTypeGQL } from '../graphql/nexus_types/FruitType';
+import { DescriptionValueObject } from './DescriptionValueObject';
 import { Entity } from './Entity';
 
 type FruitInternalProps = Omit<FruitTypeGQL, typeof FruitKey.Description> & {
@@ -24,19 +25,5 @@ class Fruit extends Entity<FruitInternalProps> {
 			[FruitKey.Limit]: fruitPropsGQL.limit,
 			[FruitKey.ID]: fruitPropsGQL.id,
 		});
-	}
-}
-
-abstract class ValueObject<T> {
-	public readonly value: T | null;
-
-	constructor(valueArg: T | null) {
-		// making value immutable
-		this.value = Object.freeze(valueArg);
-	}
-}
-class DescriptionValueObject extends ValueObject<string> {
-	constructor(nameArg: string | null) {
-		super(nameArg);
 	}
 }
