@@ -11,26 +11,41 @@ import { randomUUID } from 'crypto';
 class Fruit extends Entity<FruitInternalProps> {
 	/**
 	 *
+	 * @param {string} identifier unique id
 	 * @param {FruitInternalProps} propsFruit Fruit data
 	 */
-	private constructor(propsFruit: FruitInternalProps) {
-		super(() => this.props.name, propsFruit);
+	private constructor(identifier: string, propsFruit: FruitInternalProps) {
+		// const { [FruitKey.ID]: _discard, ...withoutID } = propsFruit;
+		super(identifier, propsFruit);
 	}
 
 	/**
 	 *
-	 * @param {FruitTypeGQL} fruitPropsGQL object containing data required for building
+	 * @param {FruitTypeGQL} fruitProps object containing data required for building
 	 * @returns {Fruit} a new immutable Fruit object
 	 */
-	static createFruit(fruitPropsGQL: FruitConstructArgs) {
+	static createNewFruit(fruitProps: FruitConstructArgs): Fruit {
 		return new Fruit(
+			randomUUID(),
 			Object.freeze({
-				[FruitKey.ID]: randomUUID(),
-				[FruitKey.Name]: fruitPropsGQL.name,
-				[FruitKey.Description]: new FruitDescriptionVO(fruitPropsGQL.description ?? null),
-				[FruitKey.Limit]: fruitPropsGQL.limit,
+				[FruitKey.Name]: fruitProps.name,
+				[FruitKey.Description]: new FruitDescriptionVO(fruitProps.description ?? null),
+				[FruitKey.Limit]: fruitProps.limit,
 				[FruitKey.Amount]: 0,
 			}),
 		);
+	}
+
+	static reconstituteFruit(fruitPropsGQL: FruitTypeGQLgit s): Fruit {
+		return new Fruit(
+			randomUUID(),
+			Object.freeze({
+				[FruitKey.Name]: fruitProps.name,
+				[FruitKey.Description]: new FruitDescriptionVO(fruitProps.description ?? null),
+				[FruitKey.Limit]: fruitProps.limit,
+				[FruitKey.Amount]: 0,
+			}),
+		);
+
 	}
 }
