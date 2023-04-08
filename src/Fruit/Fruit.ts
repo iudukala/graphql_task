@@ -20,32 +20,28 @@ class Fruit extends Entity<FruitInternalProps> {
 	}
 
 	/**
+	 * factory function to build new fruit objects. using the static reconstitute function to avoid duplicating construction logic
 	 *
 	 * @param {FruitTypeGQL} fruitProps object containing data required for building
 	 * @returns {Fruit} a new immutable Fruit object
 	 */
-	static createNewFruit(fruitProps: FruitConstructArgs): Fruit {
-		return new Fruit(
-			randomUUID(),
-			Object.freeze({
-				[FruitKey.Name]: fruitProps.name,
-				[FruitKey.Description]: new FruitDescriptionVO(fruitProps.description ?? null),
-				[FruitKey.Limit]: fruitProps.limit,
-				[FruitKey.Amount]: 0,
-			}),
-		);
+	static createNewFruit(fruitProps: FruitConstructArgs): Readonly<Fruit> {
+		return Fruit.reconstituteFruit({
+			[FruitKey.ID]: randomUUID(),
+			[FruitKey.Amount]: 0,
+
+			...fruitProps,
+		});
 	}
 
-	static reconstituteFruit(fruitPropsGQL: FruitTypeGQLgit s): Fruit {
-		return new Fruit(
-			randomUUID(),
-			Object.freeze({
+	static reconstituteFruit(fruitProps: FruitTypeGQL): Readonly<Fruit> {
+		return Object.freeze(
+			new Fruit(fruitProps.id, {
 				[FruitKey.Name]: fruitProps.name,
 				[FruitKey.Description]: new FruitDescriptionVO(fruitProps.description ?? null),
 				[FruitKey.Limit]: fruitProps.limit,
-				[FruitKey.Amount]: 0,
+				[FruitKey.Amount]: fruitProps.amount,
 			}),
 		);
-
 	}
 }
