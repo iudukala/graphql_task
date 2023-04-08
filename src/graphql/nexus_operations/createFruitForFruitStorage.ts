@@ -7,7 +7,10 @@ import type { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX';
 import type { FruitConstructArgs } from '../../Fruit/types';
 import { obsolete_FruitFactory } from '../../Fruit/FruitFactory';
 
-
+/**
+ * mutation for adding a new fruit.
+ * structure: createFruitForFruitStorage(name: string, description: string, limit: int)
+ */
 export const createFruitForFruitStorage = extendType({
 	type: 'Mutation',
 	definition(t) {

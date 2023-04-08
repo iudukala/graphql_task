@@ -4,7 +4,10 @@ import type { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX';
 import type { FruitDescriptionVO } from './FruitDescriptionVO';
 
 /**
- * type object accepted by the fruit factory function. amount is zero when built and is therefor not necessary to be passed to the constructor
+ * type of an object containing the data required to construct a new fruit object. used by the fruit factory function and is also the type of the parameters passed through the mutation to add a new fruit.
+ *
+ * amount is zero when built and is therefor not necessary to be passed to the constructor
+ *
  */
 export type FruitConstructArgs = Omit<FruitTypeGQL, typeof FruitKey.ID | typeof FruitKey.Amount>;
 

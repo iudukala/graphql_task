@@ -3,8 +3,9 @@ import { FruitDescriptionVO } from './FruitDescriptionVO';
 import { Entity } from '../core/Entity';
 
 import type { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX';
-import type { FruitInternalProps } from './types';
-
+import type { FruitConstructArgs, FruitInternalProps } from './types';
+import { isCryptoKey } from 'util/types';
+import { randomUUID } from 'crypto';
 
 /** @template FruitInternal, FruitTypeGQL */
 class Fruit extends Entity<FruitInternalProps> {
@@ -18,17 +19,17 @@ class Fruit extends Entity<FruitInternalProps> {
 
 	/**
 	 *
-	 * @param {FruitTypeGQL} fruitPropsGQL object containing the necessary data
+	 * @param {FruitTypeGQL} fruitPropsGQL object containing data required for building
 	 * @returns {Fruit} a new immutable Fruit object
 	 */
-	static createFruit(fruitPropsGQL: FruitTypeGQL) {
+	static createFruit(fruitPropsGQL: FruitConstructArgs) {
 		return new Fruit(
 			Object.freeze({
-				[FruitKey.Description]: new FruitDescriptionVO(fruitPropsGQL.description ?? null),
+				[FruitKey.ID]: randomUUID(),
 				[FruitKey.Name]: fruitPropsGQL.name,
-				[FruitKey.Amount]: fruitPropsGQL.amount,
+				[FruitKey.Description]: new FruitDescriptionVO(fruitPropsGQL.description ?? null),
 				[FruitKey.Limit]: fruitPropsGQL.limit,
-				[FruitKey.ID]: fruitPropsGQL.id,
+				[FruitKey.Amount]: 0,
 			}),
 		);
 	}
