@@ -4,7 +4,7 @@
 type Fruit {
 	amount: Int!
 	description: String
-	id: String!
+	id: ID!
 	limit: Int!
 	name: String!
 }

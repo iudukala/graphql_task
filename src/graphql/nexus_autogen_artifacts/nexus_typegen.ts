@@ -26,7 +26,7 @@ export interface NexusGenObjects {
 		// root type
 		amount: number; // Int!
 		description?: string | null; // String
-		id: string; // String!
+		id: string; // ID!
 		limit: number; // Int!
 		name: string; // String!
 	};
@@ -47,7 +47,7 @@ export interface NexusGenFieldTypes {
 		// field return type
 		amount: number; // Int!
 		description: string | null; // String
-		id: string; // String!
+		id: string; // ID!
 		limit: number; // Int!
 		name: string; // String!
 	};
@@ -66,7 +66,7 @@ export interface NexusGenFieldTypeNames {
 		// field return type name
 		amount: 'Int';
 		description: 'String';
-		id: 'String';
+		id: 'ID';
 		limit: 'Int';
 		name: 'String';
 	};
