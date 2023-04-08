@@ -1,15 +1,15 @@
 /** @template T */
 export abstract class Entity<T> {
-	protected readonly _id: () => string;
+	protected readonly id: string;
 	protected props: T;
 
 	/**
 	 *
-	 * @param {() => string} id a function that returns the identifier of the entity. a function is used instead of a constant value to avoid duplicating data in instances where the identifier may be a field that's inside the var props
-	 * @param {T} propsArg object containing the data pertaining to the entity
+	 * @param {string} idArg unique identifier of the entity.
+	 * @param {T} propsArg object containing the entity's data
 	 */
-	constructor(id: () => string, propsArg: T) {
-		this._id = id;
+	constructor(idArg: string, propsArg: T) {
+		this.id = idArg;
 		this.props = Object.freeze(propsArg);
 	}
 }
