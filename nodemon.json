@@ -2,5 +2,5 @@
 	"watch": ["src"],
 	"ext": ".ts,.js",
 	"ignore": [],
-	"exec": "npx ts-node --transpile-only ./src/index.ts"
+	"exec": "npx ts-node --esm --transpile-only ./src/index.ts"
 }
