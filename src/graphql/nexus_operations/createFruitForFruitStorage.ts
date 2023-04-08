@@ -3,11 +3,10 @@ import { GQLType } from '../constants/enum_nexusTypeKey';
 import { AllNexusArgsDefs } from 'nexus/dist/core';
 import { GQLContextType } from '../../types/GQLContextType';
 
-import type { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX';
 import type { FruitConstructArgs } from '../../Fruit/types';
-import { obsolete_FruitFactory } from '../../Fruit/FruitFactory';
 import { Fruit } from '../../Fruit/Fruit';
 import { FruitKey } from '../constants/enum_fruitKey';
+import { translateFruit } from '../../Fruit/translateFruit';
 
 /**
  * mutation for adding a new fruit.
@@ -27,15 +26,9 @@ export const createFruitForFruitStorage = extendType({
 
 			resolve: (_, args: FruitConstructArgs, context: GQLContextType) => {
 				const newFruit: Fruit = Fruit.createNewFruit(args);
-				newFruit.props.name = 'x';
 
-				const translated = {
-					[FruitKey.ID]: newFruit.id,
-					[FruitKey.Name]: newFruit.props.name,
-					[FruitKey.Description]: newFruit.props.description.value,
-					[FruitKey.Limit]: newFruit.props.limit,
-					[FruitKey.Amount]: newFruit.props.amount,
-				};
+				// todo: persistence logic
+				const translated = translateFruit(newFruit);
 
 				context.fruits.push(translated);
 				return translated;
