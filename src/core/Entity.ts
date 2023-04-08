@@ -1,7 +1,7 @@
 /** @template T */
 export abstract class Entity<T> {
-	protected readonly id: string;
-	protected props: T;
+	readonly id: string;
+	readonly props: T;
 
 	/**
 	 *
@@ -10,6 +10,8 @@ export abstract class Entity<T> {
 	 */
 	constructor(idArg: string, propsArg: T) {
 		this.id = idArg;
+
+		// todo: try to make object immutable properly
 		this.props = Object.freeze(propsArg);
 	}
 }

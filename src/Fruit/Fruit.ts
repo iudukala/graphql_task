@@ -1,11 +1,10 @@
 import { FruitKey } from '../graphql/constants/enum_fruitKey';
 import { FruitDescriptionVO } from './FruitDescriptionVO';
 import { Entity } from '../core/Entity';
+import { randomUUID } from 'crypto';
 
 import type { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX';
 import type { FruitConstructArgs, FruitInternalProps } from './types';
-import { isCryptoKey } from 'util/types';
-import { randomUUID } from 'crypto';
 
 /** @template FruitInternal, FruitTypeGQL */
 export class Fruit extends Entity<FruitInternalProps> {
@@ -15,8 +14,11 @@ export class Fruit extends Entity<FruitInternalProps> {
 	 * @param {FruitInternalProps} propsFruit Fruit data
 	 */
 	private constructor(identifier: string, propsFruit: FruitInternalProps) {
-		// const { [FruitKey.ID]: _discard, ...withoutID } = propsFruit;
 		super(identifier, propsFruit);
+
+		Object.freeze(this.props);
+		Object.freeze(this);
+		this.props.amount = 22;
 	}
 
 	/**
@@ -25,7 +27,7 @@ export class Fruit extends Entity<FruitInternalProps> {
 	 * @param {FruitConstructArgs} fruitProps data about new fruit object
 	 * @returns {Fruit} a new immutable Fruit object
 	 */
-	static createNewFruit(fruitProps: FruitConstructArgs): Readonly<Fruit> {
+	static createNewFruit(fruitProps: FruitConstructArgs): Fruit {
 		return Fruit.reconstituteFruit({
 			[FruitKey.ID]: randomUUID(),
 			[FruitKey.Amount]: 0,
@@ -41,14 +43,12 @@ export class Fruit extends Entity<FruitInternalProps> {
 	 * @returns
 	 */
 
-	static reconstituteFruit(fruitProps: FruitTypeGQL): Readonly<Fruit> {
-		return Object.freeze(
-			new Fruit(fruitProps.id, {
-				[FruitKey.Name]: fruitProps.name,
-				[FruitKey.Description]: new FruitDescriptionVO(fruitProps.description ?? null),
-				[FruitKey.Limit]: fruitProps.limit,
-				[FruitKey.Amount]: fruitProps.amount,
-			}),
-		);
+	static reconstituteFruit(fruitProps: FruitTypeGQL): Fruit {
+		return new Fruit(fruitProps.id, {
+			[FruitKey.Name]: fruitProps.name,
+			[FruitKey.Description]: new FruitDescriptionVO(fruitProps.description ?? null),
+			[FruitKey.Limit]: fruitProps.limit,
+			[FruitKey.Amount]: fruitProps.amount,
+		});
 	}
 }
