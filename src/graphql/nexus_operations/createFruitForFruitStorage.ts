@@ -6,6 +6,7 @@ import { GQLContextType } from '../../types/GQLContextType';
 import type { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX';
 import type { FruitConstructArgs } from '../../Fruit/types';
 import { obsolete_FruitFactory } from '../../Fruit/FruitFactory';
+import { Fruit } from '../../Fruit/Fruit';
 
 /**
  * mutation for adding a new fruit.
@@ -24,7 +25,7 @@ export const createFruitForFruitStorage = extendType({
 			},
 
 			resolve: (_, args: FruitConstructArgs, context: GQLContextType) => {
-				const newFruit: FruitTypeGQL = obsolete_FruitFactory(args);
+				const newFruit: Fruit = Fruit.createNewFruit(args);
 
 				context.fruits.push(newFruit);
 				return newFruit;

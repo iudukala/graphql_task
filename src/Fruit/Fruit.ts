@@ -8,7 +8,7 @@ import { isCryptoKey } from 'util/types';
 import { randomUUID } from 'crypto';
 
 /** @template FruitInternal, FruitTypeGQL */
-class Fruit extends Entity<FruitInternalProps> {
+export class Fruit extends Entity<FruitInternalProps> {
 	/**
 	 *
 	 * @param {string} identifier unique id
@@ -22,7 +22,7 @@ class Fruit extends Entity<FruitInternalProps> {
 	/**
 	 * factory function to build new fruit objects. using the static reconstitute function to avoid duplicating construction logic
 	 *
-	 * @param {FruitTypeGQL} fruitProps object containing data required for building
+	 * @param {FruitConstructArgs} fruitProps data about new fruit object
 	 * @returns {Fruit} a new immutable Fruit object
 	 */
 	static createNewFruit(fruitProps: FruitConstructArgs): Readonly<Fruit> {
@@ -33,6 +33,13 @@ class Fruit extends Entity<FruitInternalProps> {
 			...fruitProps,
 		});
 	}
+
+	/**
+	 * reconstitutes an existing fruit object, usually fetched through a persistance layer
+	 *
+	 * @param {FruitTypeGQL} fruitProps fruit object data
+	 * @returns
+	 */
 
 	static reconstituteFruit(fruitProps: FruitTypeGQL): Readonly<Fruit> {
 		return Object.freeze(
