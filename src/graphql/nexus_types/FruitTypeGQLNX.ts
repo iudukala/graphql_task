@@ -1,4 +1,4 @@
-import { GQLType } from '../constants/enum_nexusTypeKey';
-import { NexusGenObjects } from '../nexus_autogen_artifacts/nexus_typegen';
+import { GQLType } from '../constants/enum_nexusTypeKey.js';
+import { NexusGenObjects } from '../nexus_autogen_artifacts/nexus_typegen.js';
 
 export type FruitTypeGQL = NexusGenObjects[typeof GQLType.Fruit];

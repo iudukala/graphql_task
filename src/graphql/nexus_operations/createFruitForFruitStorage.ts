@@ -1,11 +1,11 @@
 import { extendType, stringArg, intArg, nonNull } from 'nexus';
-import { GQLType } from '../constants/enum_nexusTypeKey';
-import { AllNexusArgsDefs } from 'nexus/dist/core';
-import { GQLContextType } from '../../types/GQLContextType';
+import { GQLType } from '../constants/enum_nexusTypeKey.js';
+import { AllNexusArgsDefs } from 'nexus/dist/core.js';
+import { GQLContextType } from '../../types/GQLContextType.js';
 
 import type { FruitConstructArgs } from '../../Fruit/types.js';
-import { Fruit } from '../../Fruit/Fruit';
-import { translateFruit } from '../../Fruit/translateFruit';
+import { Fruit } from '../../Fruit/Fruit.js';
+import { translateFruit } from '../../Fruit/translateFruit.js';
 
 /**
  * mutation for adding a new fruit.

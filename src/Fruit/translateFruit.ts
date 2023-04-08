@@ -1,6 +1,6 @@
-import { FruitKey } from '../graphql/constants/enum_fruitKey';
-import { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX';
-import { Fruit } from './Fruit';
+import { FruitKey } from '../graphql/constants/enum_fruitKey.js';
+import { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX.js';
+import { Fruit } from './Fruit.js';
 
 /**
  *

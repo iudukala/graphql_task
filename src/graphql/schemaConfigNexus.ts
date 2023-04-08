@@ -2,6 +2,9 @@ import { join } from 'path';
 import { makeSchema } from 'nexus';
 import * as nexusTypes from './index.js';
 
+import { fileURLToPath } from 'url';
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
 const NEXUS_AUTOGEN_DIR_NAME = 'nexus_autogen_artifacts';
 
 export const nexusSchema = makeSchema({
