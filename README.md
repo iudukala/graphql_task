@@ -3,7 +3,7 @@
 - nexus requires --transpile-only to remove type checking only leaves ide type checks.
 
 - found an issue where a typescript const enum wasn't being accepted by the omit utility function. worked as expected when using pick<> to select the fields required but didn't when trying to use it to exclude the fields to extract the required ones. (turned out to be an issue with enums. const enums are static enough to be inlined at compilation so i don't see why they're insufficient for type construction. switched to const asserted object
-)
+  )
 
 - [no] the name of a fruit is required to be unique, ensured through a domain service. no need for a separate id field since name can be used for identification. however, using the name as the ID introduces two issues:
 
@@ -21,3 +21,5 @@
   https://github.com/microsoft/TypeScript/issues/40944
 
 - switched to cons asserted object from enum. allows for a single source of truth and additional compiler checks. also avoids issues related to unexpected behaviours from enums
+
+- i commit a lot when i'm building something while learning
