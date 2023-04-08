@@ -9,14 +9,16 @@ const NEXUS_AUTOGEN_DIR_NAME = 'nexus_autogen_artifacts';
 
 export const nexusSchema = makeSchema({
 	types: nexusTypes,
+
 	outputs: {
 		typegen: join(__dirname, NEXUS_AUTOGEN_DIR_NAME, 'nexus_typegen.ts'),
 		schema: join(__dirname, NEXUS_AUTOGEN_DIR_NAME, 'schema.graphql'),
 	},
 	contextType: {
 		module: join(__dirname, 'contextGQL.ts'),
-		export: 'context',
+		export: 'contextGQL',
 	},
+	shouldGenerateArtifacts: false,
 
 	// prettier config to apply to output artifacts
 	prettierConfig: join(__dirname, '../../.prettierrc'),
