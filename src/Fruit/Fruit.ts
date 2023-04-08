@@ -3,8 +3,8 @@ import { FruitDescriptionVO } from './FruitDescriptionVO';
 import { Entity } from '../core/Entity';
 import { randomUUID } from 'crypto';
 
-import type { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX';
-import type { FruitConstructArgs, FruitInternalProps } from './types';
+import type { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX.js';
+import type { FruitConstructArgs, FruitInternalProps } from './types.js';
 
 /** @template FruitInternal, FruitTypeGQL */
 export class Fruit extends Entity<FruitInternalProps> {

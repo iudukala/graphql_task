@@ -1,7 +1,7 @@
 import { FruitKey } from '../graphql/constants/enum_fruitKey';
 
-import type { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX';
-import type { FruitDescriptionVO } from './FruitDescriptionVO';
+import type { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX.js';
+import type { FruitDescriptionVO } from './FruitDescriptionVO.js';
 
 /**
  * type of an object containing the data required to construct a new fruit object. used by the fruit factory function and is also the type of the parameters passed through the mutation to add a new fruit.

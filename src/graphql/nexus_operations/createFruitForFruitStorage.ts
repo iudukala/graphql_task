@@ -3,7 +3,7 @@ import { GQLType } from '../constants/enum_nexusTypeKey';
 import { AllNexusArgsDefs } from 'nexus/dist/core';
 import { GQLContextType } from '../../types/GQLContextType';
 
-import type { FruitConstructArgs } from '../../Fruit/types';
+import type { FruitConstructArgs } from '../../Fruit/types.js';
 import { Fruit } from '../../Fruit/Fruit';
 import { translateFruit } from '../../Fruit/translateFruit';
 
