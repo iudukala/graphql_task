@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { makeSchema } from 'nexus';
-import * as nexusTypes from '.';
+import * as nexusTypes from './index.js';
 
 const NEXUS_AUTOGEN_DIR_NAME = 'nexus_autogen_artifacts';
 

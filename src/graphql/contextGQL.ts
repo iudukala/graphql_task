@@ -1,5 +1,5 @@
-import { GQLContextType } from '../types/GQLContextType';
-import { tempDataFruit } from '../tempData';
+import { GQLContextType } from '../types/GQLContextType.js';
+import { tempDataFruit } from '../tempData.js';
 
 export const contextGQL: GQLContextType = {
 	fruits: tempDataFruit,

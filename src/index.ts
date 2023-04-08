@@ -1,8 +1,8 @@
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 
-import { nexusSchema } from './graphql/schemaConfigNexus';
-import { contextGQL } from './graphql/contextGQL';
+import { nexusSchema } from './graphql/schemaConfigNexus.js';
+import { contextGQL } from './graphql/contextGQL.js';
 
 express()
 	.use(
