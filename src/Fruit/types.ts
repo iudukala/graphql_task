@@ -12,8 +12,11 @@ import type { FruitDescriptionVO } from './FruitDescriptionVO';
 export type FruitConstructArgs = Omit<FruitTypeGQL, typeof FruitKey.ID | typeof FruitKey.Amount>;
 
 /**
- * constructing a mapped type based on the graphql Fruit object emitted by nexus where the string field 'description' is replaced with a value object to enforce constraints on it
+ * constructing a mapped type based on the graphql Fruit object emitted by nexus where the id field is removed and the field 'description' is replaced with a value object to allow constraints to be enforced
  */
-export type FruitInternalProps = Omit<FruitTypeGQL, typeof FruitKey.Description> & {
+export type FruitInternalProps = Omit<
+	FruitTypeGQL,
+	typeof FruitKey.Description | typeof FruitKey.ID
+> & {
 	[FruitKey.Description]: FruitDescriptionVO;
 };
