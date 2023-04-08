@@ -22,4 +22,4 @@
 
 - switched to cons asserted object from enum. allows for a single source of truth and additional compiler checks. also avoids issues related to unexpected behaviours from enums
 
-- i commit a lot when i'm building something while learning
+- i commit a lot when i'm building something while learning. and to avoid having dozens of files changed across each commit to make diffing between commits easier to debug something
