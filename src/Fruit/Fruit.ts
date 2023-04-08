@@ -15,10 +15,6 @@ export class Fruit extends Entity<FruitInternalProps> {
 	 */
 	private constructor(identifier: string, propsFruit: FruitInternalProps) {
 		super(identifier, propsFruit);
-
-		Object.freeze(this.props);
-		Object.freeze(this);
-		this.props.amount = 22;
 	}
 
 	/**

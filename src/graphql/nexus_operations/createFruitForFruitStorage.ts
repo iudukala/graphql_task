@@ -5,7 +5,6 @@ import { GQLContextType } from '../../types/GQLContextType';
 
 import type { FruitConstructArgs } from '../../Fruit/types';
 import { Fruit } from '../../Fruit/Fruit';
-import { FruitKey } from '../constants/enum_fruitKey';
 import { translateFruit } from '../../Fruit/translateFruit';
 
 /**
