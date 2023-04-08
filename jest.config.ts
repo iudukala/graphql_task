@@ -1,29 +1,33 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 import type { Config } from 'jest';
+import type { JestConfigWithTsJest } from 'ts-jest';
 
-const config: Config = {
+const config: JestConfigWithTsJest = {
 	verbose: true,
 	rootDir: './src/',
-	roots: ['<rootDir>'],
-	// modulePaths: ['<rootDir>'],
-	// moduleDirectories: ['node_modules'],
-	moduleDirectories: ["node_modules","<module-directory>"],
+	moduleDirectories: ['node_modules'],
 
-	// modulePaths: ['<rootDir>/src/'],
-	// clearMocks: true,
-	preset: 'ts-jest',
-	// preset: 'ts-jest/presets/default-esm',
+	clearMocks: true,
+	preset: 'ts-jest/presets/default-esm',
 
-	// testEnvironment: 'node',
+	testEnvironment: 'node',
 	testMatch: ['**/__tests__/**/*.+(ts|tsx|js)', '**/?(*.)+(spec|test).+(ts|tsx|js)'],
-	transform: {
-		'^.+\\.(ts|tsx)$': 'ts-jest',
-	},
 
-	// transform: {
-	// 	'^.+\\.ts?$': 'ts-jest',
-	// },
-	// transformIgnorePatterns: ['node_modules/'],
+	// handling esm
+	moduleNameMapper: {
+		'^(\\.{1,2}/.*)\\.js$': '$1',
+	},
+	transform: {
+		'^.+\\.(ts|tsx)$': [
+			'ts-jest',
+			{
+				useESM: true,
+			},
+		],
+	},
+	extensionsToTreatAsEsm: ['.ts'],
+
+	transformIgnorePatterns: ['node_modules/'],
 };
 
 export default config;
