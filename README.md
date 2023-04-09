@@ -25,3 +25,6 @@
 - i commit a lot when i'm building something while learning. and to avoid having dozens of files changed across each commit to make diffing between commits easier to debug something
 
 - nexus js doesn't seem to support esm. when package.json has type: "module" and
+
+- insufficient esm support from jest. got esm modules to load with code transforms from ts-jest plugin but jest still fails when attempting to access import.meta global
+  "error TS1343: The 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', or 'nodenext'" when tsconfig has 'module' set to 'es2020'. not an issue with tsconfig visibility to jest since it respects other flags set in it.
