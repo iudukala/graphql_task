@@ -10,6 +10,7 @@ const config: JestConfigWithTsJest = {
 	preset: 'ts-jest/presets/default-esm',
 
 	testEnvironment: 'node',
+	testEnvironmentOptions: { module: 'esnext' },
 	testMatch: ['**/__tests__/**/*.+(ts|tsx|js)', '**/?(*.)+(spec|test).+(ts|tsx|js)'],
 
 	// handling esm
@@ -21,6 +22,9 @@ const config: JestConfigWithTsJest = {
 			'ts-jest',
 			{
 				useESM: true,
+				tsconfig:{
+					module: 'es2020'
+				}
 			},
 		],
 	},
