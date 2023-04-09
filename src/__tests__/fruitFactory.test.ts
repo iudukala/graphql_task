@@ -15,6 +15,7 @@ test('creates a new Fruit and checks translatio', async () => {
 		50,
 	);
 
+	// const data =
 	await graphql({
 		schema: nexusSchema,
 		source: `query{
@@ -27,7 +28,10 @@ test('creates a new Fruit and checks translatio', async () => {
 		contextValue: contextGQL,
 	}).then(data => {
 		console.log(JSON.stringify(data));
+		// expect(data.data?.fruits[]);
 	});
+
+	// expect(data).toBe;
 });
 
 test('basic ', () => {

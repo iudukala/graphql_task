@@ -1,4 +1,4 @@
-import { FruitKey } from '../graphql/constants/enum_fruitKey.js';
+import { FruitKey } from './enum_fruitKey.js';
 import { FruitDescriptionVO } from './FruitDescriptionVO.js';
 import { Entity } from '../core/Entity.js';
 import { randomUUID } from 'crypto';
