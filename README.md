@@ -18,8 +18,10 @@
 - another option was to copy the name from the fruit field to the id field and maintain two copies. not a major issue since all objects are immutable and fields are not changed individually.
 
 - the issue with omit is not an issue with the behaviour of omit. it's to do with the behaviour in enums.
-  https://github.com/microsoft/TypeScript/issues/40944
+  <https://github.com/microsoft/TypeScript/issues/40944>
 
 - switched to cons asserted object from enum. allows for a single source of truth and additional compiler checks. also avoids issues related to unexpected behaviours from enums
 
 - i commit a lot when i'm building something while learning. and to avoid having dozens of files changed across each commit to make diffing between commits easier to debug something
+
+- nexus js doesn't seem to support esm. when package.json has type: "module" and
