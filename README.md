@@ -28,3 +28,25 @@
 
 - insufficient esm support from jest. got esm modules to load with code transforms from ts-jest plugin but jest still fails when attempting to access import.meta global
   "error TS1343: The 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', or 'nodenext'" when tsconfig has 'module' set to 'es2020'. not an issue with tsconfig visibility to jest since it respects other flags set in it.
+
+# progress
+
+- [ ] All code written should follow Domain Driven Design, have a look at (<https://github.com/stemmlerjs/ddd-forum>) for reference
+
+- [ ] When the fruit is created, updated, or deleted; a domain event should be emitted.
+
+- [ ] The description of a fruit can't be beyond 30 letters, have a look at Value Objects
+
+- [ ] The name of a fruit should be unique, have a look at using a Domain Service
+
+- [x] The creation of a fruit should be done through a Factory
+
+- [ ] The fruit should be retrieved through a Repository
+
+- [ ] The fruit should be converted from a database object to a domain object and viceversa through mappers
+
+- [ ] Use Mongoose for your ORM
+
+- [x] Use Jest for your testing
+
+- [x] Use <https://nexusjs.org/> to automatically generate your GraphQL schemas
