@@ -3,7 +3,7 @@
  * Do not make changes to this file directly
  */
 
-import type { contextGQL } from '../common/contextGQL.js';
+import type { contextGQL } from './../common/contextGQL';
 
 declare global {
 	interface NexusGen extends NexusGenTypes {}
@@ -54,6 +54,7 @@ export interface NexusGenFieldTypes {
 	Mutation: {
 		// field return type
 		createFruitForFruitStorage: NexusGenRootTypes['Fruit']; // Fruit!
+		storeFruitToFruitStorage: NexusGenRootTypes['Fruit']; // Fruit!
 	};
 	Query: {
 		// field return type
@@ -73,6 +74,7 @@ export interface NexusGenFieldTypeNames {
 	Mutation: {
 		// field return type name
 		createFruitForFruitStorage: 'Fruit';
+		storeFruitToFruitStorage: 'Fruit';
 	};
 	Query: {
 		// field return type name
@@ -86,6 +88,11 @@ export interface NexusGenArgTypes {
 			// args
 			description: string; // String!
 			limit: number; // Int!
+			name: string; // String!
+		};
+		storeFruitToFruitStorage: {
+			// args
+			amount: number; // Int!
 			name: string; // String!
 		};
 	};
