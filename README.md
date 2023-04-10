@@ -35,7 +35,7 @@
 
 - [ ] When the fruit is created, updated, or deleted; a domain event should be emitted.
 
-- [ ] The description of a fruit can't be beyond 30 letters, have a look at Value Objects
+- [x] The description of a fruit can't be beyond 30 letters
 
 - [ ] The name of a fruit should be unique, have a look at using a Domain Service
 
