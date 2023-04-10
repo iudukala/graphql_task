@@ -42,7 +42,7 @@ export class Fruit extends Entity<FruitInternalProps> {
 	static reconstituteFruit(fruitProps: FruitTypeGQL): Fruit {
 		return new Fruit(fruitProps.id, {
 			[FruitKey.Name]: fruitProps.name,
-			[FruitKey.Description]: new FruitDescriptionVO(fruitProps.description ?? null),
+			[FruitKey.Description]: FruitDescriptionVO.create(fruitProps.description),
 			[FruitKey.Limit]: fruitProps.limit,
 			[FruitKey.Amount]: fruitProps.amount,
 		});

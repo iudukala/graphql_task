@@ -6,6 +6,7 @@ import { GQLContextType } from '../common/type_GQLContextType.js';
 import type { FruitConstructArgs } from '../../Fruit/types.js';
 import { Fruit } from '../../Fruit/Fruit.js';
 import { translateFruit } from '../../Fruit/translateFruit.js';
+import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 
 /**
  * mutation for adding a new fruit.
@@ -18,9 +19,9 @@ export const createFruitForFruitStorage = extendType({
 			type: GQLType.Fruit,
 
 			args: <Record<keyof FruitConstructArgs, AllNexusArgsDefs>>{
-				name: nonNull(stringArg()),
-				description: nonNull(stringArg()),
-				limit: nonNull(intArg()),
+				[FruitKey.Name]: nonNull(stringArg()),
+				[FruitKey.Description]: nonNull(stringArg()),
+				[FruitKey.Limit]: nonNull(intArg()),
 			},
 
 			resolve: (_, args: FruitConstructArgs, context: GQLContextType) => {
