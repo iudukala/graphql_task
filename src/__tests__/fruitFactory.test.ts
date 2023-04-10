@@ -1,7 +1,7 @@
 import { graphql } from 'graphql';
 import { Fruit } from '../Fruit/Fruit.js';
 import { nexusSchema } from '../graphql/schemaConfigNexus.js';
-import { contextGQL } from '../graphql/contextGQL.js';
+import { contextGQL } from '../graphql/common/contextGQL.js';
 
 /**
  * replacing the import.meta access call since jest has effectively no esm support

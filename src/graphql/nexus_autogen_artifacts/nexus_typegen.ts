@@ -3,7 +3,7 @@
  * Do not make changes to this file directly
  */
 
-import type { contextGQL } from './../contextGQL.js';
+import type { contextGQL } from '../common/contextGQL.js';
 
 declare global {
 	interface NexusGen extends NexusGenTypes {}
