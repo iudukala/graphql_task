@@ -8,6 +8,8 @@ import { Fruit } from '../../Fruit/Fruit.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { tempDataFruit } from '../../tempData.js';
 import { fruitSchemaMapper } from '../../Fruit/fruitSchemaMapper.js';
+import mongoose from 'mongoose';
+import { DB_URI } from '../../index.js';
 
 /**
  * mutation for adding a new fruit.
@@ -26,29 +28,22 @@ export const createFruitForFruitStorage = extendType({
 			},
 
 			resolve: async (_, args: FruitConstructArgs, context: GQLContextType) => {
-				// const newFruit: Fruit = [Fruit.createNewFruit(args)].map(fruitSchemaMapper)[0].save()
-				// const newFruit: Fruit = Fruit.createNewFruit(args);
-
-				// todo: persistence logic
-				// const translated = translateFruit(newFruit);
-
-				// context.fruits.push(translated);
-				// return translated;
-
-				const newFruit = await fruitSchemaMapper(Fruit.createNewFruit(args))
-					.save()
-					.catch(error => {
-						throw new Error('database commit failed: ' + error);
-					});
-
-				// .then(response => {
-				// 	console.log(response)
-				// 	// return response;
-				// });
-				return newFruit;
-
-				// return tempDataFruit[1];
+				return await commitToPersistence(Fruit.createNewFruit(args));
 			},
 		});
 	},
 });
+
+async function commitToPersistence(fruit: Fruit) {
+	mongoose.connect(DB_URI);
+
+	const newFruit = fruitSchemaMapper(fruit)
+		.save()
+		.catch(error => {
+			throw new Error('database commit failed: ' + error);
+		});
+
+	mongoose.connection.close();
+
+	return newFruit;
+}
