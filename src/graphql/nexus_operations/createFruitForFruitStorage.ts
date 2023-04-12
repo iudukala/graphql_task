@@ -5,8 +5,8 @@ import { GQLContextType } from '../common/type_GQLContextType.js';
 
 import type { FruitConstructArgs } from '../../Fruit/types.js';
 import { Fruit } from '../../Fruit/Fruit.js';
-import { fruitSchemaMapper as fruitSchemaMapper } from '../../Fruit/fruitSchemaMapper.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
+import { tempDataFruit } from '../../tempData.js';
 
 /**
  * mutation for adding a new fruit.
@@ -25,17 +25,16 @@ export const createFruitForFruitStorage = extendType({
 			},
 
 			resolve: (_, args: FruitConstructArgs, context: GQLContextType) => {
-				const newFruit: Fruit = [Fruit.createNewFruit(args)].map(fruitSchemaMapper)
-
-
+				// const newFruit: Fruit = [Fruit.createNewFruit(args)].map(fruitSchemaMapper)
+				const newFruit: Fruit = Fruit.createNewFruit(args);
 
 				// todo: persistence logic
-				const translated = fruitSchemaMapper(newFruit);
+				// const translated = translateFruit(newFruit);
 
-				context.fruits.push(translated);
-				return translated;
+				// context.fruits.push(translated);
+				// return translated;
+				return tempDataFruit[1];
 			},
 		});
 	},
 });
-
