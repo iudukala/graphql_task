@@ -9,10 +9,42 @@ import * as dotenv from 'dotenv';
 import mongodb from 'mongodb';
 import router from './restroute.js';
 
-
+import * as mongoose from 'mongoose';
+import { FruitKey } from './Fruit/enum_fruitKey.js';
+import { FruitTypeGQL } from './graphql/nexus_types/FruitTypeGQLNX.js';
 
 dotenv.config();
-if (process.env['DB_URI'] === null || process.env.DB_URI === undefined)
+
+
+
+
+
+export const DB_URI = 'DB_URI' as const;
+
+if (process.env[DB_URI] === null || process.env[DB_URI] === undefined)
+	throw new Error(' -- ' + process.env.DB_URI);
+
+await mongoose.connect(process.env[DB_URI]);
+const FruitModel = mongoose.model(
+	'Fruit',
+	new mongoose.Schema<FruitTypeGQL>({
+		name: String,
+		description: String,
+		limit: Number,
+		amount: Number,
+	}),
+);
+
+const x = new FruitModel({
+	names: 'lemon',
+	description: 'something',
+	limit: 10,
+	amount: 20,
+});
+
+x.save();
+
+if (process.env[DB_URI] === null || process.env[DB_URI] === undefined)
 	throw new Error(' -- ' + process.env.DB_URI);
 
 // const client = await mongodb.MongoClient.connect(process.env.DB_URI, {
@@ -30,13 +62,13 @@ try {
 
 	const dbConnection = client.db();
 	const t = await dbConnection.collection('restaurants').insertOne({
-		borough: "some",
-		cuisine: "asfdasdf",
-	name: "searchable name x"
-	})
+		borough: 'some',
+		cuisine: 'asfdasdf',
+		name: 'searchable name x',
+	});
 
-	const x =`{"_id":{"$oid":"5eb3d669b31de5d588f48c38"},"address":{"building":"461","coord":[{"$numberDouble":"-74.138492"},{"$numberDouble":"40.631136"}],"street":"Port Richmond Ave","zipcode":"10302"},"borough":"Staten Island","cuisine":"Other","grades":[],"name":"Indian Oven","restaurant_id":"50018994"}`
-	console.log(t)
+	const x = `{"_id":{"$oid":"5eb3d669b31de5d588f48c38"},"address":{"building":"461","coord":[{"$numberDouble":"-74.138492"},{"$numberDouble":"40.631136"}],"street":"Port Richmond Ave","zipcode":"10302"},"borough":"Staten Island","cuisine":"Other","grades":[],"name":"Indian Oven","restaurant_id":"50018994"}`;
+	console.log(t);
 
 	// Make the appropriate DB calls
 	// await listDatabases(client);
