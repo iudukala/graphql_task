@@ -5,7 +5,7 @@ import { GQLContextType } from '../common/type_GQLContextType.js';
 
 import type { FruitConstructArgs } from '../../Fruit/types.js';
 import { Fruit } from '../../Fruit/Fruit.js';
-import { translateFruit } from '../../Fruit/translateFruit.js';
+import { fruitSchemaMapper as fruitSchemaMapper } from '../../Fruit/fruitSchemaMapper.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 
 /**
@@ -25,10 +25,12 @@ export const createFruitForFruitStorage = extendType({
 			},
 
 			resolve: (_, args: FruitConstructArgs, context: GQLContextType) => {
-				const newFruit: Fruit = Fruit.createNewFruit(args);
+				const newFruit: Fruit = [Fruit.createNewFruit(args)].map(fruitSchemaMapper)
+
+
 
 				// todo: persistence logic
-				const translated = translateFruit(newFruit);
+				const translated = fruitSchemaMapper(newFruit);
 
 				context.fruits.push(translated);
 				return translated;
@@ -36,3 +38,4 @@ export const createFruitForFruitStorage = extendType({
 		});
 	},
 });
+

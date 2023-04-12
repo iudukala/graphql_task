@@ -5,7 +5,7 @@ import { GQLContextType } from '../common/type_GQLContextType.js';
 
 import type { FruitConstructArgs } from '../../Fruit/types.js';
 import { Fruit } from '../../Fruit/Fruit.js';
-import { translateFruit } from '../../Fruit/translateFruit.js';
+import { fruitSchemaMapper } from '../../Fruit/fruitSchemaMapper.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 
 type FruitModifyArgs = Omit<
