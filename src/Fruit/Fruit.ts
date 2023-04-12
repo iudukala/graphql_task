@@ -23,7 +23,7 @@ export class Fruit extends Entity<FruitInternalProps> {
 	 * @param {FruitConstructArgs} fruitProps data about new fruit object
 	 * @returns {Fruit} a new immutable Fruit object
 	 */
-	static createNewFruit(fruitProps: FruitConstructArgs): Fruit {
+	static createNewFruit(fruitProps: FruitConstructArgs, id?: string): Fruit {
 		return Fruit.reconstituteFruit({
 			[FruitKey.ID]: randomUUID(),
 			[FruitKey.Amount]: 0,

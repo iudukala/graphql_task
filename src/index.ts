@@ -13,39 +13,44 @@ import * as mongoose from 'mongoose';
 import { FruitKey } from './Fruit/enum_fruitKey.js';
 import { FruitTypeGQL } from './graphql/nexus_types/FruitTypeGQLNX.js';
 
+// fetching environment variables set in the .env file
 dotenv.config();
 
 export const DB_URI = 'DB_URI' as const;
 
 if (process.env[DB_URI] === null || process.env[DB_URI] === undefined)
-	throw new Error(' -- ' + process.env.DB_URI);
+	throw new Error('database connection string empty');
 
 await mongoose.connect(process.env[DB_URI]);
 
-const FruitModel = mongoose.model(
-	'Fruit',
-	new mongoose.Schema<FruitTypeGQL>({
-		name: String,
-		description: String,
-		limit: Number,
-		amount: Number,
-	}),
-);
+// const FruitModel = mongoose.model(
+// 	'Fruit',
+// 	new mongoose.Schema<FruitTypeGQL>({
+// 		name: String,
+// 		description: String,
+// 		limit: Number,
+// 		amount: Number,
+// 	}),
+// );
 
-const x = new FruitModel({
-	names: 'lemon2',
-	description: 'something',
-	limit: 10,
-	amount: 20,
-});
+// const x = new FruitModel({
+// 	name: 'lemon3',
+// 	description: 'something',
+// 	limit: 10,
+// 	amount: 20,
+// });
 
-console.log(await x.save());
+// x.save().then(res => {
+// 	console.log(res);
+// 	// mongoose.connection.close();
+// 	mongoose.disconnect();
+// });
 
-if (process.env[DB_URI] === null || process.env[DB_URI] === undefined)
-	throw new Error(' -- ' + process.env.DB_URI);
+// if (process.env[DB_URI] === null || process.env[DB_URI] === undefined)
+// 	throw new Error(' -- ' + process.env.DB_URI);
 
-// const client = await mongodb.MongoClient.connect(process.env.DB_URI, {
-const client = new mongodb.MongoClient(process.env['DB_URI']);
+// // const client = await mongodb.MongoClient.connect(process.env.DB_URI, {
+// const client = new mongodb.MongoClient(process.env['DB_URI']);
 
 // try {
 // Connect to the MongoDB cluster
