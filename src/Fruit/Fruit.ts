@@ -5,6 +5,7 @@ import { randomUUID } from 'crypto';
 
 import type { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX.js';
 import type { FruitConstructArgs, FruitInternalProps } from './types.js';
+import mongoose from 'mongoose';
 
 /** @template FruitInternal, FruitTypeGQL */
 export class Fruit extends Entity<FruitInternalProps> {
@@ -25,7 +26,7 @@ export class Fruit extends Entity<FruitInternalProps> {
 	 */
 	static createNewFruit(fruitProps: FruitConstructArgs, id?: string): Fruit {
 		return Fruit.reconstituteFruit({
-			[FruitKey.ID]: randomUUID(),
+			[FruitKey.ID]: new mongoose.Types.ObjectId().toString(),
 			[FruitKey.Amount]: 0,
 
 			...fruitProps,

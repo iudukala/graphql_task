@@ -1,7 +1,7 @@
 import { FruitKey } from './enum_fruitKey.js';
 import { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX.js';
 import { Fruit } from './Fruit.js';
-import { Model, Schema } from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
 import { FruitModel } from './mongooseFruitModel.js';
 
 /**
@@ -12,6 +12,7 @@ import { FruitModel } from './mongooseFruitModel.js';
  */
 export function fruitSchemaMapper(fruit: Fruit) {
 	return new FruitModel({
+		_id: new mongoose.Types.ObjectId(fruit.id),
 		[FruitKey.Name]: fruit.props.name,
 		[FruitKey.Description]: fruit.props.description.value,
 		[FruitKey.Limit]: fruit.props.limit,

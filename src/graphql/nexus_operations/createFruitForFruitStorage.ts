@@ -45,9 +45,9 @@ export const createFruitForFruitStorage = extendType({
 				// 	console.log(response)
 				// 	// return response;
 				// });
-				// return newFruit;
+				return newFruit;
 
-				return tempDataFruit[1];
+				// return tempDataFruit[1];
 			},
 		});
 	},
