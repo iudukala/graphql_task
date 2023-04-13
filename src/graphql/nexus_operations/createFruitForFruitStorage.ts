@@ -35,9 +35,9 @@ export const createFruitForFruitStorage = extendType({
 });
 
 async function commitToPersistence(fruit: Fruit) {
-	mongoose.connect(DB_URI);
+	await mongoose.connect(DB_URI);
 
-	const newFruit = fruitSchemaMapper(fruit)
+	const newFruit = await fruitSchemaMapper(fruit)
 		.save()
 		.catch(error => {
 			throw new Error('database commit failed: ' + error);

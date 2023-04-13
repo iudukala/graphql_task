@@ -5,21 +5,25 @@ import { contextGQL } from './graphql/common/contextGQL.js';
 import dotenv from 'dotenv';
 import * as mongoose from 'mongoose';
 
+import { MongoMemoryServer } from 'mongodb-memory-server';
+
 // fetching environment variables set in the .env file and initializing the connection string var
 // dotenv.config();
 // if (process.env['DB_URI'] === null || process.env['DB_URI'] === undefined)
 // 	throw new Error('database connection string empty');
 // export const DB_URI: string = process.env['DB_URI'];
 
-import { MongoMemoryServer } from 'mongodb-memory-server';
 
 // This will create an new instance of "MongoMemoryServer" and automatically start it
-const mongod = await MongoMemoryServer.create();
+// const mongod = await MongoMemoryServer.create();
 
-export const DB_URI = mongod.getUri();
+// export const DB_URI = mongod.getUri();
+
+export const DB_URI = "mongodb://myTester:test@127.0.0.1:27017/test"
+// /?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8.0"
 
 // The Server can be stopped again with
-await mongod.stop();
+// await mongod.stop();
 
 express()
 	.use(
