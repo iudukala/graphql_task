@@ -8,7 +8,6 @@ import { Fruit } from '../../Fruit/Fruit.js';
 import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
-import { DB_URI } from '../../index.js';
 import { connectDB } from '../../persistence/connectDB.js';
 import { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX.js';
 
@@ -39,7 +38,7 @@ export const storeFruitToFruitStorage = extendType({
 			},
 
 			resolve: async (_discard, args: FruitModifyArgs, context: GQLContextType) => {
-				connectDB(DB_URI);
+				connectDB(context.DB_URI);
 
 				const target = await FruitModel.findOne({ [FruitKey.Name]: args.name }).exec();
 				console.log(target);

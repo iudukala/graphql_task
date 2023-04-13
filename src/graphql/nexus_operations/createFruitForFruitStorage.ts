@@ -9,7 +9,6 @@ import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { tempDataFruit } from '../../tempData.js';
 import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.js';
 import mongoose from 'mongoose';
-import { DB_URI } from '../../index.js';
 import { connectDB } from '../../persistence/connectDB.js';
 
 /**
@@ -29,13 +28,13 @@ export const createFruitForFruitStorage = extendType({
 			},
 
 			resolve: async (_, args: FruitConstructArgs, context: GQLContextType) => {
-				return commitToPersistence(Fruit.createNewFruit(args));
+				return commitToPersistence(Fruit.createNewFruit(args), context.DB_URI);
 			},
 		});
 	},
 });
 
-async function commitToPersistence(fruit: Fruit) {
+async function commitToPersistence(fruit: Fruit, DB_URI: string) {
 	connectDB(DB_URI);
 
 	const newFruit = await mapToPersistenceModel(fruit)

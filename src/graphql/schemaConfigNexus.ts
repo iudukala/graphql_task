@@ -16,8 +16,8 @@ export const nexusSchema = makeSchema({
 		schema: join(DIRNAME, NEXUS_AUTOGEN_DIR_NAME, 'schema.graphql'),
 	},
 	contextType: {
-		module: join(DIRNAME, 'common', 'contextGQL.ts'),
-		export: 'contextGQL',
+		module: join(DIRNAME, 'common', 'type_GQLContextType.ts'),
+		export: 'GQLContextType',
 	},
 	shouldGenerateArtifacts: true,
 

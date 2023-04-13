@@ -18,8 +18,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 
 // export const DB_URI = mongod.getUri();
 
-export const DB_URI = 'mongodb://myTester:test@127.0.0.1:27017/test' as const;
-mongoose.connect(DB_URI);
+mongoose.connect(contextGQL.DB_URI);
 // /?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8.0"
 
 // The Server can be stopped again with

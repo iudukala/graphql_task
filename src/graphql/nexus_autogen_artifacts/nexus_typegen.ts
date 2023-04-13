@@ -3,7 +3,7 @@
  * Do not make changes to this file directly
  */
 
-import type { contextGQL } from './../common/contextGQL';
+import type { GQLContextType } from './../common/type_GQLContextType';
 
 declare global {
 	interface NexusGen extends NexusGenTypes {}
@@ -127,7 +127,7 @@ export type NexusGenFeaturesConfig = {
 };
 
 export interface NexusGenTypes {
-	context: contextGQL;
+	context: GQLContextType;
 	inputTypes: NexusGenInputs;
 	rootTypes: NexusGenRootTypes;
 	inputTypeShapes: NexusGenInputs & NexusGenEnums & NexusGenScalars;
