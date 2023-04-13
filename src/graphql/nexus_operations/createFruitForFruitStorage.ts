@@ -10,6 +10,7 @@ import { tempDataFruit } from '../../tempData.js';
 import { fruitSchemaMapper } from '../../Fruit/fruitSchemaMapper.js';
 import mongoose from 'mongoose';
 import { DB_URI } from '../../index.js';
+import { connectDB } from '../../persistence/connectDB.js';
 
 /**
  * mutation for adding a new fruit.
@@ -35,9 +36,7 @@ export const createFruitForFruitStorage = extendType({
 });
 
 async function commitToPersistence(fruit: Fruit) {
-	// if in state 'disconnected' or 'disconnecting'
-	if (mongoose.connection.readyState === 0 || mongoose.connection.readyState === 3)
-		await mongoose.connect(DB_URI);
+	connectDB(DB_URI);
 
 	const newFruit = await fruitSchemaMapper(fruit)
 		.save()
@@ -46,6 +45,5 @@ async function commitToPersistence(fruit: Fruit) {
 		});
 
 	mongoose.connection.close();
-
 	return newFruit;
 }
