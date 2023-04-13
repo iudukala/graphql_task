@@ -8,11 +8,20 @@ import { Fruit } from '../../Fruit/Fruit.js';
 import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
+import { DB_URI } from '../../index.js';
+import { connectDB } from '../../persistence/connectDB.js';
+import { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX.js';
 
+// type FruitModifyArgs = Omit<
+// 	FruitConstructArgs,
+// 	typeof FruitKey.Description | typeof FruitKey.Limit
+// > & { [FruitKey.Amount]: number };
+
+// export type FruitConstructArgs = Omit<
 type FruitModifyArgs = Omit<
-	FruitConstructArgs,
-	typeof FruitKey.Description | typeof FruitKey.Limit
-> & { [FruitKey.Amount]: number };
+	FruitTypeGQL,
+	typeof FruitKey.ID | typeof FruitKey.Limit | typeof FruitKey.Description
+>;
 
 /**
  * mutation for updating the the amount of an existing fruit.
@@ -30,8 +39,25 @@ export const storeFruitToFruitStorage = extendType({
 			},
 
 			resolve: async (_discard, args: FruitModifyArgs, context: GQLContextType) => {
-				const x = await FruitModel.find({ [FruitKey.Name]: args.name }).exec();
-				console.log(x);
+				connectDB(DB_URI);
+
+				const target = await FruitModel.findOne({ [FruitKey.Name]: args.name }).exec();
+				console.log(target);
+
+				if (target === null) throw new Error(`fruit not found for name: [${args.name}]`);
+
+				if (target.amount + args.amount > target.limit)
+					throw new Error(
+						`specified amount (${args.amount}) increments beyond the limit (${target.limit}). current value: ${target.amount}`,
+					);
+
+				const updated = await FruitModel.findByIdAndUpdate(target._id, {
+					[FruitKey.Amount]: target.amount + args.amount,
+				});
+
+				// return updated;
+				// const y = await FruitModel.findById(x?._id);
+				// console.log(y);
 
 				throw new Error('not implemented');
 				// const newFruit: Fruit = Fruit.createNewFruit(args);
