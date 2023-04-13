@@ -29,6 +29,8 @@
 - insufficient esm support from jest. got esm modules to load with code transforms from ts-jest plugin but jest still fails when attempting to access import.meta global
   "error TS1343: The 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', or 'nodenext'" when tsconfig has 'module' set to 'es2020'. not an issue with tsconfig visibility to jest since it respects other flags set in it.
 
+- operating as if there's only one fruit with the same name. implement domain service
+
 # progress
 
 - [ ] All code written should follow Domain Driven Design, have a look at (<https://github.com/stemmlerjs/ddd-forum>) for reference

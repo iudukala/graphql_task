@@ -7,7 +7,7 @@ import type { FruitConstructArgs } from '../../Fruit/types.js';
 import { Fruit } from '../../Fruit/Fruit.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { tempDataFruit } from '../../tempData.js';
-import { fruitSchemaMapper } from '../../Fruit/fruitSchemaMapper.js';
+import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.js';
 import mongoose from 'mongoose';
 import { DB_URI } from '../../index.js';
 import { connectDB } from '../../persistence/connectDB.js';
@@ -38,7 +38,7 @@ export const createFruitForFruitStorage = extendType({
 async function commitToPersistence(fruit: Fruit) {
 	connectDB(DB_URI);
 
-	const newFruit = await fruitSchemaMapper(fruit)
+	const newFruit = await mapToPersistenceModel(fruit)
 		.save()
 		.catch(error => {
 			throw new Error('database commit failed: ' + error);

@@ -5,7 +5,7 @@ import { GQLContextType } from '../common/type_GQLContextType.js';
 
 import type { FruitConstructArgs } from '../../Fruit/types.js';
 import { Fruit } from '../../Fruit/Fruit.js';
-import { fruitSchemaMapper } from '../../Fruit/fruitSchemaMapper.js';
+import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
 
