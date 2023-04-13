@@ -31,6 +31,7 @@
 
 - operating as if there's only one fruit with the same name. implement domain service
 - assuming that the mutation storeFruitToFruitStorage(name: string, amount: int) is specifiying the count in storage to be incremented by. not the exact value that is to be stored in the 'amount' field in the record.
+-assuming force delete is required when the amount is above zero
 
 ## progress
 
