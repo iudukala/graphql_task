@@ -7,6 +7,7 @@ import type { FruitConstructArgs } from '../../Fruit/types.js';
 import { Fruit } from '../../Fruit/Fruit.js';
 import { fruitSchemaMapper } from '../../Fruit/fruitSchemaMapper.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
+import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
 
 type FruitModifyArgs = Omit<
 	FruitConstructArgs,
@@ -28,8 +29,11 @@ export const storeFruitToFruitStorage = extendType({
 				[FruitKey.Amount]: nonNull(intArg()),
 			},
 
-			resolve: (_discard, args: FruitModifyArgs, context: GQLContextType) => {
-				throw new Error("not implemented");
+			resolve: async (_discard, args: FruitModifyArgs, context: GQLContextType) => {
+				const x = await FruitModel.find({ [FruitKey.Name]: args.name }).exec();
+				console.log(x);
+
+				throw new Error('not implemented');
 				// const newFruit: Fruit = Fruit.createNewFruit(args);
 
 				// // todo: persistence logic

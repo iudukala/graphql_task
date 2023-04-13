@@ -28,14 +28,16 @@ export const createFruitForFruitStorage = extendType({
 			},
 
 			resolve: async (_, args: FruitConstructArgs, context: GQLContextType) => {
-				return await commitToPersistence(Fruit.createNewFruit(args));
+				return commitToPersistence(Fruit.createNewFruit(args));
 			},
 		});
 	},
 });
 
 async function commitToPersistence(fruit: Fruit) {
-	await mongoose.connect(DB_URI);
+	// if in state 'disconnected' or 'disconnecting'
+	if (mongoose.connection.readyState === 0 || mongoose.connection.readyState === 3)
+		await mongoose.connect(DB_URI);
 
 	const newFruit = await fruitSchemaMapper(fruit)
 		.save()

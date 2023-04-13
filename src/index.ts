@@ -13,13 +13,13 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 // 	throw new Error('database connection string empty');
 // export const DB_URI: string = process.env['DB_URI'];
 
-
 // This will create an new instance of "MongoMemoryServer" and automatically start it
 // const mongod = await MongoMemoryServer.create();
 
 // export const DB_URI = mongod.getUri();
 
-export const DB_URI = "mongodb://myTester:test@127.0.0.1:27017/test"
+export const DB_URI = 'mongodb://myTester:test@127.0.0.1:27017/test' as const;
+mongoose.connect(DB_URI);
 // /?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8.0"
 
 // The Server can be stopped again with
