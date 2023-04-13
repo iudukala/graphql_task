@@ -10,6 +10,7 @@ import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
 import { connectDB } from '../../persistence/connectDB.js';
 import { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX.js';
+import mongoose, { ObjectId, Types } from 'mongoose';
 
 // type FruitModifyArgs = Omit<
 // 	FruitConstructArgs,
@@ -41,7 +42,6 @@ export const storeFruitToFruitStorage = extendType({
 				connectDB(context.DB_URI);
 
 				const target = await FruitModel.findOne({ [FruitKey.Name]: args.name }).exec();
-				console.log(target);
 
 				if (target === null) throw new Error(`fruit not found for name: [${args.name}]`);
 
@@ -53,6 +53,33 @@ export const storeFruitToFruitStorage = extendType({
 				const updated = await FruitModel.findByIdAndUpdate(target._id, {
 					[FruitKey.Amount]: target.amount + args.amount,
 				});
+
+
+				if (updated === null) throw new Error(`update failed for fruit [${target.name}]`);
+
+				type T = typeof updated._id;
+
+				type PersistenceFruit = Omit<FruitTypeGQL, typeof FruitKey.ID> & { _id: mongoose.Types.ObjectId};
+				// type PersistenceFruit = typeof updated;
+				const mapFromPersistenceResp = (fruit: PersistenceFruit): Fruit => {
+					return Fruit.reconstituteFruit({
+						id: fruit._id.toString(),
+						[FruitKey.Name]: fruit.name,
+						[FruitKey.Description]: fruit.description,
+						[FruitKey.Limit]: fruit.limit,
+						[FruitKey.Amount]: fruit.amount,
+					});
+				};
+
+				type X = { a: number; b: number };
+				type Y = { a: number };
+
+				const x: X = { a: 1, b: 2 };
+				// const x2: X = { a: 1, b: 2, c: 3 };
+				const y: Y = x;
+
+				// console.log(mapToPersistenceModel(mapFromPersistenceResp(updated)));
+				return mapToPersistenceModel(mapFromPersistenceResp(updated));
 
 				// return updated;
 				// const y = await FruitModel.findById(x?._id);
