@@ -1,7 +1,6 @@
 import { FruitKey } from './enum_fruitKey.js';
 import { FruitDescriptionVO } from './FruitDescriptionVO.js';
 import { Entity } from '../core/Entity.js';
-import { randomUUID } from 'crypto';
 
 import type { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX.js';
 import type { FruitConstructArgs, FruitInternalProps } from './types.js';
