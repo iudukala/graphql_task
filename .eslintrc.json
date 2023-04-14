@@ -7,7 +7,7 @@
 		"eslint:recommended",
 		"plugin:@typescript-eslint/recommended",
 		"prettier",
-		"plugin:jsdoc/recommended"
+		"plugin:jsdoc/recommended-typescript"
 	],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
@@ -28,18 +28,7 @@
 				"ignorePattern": "(^imports*.*$|^s*export function.*$)"
 			}
 		],
-		"require-jsdoc": [
-			"error",
-			{
-				"require": {
-					"FunctionDeclaration": false,
-					"MethodDefinition": false,
-					"ClassDeclaration": false,
-					"ArrowFunctionExpression": false,
-					"FunctionExpression": false
-				}
-			}
-		],
+
 		"indent": ["error","tab", {"SwitchCase": 1}],
 		"no-tabs":["off",{"allowIndentationTabs":"true"}],
 		"valid-jsdoc": ["off"],
@@ -52,6 +41,12 @@
 		"brace-style": ["error", "1tbs", { "allowSingleLine": true } ],
 		"linebreak-style": ["error", "unix"],
 		"no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
-		"object-curly-spacing": ["error", "always"]
+		"object-curly-spacing": ["error", "always"],
+
+		// jsdoc rules
+		"jsdoc/no-types": 0,
+		"jsdoc/require-param-type": 0,
+		"jsdoc/require-property-type": 0,
+		"jsdoc/require-returns-type": 0
 	}
 }
