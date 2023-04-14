@@ -8,5 +8,5 @@ import mongoose from 'mongoose';
 export const connectDB = async (DB_URI: string) => {
 	// if in state 'disconnected' = 0 or 'disconnecting' = 3
 	if (mongoose.connection.readyState === 0 || mongoose.connection.readyState === 3)
-		await mongoose.connect(DB_URI);
+		mongoose.connect(DB_URI);
 };
