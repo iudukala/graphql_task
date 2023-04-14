@@ -6,6 +6,9 @@ import type { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX.js';
 import type { FruitConstructArgs, FruitInternalProps } from './types.js';
 import mongoose from 'mongoose';
 
+type PersistenceFruitModel = Omit<FruitTypeGQL, typeof FruitKey.ID> & {
+	_id: mongoose.Types.ObjectId;
+};
 /** @template FruitInternal, FruitTypeGQL */
 export class Fruit extends Entity<FruitInternalProps> {
 	/**
@@ -21,12 +24,11 @@ export class Fruit extends Entity<FruitInternalProps> {
 	 * factory function to build new fruit objects. using the static reconstitute function to avoid duplicating construction logic
 	 *
 	 * @param {FruitConstructArgs} fruitProps data about new fruit object
-	 * @param {string} id value for id, if available. for example: when recreating an object from data fetched from persistence
 	 * @returns {Fruit} a new immutable Fruit object
 	 */
-	static createNewFruit(fruitProps: FruitConstructArgs, id?: string): Fruit {
+	static createNewFruit(fruitProps: FruitConstructArgs): Fruit {
 		return Fruit.reconstituteFruit({
-			[FruitKey.ID]: id ?? new mongoose.Types.ObjectId().toString(),
+			_id: new mongoose.Types.ObjectId(),
 			[FruitKey.Amount]: 0,
 
 			...fruitProps,
@@ -39,9 +41,8 @@ export class Fruit extends Entity<FruitInternalProps> {
 	 * @param {FruitTypeGQL} fruitProps fruit object data
 	 * @returns
 	 */
-
-	static reconstituteFruit(fruitProps: FruitTypeGQL): Fruit {
-		return new Fruit(fruitProps.id, {
+	static reconstituteFruit(fruitProps: PersistenceFruitModel): Fruit {
+		return new Fruit(fruitProps._id.toString(), {
 			[FruitKey.Name]: fruitProps.name.trim(),
 			[FruitKey.Description]: FruitDescriptionVO.create(fruitProps.description?.trim()),
 			[FruitKey.Limit]: fruitProps.limit,

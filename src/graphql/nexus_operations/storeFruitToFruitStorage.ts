@@ -7,7 +7,7 @@ import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
 import { connectDB } from '../../persistence/connectDB.js';
 import { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX.js';
-import { mapFromPersistenceModel } from '../../persistence/mapFromPersistenceModel.js';
+import { Fruit } from '../../Fruit/Fruit.js';
 
 type FruitModifyArgs = Omit<
 	FruitTypeGQL,
@@ -49,7 +49,7 @@ export const storeFruitToFruitStorage = extendType({
 
 				if (updated === null) throw new Error(`update failed for fruit [${target.name}]`);
 
-				return mapToPersistenceModel(mapFromPersistenceModel(updated)) as FruitTypeGQL;
+				return mapToPersistenceModel(Fruit.reconstituteFruit(updated)) as FruitTypeGQL;
 			},
 		});
 	},

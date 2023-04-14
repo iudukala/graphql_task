@@ -8,7 +8,7 @@ import { PersistenceFruitModel } from './type_persistenceFruitModel.js';
  * @param fruit object returned through mongoose
  * @returns {Fruit} a new fruit domain entity
  */
-export const mapFromPersistenceModel = (fruit: PersistenceFruitModel): Fruit => {
+export const mapFromPersistenceModel_obsolete = (fruit: PersistenceFruitModel): Fruit => {
 	return Fruit.reconstituteFruit({
 		id: fruit._id.toString(),
 		[FruitKey.Name]: fruit.name,

@@ -5,8 +5,8 @@ import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.j
 import { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX.js';
 import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
-import { mapFromPersistenceModel } from '../../persistence/mapFromPersistenceModel.js';
-import { tempDataFruit } from '../../tempData.js';
+import { connectDB } from '../../persistence/connectDB.js';
+import { Fruit } from '../../Fruit/Fruit.js';
 
 // todo: change to 'findFruit()'
 export const findFruit = extendType({
@@ -21,17 +21,22 @@ export const findFruit = extendType({
 			},
 
 			resolve: async (_discard, args: { [FruitKey.Name]: string }, context: GQLContextType) => {
-				const target = await findFruitByName(args.name);
-				// return mapToPersistenceModel(mapFromPersistenceModel(target)) as FruitTypeGQL;
+				const target = await findFruitByName(args.name, context.DB_URI);
+				console.log(target);
+				const x = mapToPersistenceModel(Fruit.reconstituteFruit(target));
 
-				// return context.fruits.map(fruit => mapToPersistenceModel(fruit) as FruitTypeGQL);
-				return [mapToPersistenceModel(tempDataFruit[0]) as FruitTypeGQL];
+				console.log(x.id + '-' + x._id);
+				return [x] as [FruitTypeGQL];
+
+				// return [mapToPersistenceModel(mapFromPersistenceModel(target)) as FruitTypeGQL];
+				// return [target as FruitTypeGQL];
 			},
 		});
 	},
 });
 
-const findFruitByName = async (fruitName: string) => {
+const findFruitByName = async (fruitName: string, DB_URI: string) => {
+	await connectDB(DB_URI);
 	const target = await FruitModel.findOne({ [FruitKey.Name]: fruitName })
 		.lean()
 		.exec();
