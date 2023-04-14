@@ -21,11 +21,12 @@ export class Fruit extends Entity<FruitInternalProps> {
 	 * factory function to build new fruit objects. using the static reconstitute function to avoid duplicating construction logic
 	 *
 	 * @param {FruitConstructArgs} fruitProps data about new fruit object
+	 * @param {string} id value for id, if available. for example: when recreating an object from data fetched from persistence
 	 * @returns {Fruit} a new immutable Fruit object
 	 */
 	static createNewFruit(fruitProps: FruitConstructArgs, id?: string): Fruit {
 		return Fruit.reconstituteFruit({
-			[FruitKey.ID]: new mongoose.Types.ObjectId().toString(),
+			[FruitKey.ID]: id ?? new mongoose.Types.ObjectId().toString(),
 			[FruitKey.Amount]: 0,
 
 			...fruitProps,

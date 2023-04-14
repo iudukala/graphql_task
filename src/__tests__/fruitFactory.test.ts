@@ -11,8 +11,8 @@ jest.mock('../graphql/dirnameESM.js', () => ({
 	getDirname: () => __dirname,
 }));
 
-beforeEach(() => {
-});
+// beforeEach(() => {
+// });
 
 test('creates a new Fruit and checks translatio', async () => {
 	expect(Fruit.createNewFruit({ name: 'apple', limit: 50, description: 'desc' }).props.limit).toBe(
