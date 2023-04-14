@@ -10,6 +10,7 @@ import { tempDataFruit } from '../../tempData.js';
 import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.js';
 import mongoose from 'mongoose';
 import { connectDB } from '../../persistence/connectDB.js';
+import { commitToPersistence } from '../../persistence/commitToPersistence.js';
 
 /**
  * mutation for adding a new fruit.
@@ -28,21 +29,8 @@ export const createFruitForFruitStorage = extendType({
 			},
 
 			resolve: async (_, args: FruitConstructArgs, context: GQLContextType) => {
-				return commitToPersistence(Fruit.createNewFruit(args), context.DB_URI);
+				return await commitToPersistence(Fruit.createNewFruit(args), context.DB_URI);
 			},
 		});
 	},
 });
-
-async function commitToPersistence(fruit: Fruit, DB_URI: string) {
-	connectDB(DB_URI);
-
-	const newFruit = await mapToPersistenceModel(fruit)
-		.save()
-		.catch(error => {
-			throw new Error('database commit failed: ' + error);
-		});
-
-	mongoose.connection.close();
-	return newFruit;
-}
