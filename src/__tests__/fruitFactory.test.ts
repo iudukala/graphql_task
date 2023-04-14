@@ -25,7 +25,6 @@ describe('graphql tests', () => {
 	});
 
 	test('creates a new Fruit and checks translatio', async () => {
-		dotenv.config();
 		console.log('process env' + process.env['DB_URI']);
 		const connection = await connectDB(process.env['DB_URI']);
 		console.log('list collections:' + JSON.stringify(mongoose.connection.db.listCollections().toArray()))
