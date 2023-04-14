@@ -22,14 +22,7 @@ export const findFruit = extendType({
 
 			resolve: async (_discard, args: { [FruitKey.Name]: string }, context: GQLContextType) => {
 				const target = await findFruitByName(args.name, context.DB_URI);
-				console.log(target);
-				const x = mapToPersistenceModel(Fruit.reconstituteFruit(target));
-
-				console.log(x.id + '-' + x._id);
-				return [x] as [FruitTypeGQL];
-
-				// return [mapToPersistenceModel(mapFromPersistenceModel(target)) as FruitTypeGQL];
-				// return [target as FruitTypeGQL];
+				return [mapToPersistenceModel(Fruit.reconstituteFruit(target)) as FruitTypeGQL];
 			},
 		});
 	},
