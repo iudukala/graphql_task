@@ -1,6 +1,6 @@
-import { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX.js';
+import { Fruit } from '../../Fruit/Fruit.js';
 
 export type GQLContextType = {
 	DB_URI: string;
-	fruits: Array<FruitTypeGQL>;
+	fruits: Array<Fruit>;
 };
