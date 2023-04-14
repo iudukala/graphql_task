@@ -1,4 +1,4 @@
-import { extendType, stringArg } from 'nexus';
+import { extendType, nonNull, stringArg } from 'nexus';
 import { GQLType } from '../common/enum_nexusTypeKey.js';
 import { GQLContextType } from '../common/type_GQLContextType.js';
 import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.js';
@@ -17,17 +17,26 @@ export const findFruit = extendType({
 			type: GQLType.Fruit,
 
 			args: {
-				[FruitKey.Name]: stringArg(),
+				[FruitKey.Name]: nonNull(stringArg()),
 			},
 
-			resolve: (_discard, args: {[FruitKey.Name] : string}, context: GQLContextType) => {
-				// const target = await FruitModel.findOne({ [FruitKey.Name]: args.name }).exec();
+			resolve: async (_discard, args: { [FruitKey.Name]: string }, context: GQLContextType) => {
+				const target = await findFruitByName(args.name);
 				// return mapToPersistenceModel(mapFromPersistenceModel(target)) as FruitTypeGQL;
 
 				// return context.fruits.map(fruit => mapToPersistenceModel(fruit) as FruitTypeGQL);
 				return [mapToPersistenceModel(tempDataFruit[0]) as FruitTypeGQL];
-				// return [{}];
 			},
 		});
 	},
 });
+
+const findFruitByName = async (fruitName: string) => {
+	const target = await FruitModel.findOne({ [FruitKey.Name]: fruitName })
+		.lean()
+		.exec();
+	if (target === null || target === undefined)
+		throw new Error(`fruit not found for name: [${fruitName}]`);
+
+	return target;
+};

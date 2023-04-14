@@ -39,7 +39,8 @@ export const storeFruitToFruitStorage = extendType({
 
 				if (target.amount + args.amount > target.limit)
 					throw new Error(
-						`specified amount (${args.amount}) increments beyond the limit (${target.limit}). current value: ${target.amount}`,
+						`specified amount (${args.amount}) increments beyond the limit \
+						(${target.limit}). current value: ${target.amount}`,
 					);
 
 				const updated = await FruitModel.findByIdAndUpdate(target._id, {

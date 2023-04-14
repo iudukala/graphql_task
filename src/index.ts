@@ -19,9 +19,9 @@ express()
 			pretty: false,
 		}),
 	)
-	.use('*', (_, res) => res.status(404).json({ error: 'invalid' + res + _ }))
+	// .use('*', (_, res) => res.status(404).json({ error: 'invalid' + res + _ }))
 	.listen(4000);
 
 console.log('running on :4000/graphql');
 
-await initializeDBForTesting();
+// await initializeDBForTesting();

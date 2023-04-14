@@ -12,7 +12,7 @@ import { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX.js';
  * @returns {Promise<FruitTypeGQL>} the committed object cast to a form that the nexus resolvers recognize
  */
 export async function commitToPersistence(fruit: Fruit, DB_URI: string): Promise<FruitTypeGQL> {
-	connectDB(DB_URI);
+	await connectDB(DB_URI);
 
 	const newFruit = await mapToPersistenceModel(fruit)
 		.save()
