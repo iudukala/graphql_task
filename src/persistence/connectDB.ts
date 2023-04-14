@@ -13,7 +13,7 @@ export const connectDB = async (DB_URI: string | null | undefined): Promise<bool
 		console.log('connectDB pre con : ' + mongoose.connection.readyState);
 		if (mongoose.connection.readyState !== 1 && mongoose.connection.readyState !== 2) {
 			// mongoose.connect(DB_URI);
-			await mongoose.createConnection(DB_URI).asPromise();
+			mongoose.createConnection(DB_URI).asPromise();
 			console.log('connectDB - should work : ' + mongoose.connection.readyState);
 		}
 		return true;

@@ -56,5 +56,5 @@ describe('graphql tests', () => {
 		// 	console.log('output----------------' + JSON.stringify(data));
 		// 	expect(data).not.toBeNull();
 		// });
-	}, 100000);
+	});
 });
