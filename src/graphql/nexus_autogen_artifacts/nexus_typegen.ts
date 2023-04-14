@@ -3,7 +3,7 @@
  * Do not make changes to this file directly
  */
 
-import type { GQLContextType } from './../common/type_GQLContextType.js';
+import type { GQLContextType } from './../common/type_GQLContextType';
 
 declare global {
 	interface NexusGen extends NexusGenTypes {}
@@ -59,6 +59,7 @@ export interface NexusGenFieldTypes {
 	};
 	Query: {
 		// field return type
+		findFruit: Array<NexusGenRootTypes['Fruit'] | null>; // [Fruit]!
 		fruits: Array<NexusGenRootTypes['Fruit'] | null>; // [Fruit]!
 	};
 }
@@ -80,6 +81,7 @@ export interface NexusGenFieldTypeNames {
 	};
 	Query: {
 		// field return type name
+		findFruit: 'Fruit';
 		fruits: 'Fruit';
 	};
 }
@@ -101,6 +103,12 @@ export interface NexusGenArgTypes {
 			// args
 			amount: number; // Int!
 			name: string; // String!
+		};
+	};
+	Query: {
+		findFruit: {
+			// args
+			name?: string | null; // String
 		};
 	};
 }
