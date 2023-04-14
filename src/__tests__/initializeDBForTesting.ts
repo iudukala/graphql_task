@@ -24,7 +24,9 @@ export async function initializeDBForTesting(DB_URI: string | null | undefined) 
 		// i[f (exception instanceof MongoServerError)
 		// else throw exception;
 	} finally {
-		await FruitModel.insertMany([...tempDataFruit.map(mapToPersistenceModel)]);
+		mongoose.connection.on('connected', async () => {
+			await FruitModel.insertMany([...tempDataFruit.map(mapToPersistenceModel)]);
+		});
 	}
 	// await FruitModel.collection.drop();
 	// FruitModel.insertMany([...tempDataFruit.map(mapToPersistenceModel)]);

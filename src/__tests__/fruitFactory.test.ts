@@ -26,9 +26,12 @@ describe('graphql tests', () => {
 
 	test('creates a new Fruit and checks translatio', async () => {
 		console.log('process env' + process.env['DB_URI']);
-		const connection = await connectDB(process.env['DB_URI']);
+		await connectDB(process.env['DB_URI']);
+
+		console.log('connectDB outer: ' + mongoose.connection.readyState);
 		console.log('list collections:' + JSON.stringify(mongoose.connection.db.listCollections().toArray()))
-		console.log('state' + connection);
+
+		// console.log('state' + connection);
 
 		const result = await graphql({
 			schema: nexusSchema,
@@ -47,5 +50,5 @@ describe('graphql tests', () => {
 		// 	console.log('output----------------' + JSON.stringify(data));
 		// 	expect(data).not.toBeNull();
 		// });
-	});
+	}, 100000);
 });
