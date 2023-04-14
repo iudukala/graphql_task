@@ -10,7 +10,8 @@ const config: JestConfigWithTsJest = {
 	preset: 'ts-jest/presets/default-esm',
 
 	testEnvironment: 'node',
-	testMatch: ['**/__tests__/**/*.+(ts|tsx|js)', '**/?(*.)+(spec|test).+(ts|tsx|js)'],
+	// testMatch: ['**/__tests__/**/*.+(ts|tsx|js)', '**/?(*.)+(spec|test).+(ts|tsx|js)'],
+	testMatch: ['**/?(*.)+(spec|test).+(ts|tsx|js)'],
 
 	// handling esm
 	moduleNameMapper: {
