@@ -29,23 +29,29 @@ describe('graphql tests', () => {
 		await connectDB(process.env['DB_URI']);
 
 		console.log('connectDB outer: ' + mongoose.connection.readyState);
-		console.log('list collections:' + JSON.stringify(mongoose.connection.db.listCollections().toArray()))
+		console.log(
+			'list collections:' + JSON.stringify(mongoose.connection.db.listCollections().toArray()),
+		);
 
 		// console.log('state' + connection);
 
-		const result = await graphql({
-			schema: nexusSchema,
-			source: `query{
+		mongoose.connection.on('connected', async () => {
+			const result = await graphql({
+				schema: nexusSchema,
+				source: `query{
 					findFruit(name: "apple"){
 						name
 						description
 						id
 					}
 				}`,
-			contextValue: contextGQL,
+				contextValue: contextGQL,
+			});
+
+			console.log('output----------------' + JSON.stringify(result));
+			expect(result).not.toBeNull();
 		});
 
-		console.log('output----------------' + JSON.stringify(result));
 		// }).then(data => {
 		// 	console.log('output----------------' + JSON.stringify(data));
 		// 	expect(data).not.toBeNull();
