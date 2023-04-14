@@ -3,6 +3,7 @@ import { Fruit } from '../Fruit/Fruit.js';
 import { nexusSchema } from '../graphql/schemaConfigNexus.js';
 import { contextGQL } from '../graphql/common/contextGQL.js';
 import { FruitModel } from '../Fruit/mongooseFruitModel.js';
+import { initializeDBForTesting } from './initializeDBForTesting.js';
 
 /**
  * replacing the import.meta access call since jest has effectively no esm support
@@ -11,8 +12,9 @@ jest.mock('../graphql/dirnameESM.js', () => ({
 	getDirname: () => __dirname,
 }));
 
-// beforeEach(() => {
-// });
+beforeEach(() => {
+	initializeDBForTesting();
+});
 
 test('creates a new Fruit and checks translatio', async () => {
 	expect(Fruit.createNewFruit({ name: 'apple', limit: 50, description: 'desc' }).props.limit).toBe(
@@ -20,7 +22,7 @@ test('creates a new Fruit and checks translatio', async () => {
 	);
 
 	// const data =
-	await graphql({
+	const data = await graphql({
 		schema: nexusSchema,
 		source: `query{
 			fruits{
@@ -30,10 +32,14 @@ test('creates a new Fruit and checks translatio', async () => {
 			}
 		}`,
 		contextValue: contextGQL,
-	}).then(data => {
-		console.log(JSON.stringify(data));
-		// expect(data.data?.fruits[]);
 	});
+
+	console.log(JSON.stringify(data));
+	expect(data).not.toBeNull();
+	// .then(data => {
+	// 	console.log(JSON.stringify(data));
+	// 	// expect(data.data?.fruits[]);
+	// });
 
 	// expect(data).toBe;
 });
