@@ -1,13 +1,10 @@
 import { FruitKey } from '../Fruit/enum_fruitKey.js';
-import { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX.js';
 import { Fruit } from '../Fruit/Fruit.js';
-import mongoose, { Model, Schema, Document } from 'mongoose';
+import mongoose from 'mongoose';
 import { FruitModel } from '../Fruit/mongooseFruitModel.js';
-// import { PersistenceFruitModel } from './type_persistenceFruitModel.js';
-import { FruitGQLDocType } from './type_FruitGQLDocType.js';
 
 /**
- *
+ * translates a fruit object to a mongoose model instance/document
  *
  * @param {Fruit} fruit fruit object to be translated
  * @returns translated mongoose fruit model object that can be commited to the database
