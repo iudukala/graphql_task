@@ -10,7 +10,7 @@ import { connectDB } from '../persistence/connectDB.js';
  */
 export async function initializeDBForTesting() {
 	dotenv.config();
-	connectDB(contextGQL.DB_URI);
+	await connectDB(contextGQL.DB_URI);
 
 	await FruitModel.collection.drop();
 	await tempDataFruit.forEach(fruit => commitToPersistence(fruit, contextGQL.DB_URI));
