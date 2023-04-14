@@ -34,8 +34,8 @@ test('creates a new Fruit and checks translatio', async () => {
 	// expect(data).toBe;
 });
 
-test('basic ', () => {
-	type T = { a: number; b: number };
-	const x: T = { a: 3, b: 3 };
-	expect(x.a + x.b).toBe(6);
-});
+// test('basic ', () => {
+// 	type T = { a: number; b: number };
+// 	const x: T = { a: 3, b: 3 };
+// 	expect(x.a + x.b).toBe(6);
+// });
