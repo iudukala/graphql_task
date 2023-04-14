@@ -108,7 +108,7 @@ export interface NexusGenArgTypes {
 	Query: {
 		findFruit: {
 			// args
-			name?: string | null; // String
+			name: string; // String!
 		};
 	};
 }
