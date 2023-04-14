@@ -2,7 +2,6 @@ import { graphql } from 'graphql';
 import { Fruit } from '../Fruit/Fruit.js';
 import { nexusSchema } from '../graphql/schemaConfigNexus.js';
 import { contextGQL } from '../graphql/common/contextGQL.js';
-import { FruitModel } from '../Fruit/mongooseFruitModel.js';
 import { initializeDBForTesting } from './initializeDBForTesting.js';
 
 /**

@@ -39,7 +39,7 @@ export class Fruit extends Entity<FruitInternalProps> {
 	 * reconstitutes an existing fruit object, usually fetched through a persistance layer
 	 *
 	 * @param {FruitTypeGQL} fruitProps fruit object data
-	 * @returns
+	 * @returns constructed fruit object
 	 */
 	static reconstituteFruit(fruitProps: PersistenceFruitModel): Fruit {
 		return new Fruit(fruitProps._id.toString(), {
