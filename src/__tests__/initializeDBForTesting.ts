@@ -20,7 +20,7 @@ export async function initializeDBForTesting(DB_URI: string | null | undefined) 
 	try {
 		await FruitModel.collection.drop();
 	} catch (exception) {
-		console.log(exception);
+		// console.log(exception);
 		// i[f (exception instanceof MongoServerError)
 		// else throw exception;
 	} finally {

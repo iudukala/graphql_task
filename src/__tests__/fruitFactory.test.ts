@@ -25,32 +25,33 @@ describe('graphql tests', () => {
 	});
 
 	test('creates a new Fruit and checks translatio', async () => {
-		console.log('process env' + process.env['DB_URI']);
+		// console.log('process env' + process.env['DB_URI']);
 		await connectDB(process.env['DB_URI']);
+		jest.setTimeout(30000);
 
-		console.log('connectDB outer: ' + mongoose.connection.readyState);
-		console.log(
-			'list collections:' + JSON.stringify(mongoose.connection.db.listCollections().toArray()),
-		);
+		// console.log('connectDB outer: ' + mongoose.connection.readyState);
+		// console.log(
+		// 	'list collections:' + JSON.stringify(mongoose.connection.db.listCollections().toArray()),
+		// );
 
 		// console.log('state' + connection);
 
-		mongoose.connection.on('connected', async () => {
-			const result = await graphql({
-				schema: nexusSchema,
-				source: `query{
+		// mongoose.connection.on('connected', async () => {
+		const result = await graphql({
+			schema: nexusSchema,
+			source: `query{
 					findFruit(name: "apple"){
 						name
 						description
 						id
 					}
 				}`,
-				contextValue: contextGQL,
-			});
-
-			console.log('output----------------' + JSON.stringify(result));
-			expect(result).not.toBeNull();
+			contextValue: contextGQL,
 		});
+
+		console.log('output----------------' + JSON.stringify(result));
+		expect(result).not.toBeNull();
+		// });
 
 		// }).then(data => {
 		// 	console.log('output----------------' + JSON.stringify(data));
