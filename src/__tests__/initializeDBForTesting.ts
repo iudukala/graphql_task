@@ -10,10 +10,12 @@ import { MongoServerError } from 'mongodb';
 
 /**
  * clears out data and adds
+ *
+ * @param DB_URI database connection uri
  */
-export async function initializeDBForTesting() {
-	dotenv.config();
-	await connectDB(contextGQL.DB_URI);
+export async function initializeDBForTesting(DB_URI: string | null | undefined) {
+	// dotenv.config();
+	await connectDB(DB_URI);
 
 	try {
 		await FruitModel.collection.drop();

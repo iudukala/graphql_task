@@ -24,4 +24,4 @@ express()
 
 console.log('running on :4000/graphql');
 
-await initializeDBForTesting();
+// await initializeDBForTesting(process.env['DB_URI']);
