@@ -8,9 +8,12 @@ import { Fruit } from '../../Fruit/Fruit.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { tempDataFruit } from '../../tempData.js';
 import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.js';
-import mongoose from 'mongoose';
+import mongoose, { Document, Model } from 'mongoose';
 import { connectDB } from '../../persistence/connectDB.js';
+// import { PersistenceFruitModel } from '../../persistence/type_persistenceFruitModel.js';
+import { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX.js';
 import { commitToPersistence } from '../../persistence/commitToPersistence.js';
+// import { commitToPersistence } from '../../persistence/commitToPersistence.js';
 
 /**
  * mutation for adding a new fruit.
@@ -34,3 +37,5 @@ export const createFruitForFruitStorage = extendType({
 		});
 	},
 });
+
+// export type P = Omit<FruitTypeGQL, typeof FruitKey.ID> & Document;

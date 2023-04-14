@@ -52,7 +52,7 @@ export const removeFruitFromFruitStorage = extendType({
 
 				if (updated === null) throw new Error(`update failed for fruit [${target.name}]`);
 
-				return mapToPersistenceModel(mapFromPersistenceModel(updated));
+				return mapToPersistenceModel(mapFromPersistenceModel(updated)) as FruitTypeGQL;
 			},
 		});
 	},

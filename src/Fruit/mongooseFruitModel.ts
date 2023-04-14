@@ -5,10 +5,8 @@ import { FruitKey } from './enum_fruitKey.js';
 /**
  * mongoose model of Fruit type
  */
-export type P = Omit<FruitTypeGQL, typeof FruitKey.ID> & Document;
-// export type P = Omit<FruitTypeGQL, typeof FruitKey.ID> & mongoose.Document;
-// export const FruitModel : Model<P> = model<FruitTypeGQL>(
-export const FruitModel = mongoose.model<P>(
+export type FruitModelType = Omit<FruitTypeGQL, typeof FruitKey.ID> & mongoose.Document;
+export const FruitModel = mongoose.model<FruitModelType>(
 	'Fruit',
 	new mongoose.Schema<FruitTypeGQL>({
 		name: String,
