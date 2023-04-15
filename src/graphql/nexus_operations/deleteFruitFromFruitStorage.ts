@@ -6,7 +6,6 @@ import { GQLContextType } from '../common/type_GQLContextType.js';
 import type { FruitConstructArgs } from '../../Fruit/types.js';
 import { Fruit } from '../../Fruit/Fruit.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
-import { tempDataFruit } from '../../tempData.js';
 import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.js';
 import mongoose from 'mongoose';
 import { connectDB } from '../../persistence/connectDB.js';
@@ -34,6 +33,11 @@ export const deleteFruitFromFruitStorage = extendType({
 	},
 });
 
+/**
+ *
+ * @param fruit fruit object to commit to database
+ * @param DB_URI database connection uri
+ */
 async function commitToPersistence(fruit: Fruit, DB_URI: string) {
 	connectDB(DB_URI);
 
