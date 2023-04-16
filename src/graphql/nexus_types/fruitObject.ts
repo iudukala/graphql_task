@@ -1,8 +1,8 @@
 import { objectType } from 'nexus';
-import { GQLType } from '../common/enum_nexusTypeKey.js';
+import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
 
 export const FruitNX = objectType({
-	name: GQLType.Fruit,
+	name: FRUIT_NAME,
 	definition(t) {
 		t.nonNull.id('id');
 		t.nonNull.string('name');

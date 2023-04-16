@@ -1,5 +1,4 @@
 import { extendType, stringArg, intArg, nonNull } from 'nexus';
-import { GQLType } from '../common/enum_nexusTypeKey.js';
 import { AllNexusArgsDefs } from 'nexus/dist/core.js';
 import { GQLContextType } from '../common/type_GQLContextType.js';
 import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.js';
@@ -8,6 +7,7 @@ import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
 import { connectDB } from '../../persistence/connectDB.js';
 import { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX.js';
 import { Fruit } from '../../Fruit/Fruit.js';
+import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
 
 type FruitModifyArgs = Omit<
 	FruitTypeGQL,
@@ -23,7 +23,7 @@ export const storeFruitToFruitStorage = extendType({
 	type: 'Mutation',
 	definition(t) {
 		t.nonNull.field('storeFruitToFruitStorage', {
-			type: GQLType.Fruit,
+			type: FRUIT_NAME,
 
 			args: <Record<keyof FruitModifyArgs, AllNexusArgsDefs>>{
 				[FruitKey.Name]: nonNull(stringArg()),

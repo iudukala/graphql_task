@@ -1,5 +1,4 @@
 import { extendType, nonNull, stringArg } from 'nexus';
-import { GQLType } from '../common/enum_nexusTypeKey.js';
 import { GQLContextType } from '../common/type_GQLContextType.js';
 import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.js';
 import { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX.js';
@@ -7,14 +6,15 @@ import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { connectDB } from '../../persistence/connectDB.js';
 import { Fruit } from '../../Fruit/Fruit.js';
+import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
 
 // todo: change to 'findFruit()'
 export const findFruit = extendType({
-	type: GQLType.Query,
+	type: 'Query',
 
 	definition(t) {
 		t.nonNull.list.field('findFruit', {
-			type: GQLType.Fruit,
+			type: FRUIT_NAME,
 
 			args: {
 				[FruitKey.Name]: nonNull(stringArg()),

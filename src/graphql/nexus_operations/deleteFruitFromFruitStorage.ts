@@ -1,5 +1,4 @@
 import { extendType, stringArg, booleanArg, nonNull } from 'nexus';
-import { GQLType } from '../common/enum_nexusTypeKey.js';
 import { AllNexusArgsDefs } from 'nexus/dist/core.js';
 import { GQLContextType } from '../common/type_GQLContextType.js';
 
@@ -11,6 +10,7 @@ import mongoose from 'mongoose';
 import { connectDB } from '../../persistence/connectDB.js';
 import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
 import { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX.js';
+import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
 
 type DeleteMutationArgs = { [FruitKey.Name]: string; forceDelete: boolean };
 /**
@@ -21,13 +21,12 @@ export const deleteFruitFromFruitStorage = extendType({
 	type: 'Mutation',
 	definition(t) {
 		t.nonNull.field('deleteFruitFromFruitStorage', {
-			type: GQLType.Fruit,
+			type: FRUIT_NAME,
 
 			args: <Record<keyof DeleteMutationArgs, AllNexusArgsDefs>>{
 				[FruitKey.Name]: nonNull(stringArg()),
 				forceDelete: booleanArg(),
 			},
-
 
 			resolve: async (_, args: DeleteMutationArgs, context: GQLContextType) => {
 				await connectDB(context.DB_URI);
@@ -42,8 +41,8 @@ export const deleteFruitFromFruitStorage = extendType({
 
 					return mapToPersistenceModel(Fruit.reconstituteFruit(updated)) as FruitTypeGQL;
 					// else return 'delete successful';
-				} else return 'cant delete fruits where the amount is greater than zero';
-
+				} else return mapToPersistenceModel(Fruit.reconstituteFruit(target)) as FruitTypeGQL;
+				// return 'cant delete fruits where the amount is greater than zero';
 				// return commitToPersistence(Fruit.createNewFruit(args), context.DB_URI);
 			},
 		});
