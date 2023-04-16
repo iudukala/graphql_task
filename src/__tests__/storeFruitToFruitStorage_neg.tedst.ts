@@ -1,6 +1,5 @@
 import { perfromQuery } from './performQuery.js';
 import { initializeDBForTesting } from './initTestEnvironment.js';
-import { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX.js';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 

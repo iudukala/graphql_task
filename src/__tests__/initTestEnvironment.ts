@@ -13,9 +13,7 @@ export async function initializeDBForTesting(DB_URI: string | null | undefined) 
 
 	try {
 		await FruitModel.collection.drop();
-		console.log('dropped collection');
 	} finally {
 		await FruitModel.insertMany([...tempDataFruit.map(mapToPersistenceModel)]);
-		console.log('added to collection');
 	}
 }
