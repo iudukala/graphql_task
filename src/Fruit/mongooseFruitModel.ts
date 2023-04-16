@@ -14,4 +14,5 @@ export const FruitModel = mongoose.model<FruitModelType>(
 		limit: Number,
 		amount: Number,
 	}),
+	'Fruit',
 );
