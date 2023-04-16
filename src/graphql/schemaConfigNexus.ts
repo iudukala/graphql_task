@@ -19,7 +19,7 @@ export const nexusSchema = makeSchema({
 		module: join(DIRNAME, 'common', 'type_GQLContextType.ts'),
 		export: 'GQLContextType',
 	},
-	shouldGenerateArtifacts: false,
+	shouldGenerateArtifacts: true,
 
 	// prettier config to apply to output artifacts
 	prettierConfig: join(DIRNAME, '../../.prettierrc'),

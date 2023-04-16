@@ -11,6 +11,7 @@ type Fruit {
 
 type Mutation {
 	createFruitForFruitStorage(description: String!, limit: Int!, name: String!): Fruit!
+	deleteFruitFromFruitStorage(forceDelete: Boolean, name: String!): Fruit!
 	removeFruitFromFruitStorage(amount: Int!, name: String!): Fruit!
 	storeFruitToFruitStorage(amount: Int!, name: String!): Fruit!
 }
