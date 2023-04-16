@@ -8,9 +8,13 @@ jobs:
   test_on_push:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: checkout repo
+        uses: actions/checkout@v3
+      - name: install node
+        uses: actions/setup-node@v3
         with:
           node-version: 18
+      - name: create mongodb docker container for testing
+        uses: DigiPie/mongo-action@v2.0.1
       - run: yarn install
       - run: yarn run test
