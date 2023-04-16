@@ -1,6 +1,6 @@
 import { extendType, stringArg, intArg, nonNull } from 'nexus';
 import { GQLType } from '../common/enum_nexusTypeKey.js';
-import { AllNexusArgsDefs } from 'nexus/dist/core.js';
+import { AllNexusArgsDefs, booleanArg } from 'nexus/dist/core.js';
 import { GQLContextType } from '../common/type_GQLContextType.js';
 
 import type { FruitConstructArgs } from '../../Fruit/types.js';
@@ -10,6 +10,7 @@ import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.j
 import mongoose from 'mongoose';
 import { connectDB } from '../../persistence/connectDB.js';
 
+type DeleteMutationArgs = { [FruitKey.Name]: string; forceDelete: boolean };
 /**
  * mutation for deleting a fruit.
  * structure: deleteFruitFromFruitStorage(name: string, forceDelete: boolean)
@@ -20,14 +21,14 @@ export const deleteFruitFromFruitStorage = extendType({
 		t.nonNull.field('deleteFruitFromFruitStorage', {
 			type: GQLType.Fruit,
 
-			args: <Record<keyof FruitConstructArgs, AllNexusArgsDefs>>{
+			args: <Record<keyof DeleteMutationArgs, AllNexusArgsDefs>>{
 				[FruitKey.Name]: nonNull(stringArg()),
-				[FruitKey.Description]: nonNull(stringArg()),
-				[FruitKey.Limit]: nonNull(intArg()),
+				forceDelete: booleanArg(),
 			},
 
-			resolve: async (_, args: FruitConstructArgs, context: GQLContextType) => {
-				return commitToPersistence(Fruit.createNewFruit(args), context.DB_URI);
+			resolve: async (_, args: DeleteMutationArgs, context: GQLContextType) => {
+
+				// return commitToPersistence(Fruit.createNewFruit(args), context.DB_URI);
 			},
 		});
 	},
