@@ -4,6 +4,7 @@ import { GQLContextType } from '../common/type_GQLContextType.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { connectDB } from '../../persistence/connectDB.js';
 import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
+import { findFruitByName } from './helpers/findFruitByName.js';
 
 type DeleteMutationArgs = { [FruitKey.Name]: string; forceDelete?: boolean | null };
 /**
@@ -22,10 +23,7 @@ export const deleteFruitFromFruitStorage = extendType({
 			},
 
 			resolve: async (_, args: DeleteMutationArgs, context: GQLContextType) => {
-				await connectDB(context.DB_URI);
-
-				const target = await FruitModel.findOne({ [FruitKey.Name]: args.name }).exec();
-				if (target === null) throw new Error(`fruit not found for name: [${args.name}]`);
+				const target = await findFruitByName(args.name, context.DB_URI);
 
 				if (args.forceDelete || target.amount === 0) {
 					const updated = await FruitModel.findByIdAndDelete(target._id);
@@ -33,6 +31,10 @@ export const deleteFruitFromFruitStorage = extendType({
 					if (updated === null) throw new Error(`delete failed for fruit [${target.name}]`);
 					else return `delete successful for fruit ${target.name} with id [${target._id}]`;
 				}
+
+
+
+
 
 				return (
 					`fruit name: ${target.name} has an amount of ${target.amount}.` +

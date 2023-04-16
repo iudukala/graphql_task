@@ -7,6 +7,7 @@ import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { connectDB } from '../../persistence/connectDB.js';
 import { Fruit } from '../../Fruit/Fruit.js';
 import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
+import { findFruitByName } from './helpers/findFruitByName.js';
 
 // todo: change to 'findFruit()'
 export const findFruit = extendType({
@@ -27,14 +28,3 @@ export const findFruit = extendType({
 		});
 	},
 });
-
-const findFruitByName = async (fruitName: string, DB_URI: string) => {
-	await connectDB(DB_URI);
-	const target = await FruitModel.findOne({ [FruitKey.Name]: fruitName })
-		.lean()
-		.exec();
-	if (target === null || target === undefined)
-		throw new Error(`fruit not found for name: [${fruitName}]`);
-
-	return target;
-};

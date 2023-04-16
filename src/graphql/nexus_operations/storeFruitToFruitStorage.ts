@@ -8,6 +8,7 @@ import { connectDB } from '../../persistence/connectDB.js';
 import { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX.js';
 import { Fruit } from '../../Fruit/Fruit.js';
 import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
+import { findFruitByName } from './helpers/findFruitByName.js';
 
 type FruitModifyArgs = Omit<
 	FruitTypeGQL,
@@ -31,11 +32,7 @@ export const storeFruitToFruitStorage = extendType({
 			},
 
 			resolve: async (_discard, args: FruitModifyArgs, context: GQLContextType) => {
-				connectDB(context.DB_URI);
-
-				const target = await FruitModel.findOne({ [FruitKey.Name]: args.name }).exec();
-
-				if (target === null) throw new Error(`fruit not found for name: [${args.name}]`);
+				const target = await findFruitByName(args.name, context.DB_URI);
 
 				if (target.amount + args.amount > target.limit)
 					throw new Error(
