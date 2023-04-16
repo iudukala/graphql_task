@@ -19,7 +19,7 @@ export async function initializeDBForTesting(DB_URI: string | null | undefined) 
 
 		if (collectionExists) await FruitModel.collection.drop();
 	} catch (exception) {
-		console.log(exception);
+		console.error('test environment init failure: ' + exception);
 	} finally {
 		await FruitModel.insertMany([...tempDataFruit.map(mapToPersistenceModel)]);
 	}
