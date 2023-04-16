@@ -1,7 +1,7 @@
 import { graphql } from 'graphql';
 import { nexusSchema } from '../graphql/schemaConfigNexus.js';
 import { contextGQL } from '../graphql/common/contextGQL.js';
-import { initializeDBForTesting } from './initializeDBForTesting.js';
+import { initializeDBForTesting } from './initTestEnvironment.js';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { connectDB } from '../persistence/connectDB.js';
@@ -17,34 +17,36 @@ jest.mock('../graphql/dirnameESM.js', () => ({
 beforeEach(async () => {
 	dotenv.config();
 	await initializeDBForTesting(process.env['DB_URI']);
+
+	// await connectDB(process.env['DB_URI']);
 });
 
 afterAll(async () => {
 	mongoose.disconnect();
 });
 
+const perfromQuery = (query: string) =>
+	graphql({
+		schema: nexusSchema,
+		source: query,
+		contextValue: contextGQL,
+	});
+
 describe('graphql tests', () => {
-	test('creates a new Fruit and checks translatio', async () => {
-		await connectDB(process.env['DB_URI']);
+	test('uses query findFruit() to find an existing fruit', async () => {
 		// jest.setTimeout(30000);
 
-		const result = await graphql({
-			schema: nexusSchema,
-			source: `query{
-					findFruit(name: "apple"){
-						name
-						description
-						id
-					}
-				}`,
-			contextValue: contextGQL,
-		});
+		const result = await perfromQuery(
+			`query{
+				findFruit(name: "apple"){
+					name
+					description
+					id
+				}
+			}`,
+		);
 
-		console.log('output----------------' + JSON.stringify(result));
-		console.log((result.data?.findFruit as [FruitTypeGQL])[0].name);
-		// console.log(JSON.stringify(result.data?.findFruit));
-
-		// console.log(result.data?.findFruit?[0]?.name)
-		expect(result).not.toBeNull();
+		// console.log('output----------------' + JSON.stringify(result));
+		expect((result.data?.findFruit as [FruitTypeGQL])[0].name).toBe('apple');
 	});
 });

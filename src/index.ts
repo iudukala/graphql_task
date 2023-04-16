@@ -4,7 +4,7 @@ import { nexusSchema } from './graphql/schemaConfigNexus.js';
 import { contextGQL } from './graphql/common/contextGQL.js';
 import dotenv from 'dotenv';
 import { mapToPersistenceModel } from './persistence/mapToPersistenceModel.js';
-import { initializeDBForTesting } from './__tests__/initializeDBForTesting.js';
+import { initializeDBForTesting } from './__tests__/initTestEnvironment.js';
 
 // fetching environment variables set in the .env file and initializing the connection string var
 dotenv.config();

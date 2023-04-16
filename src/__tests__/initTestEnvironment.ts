@@ -18,5 +18,5 @@ export async function initializeDBForTesting(DB_URI: string | null | undefined) 
 		await FruitModel.insertMany([...tempDataFruit.map(mapToPersistenceModel)]);
 	}
 
-	mongoose.connection.close();
+	// mongoose.connection.close();
 }
