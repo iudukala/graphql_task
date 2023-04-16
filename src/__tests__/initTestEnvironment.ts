@@ -2,6 +2,7 @@ import { FruitModel } from '../Fruit/mongooseFruitModel.js';
 import { tempDataFruit } from '../tempData.js';
 import { connectDB } from '../persistence/connectDB.js';
 import { mapToPersistenceModel } from '../persistence/mapToPersistenceModel.js';
+import mongoose from 'mongoose';
 
 /**
  * clears out existing data and adds new
@@ -12,6 +13,15 @@ export async function initializeDBForTesting(DB_URI: string | null | undefined) 
 	await connectDB(DB_URI);
 
 	try {
+		const x = (await mongoose.connection.db.listCollections().toArray()).map(
+			collection => collection.name,
+		);
+
+		// .includes(FruitModel.modelName.toLowerCase());
+		console.log(JSON.stringify(x));
+		//  (err, names) => {
+		// 	console.log(names);
+		// });
 		await FruitModel.collection.drop();
 	} catch (exception) {
 		console.log(exception);

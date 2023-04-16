@@ -1,4 +1,4 @@
-import mongoose, { model, Document, Schema, Model } from 'mongoose';
+import mongoose from 'mongoose';
 import { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX.js';
 import { FruitKey } from './enum_fruitKey.js';
 

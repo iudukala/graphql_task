@@ -31,7 +31,7 @@ export const removeFruitFromFruitStorage = extendType({
 			},
 
 			resolve: async (_discard, args: FruitModifyArgs, context: GQLContextType) => {
-				connectDB(context.DB_URI);
+				await connectDB(context.DB_URI);
 
 				const target = await FruitModel.findOne({ [FruitKey.Name]: args.name }).exec();
 
