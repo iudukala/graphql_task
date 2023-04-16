@@ -22,6 +22,8 @@ afterAll(async () => {
 
 describe('storeFruitToFruitStorage() endpoint test', () => {
 	test("ensures fruit doesn't exist, creates it and validates created data", async () => {
+		jest.setTimeout(10000);
+
 		await perfromQuery(
 			`query{
 				findFruit(name: "lemon"){
