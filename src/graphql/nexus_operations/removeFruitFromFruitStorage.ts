@@ -39,8 +39,8 @@ export const removeFruitFromFruitStorage = extendType({
 
 				if (target.amount - args.amount < 0)
 					throw new Error(
-						`specified amount (${args.amount}) deducts beyond zero. \
-						current value: ${target.amount}`,
+						`specified amount (${args.amount}) deducts beyond zero.` +
+							`current value: ${target.amount}`,
 					);
 
 				const updated = await FruitModel.findByIdAndUpdate(
