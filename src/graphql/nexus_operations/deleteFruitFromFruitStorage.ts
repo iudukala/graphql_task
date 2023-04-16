@@ -2,7 +2,6 @@ import { extendType, stringArg, booleanArg, nonNull } from 'nexus';
 import { AllNexusArgsDefs } from 'nexus/dist/core.js';
 import { GQLContextType } from '../common/type_GQLContextType.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
-import { connectDB } from '../../persistence/connectDB.js';
 import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
 import { findFruitByName } from './helpers/findFruitByName.js';
 
