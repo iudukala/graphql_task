@@ -13,16 +13,11 @@ export async function initializeDBForTesting(DB_URI: string | null | undefined) 
 	await connectDB(DB_URI);
 
 	try {
-		const x = (await mongoose.connection.db.listCollections().toArray()).map(
-			collection => collection.name,
-		);
+		const collectionExists = (await mongoose.connection.db.listCollections().toArray())
+			.map(collection => collection.name)
+			.includes(FruitModel.collection.collectionName);
 
-		// .includes(FruitModel.modelName.toLowerCase());
-		console.log(JSON.stringify(x));
-		//  (err, names) => {
-		// 	console.log(names);
-		// });
-		await FruitModel.collection.drop();
+		if (collectionExists) await FruitModel.collection.drop();
 	} catch (exception) {
 		console.log(exception);
 	} finally {
