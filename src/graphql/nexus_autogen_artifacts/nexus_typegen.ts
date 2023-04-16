@@ -6,7 +6,7 @@
 import type { GQLContextType } from './../common/type_GQLContextType.js';
 
 declare global {
-	type NexusGen = NexusGenTypes
+	interface NexusGen extends NexusGenTypes {}
 }
 
 export interface NexusGenInputs {}
