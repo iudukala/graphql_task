@@ -20,10 +20,8 @@ afterAll(async () => {
 	mongoose.disconnect();
 });
 
-export { perfromQuery };
-
 describe('graphql tests', () => {
-	test('uses query findFruit() to find an existing fruit', async () => {
+	test('uses findFruit() to find an existing fruit', async () => {
 		const result = await perfromQuery(
 			`query{
 				findFruit(name: "apple"){
@@ -33,5 +31,17 @@ describe('graphql tests', () => {
 		);
 
 		expect((result.data?.findFruit as [FruitTypeGQL])[0].name).toBe('apple');
+	});
+
+	test('uses findFruit() to find a non-existent fruit', async () => {
+		const result = await perfromQuery(
+			`query{
+				findFruit(name: "XXXXXX"){
+					name
+				}
+			}`,
+		);
+
+		expect(result.data).toBe(null);
 	});
 });
