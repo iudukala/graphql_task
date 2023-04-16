@@ -1,5 +1,5 @@
 import { GQLContextType } from './type_GQLContextType.js';
-import { fruitSampleData } from '../../__tests__/helpers/sampleDataFruit.js';
+import { fruitSampleData } from '../../__tests__/data/sampleDataFruit.js';
 import dotenv from 'dotenv';
 
 // fetching environment variables set in the .env file

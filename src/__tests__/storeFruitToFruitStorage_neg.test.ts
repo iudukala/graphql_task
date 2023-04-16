@@ -1,5 +1,5 @@
-import { perfromQuery } from './performQuery.js';
-import { initializeDBForTesting } from './initTestEnvironment.js';
+import { perfromQuery } from './helpers/performQuery.js';
+import { initializeDBForTesting } from './helpers/initTestEnvironment.js';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 

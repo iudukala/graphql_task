@@ -1,7 +1,7 @@
-import { FruitModel } from '../Fruit/mongooseFruitModel.js';
-import { fruitSampleData } from './helpers/sampleDataFruit.js';
-import { connectDB } from '../persistence/connectDB.js';
-import { mapToPersistenceModel } from '../persistence/mapToPersistenceModel.js';
+import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
+import { fruitSampleData } from '../data/sampleDataFruit.js';
+import { connectDB } from '../../persistence/connectDB.js';
+import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.js';
 import mongoose from 'mongoose';
 
 /**
