@@ -43,7 +43,6 @@ describe('storeFruitToFruitStorage() endpoint test', () => {
 				}
 			}`,
 		).then(result => {
-			console.log(JSON.stringify(result));
 			const returned = result.data?.[createMutName] as FruitTypeGQL;
 
 			expect(returned.name).toBe('lemon');
