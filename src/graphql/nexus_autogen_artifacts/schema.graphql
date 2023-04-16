@@ -18,5 +18,4 @@ type Mutation {
 
 type Query {
 	findFruit(name: String!): [Fruit]!
-	fruits: [Fruit]!
 }

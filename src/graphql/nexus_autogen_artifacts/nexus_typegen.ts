@@ -61,7 +61,6 @@ export interface NexusGenFieldTypes {
 	Query: {
 		// field return type
 		findFruit: Array<NexusGenRootTypes['Fruit'] | null>; // [Fruit]!
-		fruits: Array<NexusGenRootTypes['Fruit'] | null>; // [Fruit]!
 	};
 }
 
@@ -84,7 +83,6 @@ export interface NexusGenFieldTypeNames {
 	Query: {
 		// field return type name
 		findFruit: 'Fruit';
-		fruits: 'Fruit';
 	};
 }
 
