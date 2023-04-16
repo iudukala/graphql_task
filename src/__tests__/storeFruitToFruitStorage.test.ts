@@ -11,7 +11,7 @@ jest.mock('../graphql/dirnameESM.js', () => ({
 	getDirname: () => __dirname,
 }));
 
-beforeEach(async () => {
+beforeAll(async () => {
 	dotenv.config();
 	await initializeDBForTesting(process.env['DB_URI']);
 });
@@ -20,28 +20,35 @@ afterAll(async () => {
 	mongoose.disconnect();
 });
 
-describe('findFruit() query tests', () => {
+describe('storeFruitToFruitStorage() endpoint test', () => {
 	test('finds an existing fruit', async () => {
-		const result = await perfromQuery(
-			`query{
-				findFruit(name: "apple"){
-					name
-				}
-			}`,
-		);
-
-		expect((result.data?.findFruit as [FruitTypeGQL])[0].name).toBe('apple');
-	});
-
-	test('finds a non-existent fruit', async () => {
-		const result = await perfromQuery(
+		await perfromQuery(
 			`query{
 				findFruit(name: "lemon"){
 					name
 				}
 			}`,
-		);
+		).then(result => {
+			expect(result.data).toBe(null);
+		});
 
-		expect(result.data).toBe(null);
+		const createMutName = 'createFruitForFruitStorage';
+		perfromQuery(
+			`mutation{
+				${createMutName}(
+					name: "lemon", description: "lemony description", limit: 20){
+						name
+						amount
+						limit
+				}
+			}`,
+		).then(result => {
+			console.log(JSON.stringify(result));
+			const returned = result.data?.[createMutName] as FruitTypeGQL;
+
+			expect(returned.name).toBe('lemon');
+			expect(returned.limit).toBe(20);
+			expect(returned.amount).toBe(0);
+		});
 	});
 });

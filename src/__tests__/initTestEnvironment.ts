@@ -4,7 +4,7 @@ import { connectDB } from '../persistence/connectDB.js';
 import { mapToPersistenceModel } from '../persistence/mapToPersistenceModel.js';
 
 /**
- * clears out existing data and adds some back
+ * clears out existing data and adds new
  *
  * @param DB_URI database connection uri
  */
