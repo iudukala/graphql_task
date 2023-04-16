@@ -36,7 +36,7 @@
 
 ## progress
 
-- [ ] All code written should follow Domain Driven Design, have a look at (<https://github.com/stemmlerjs/ddd-forum>) for reference
+- [ ] All code written should follow Domain Driven Design
 
 - [ ] When the fruit is created, updated, or deleted; a domain event should be emitted.
 
@@ -48,9 +48,9 @@
 
 - [ ] The fruit should be retrieved through a Repository
 
-- [ ] The fruit should be converted from a database object to a domain object and viceversa through mappers
+- [x] The fruit should be converted from a database object to a domain object and viceversa through mappers
 
-- [ ] Use Mongoose for your ORM
+- [x] Use Mongoose for your ORM
 
 - [x] Use Jest for your testing
 
