@@ -43,9 +43,13 @@ export const storeFruitToFruitStorage = extendType({
 						(${target.limit}). current value: ${target.amount}`,
 					);
 
-				const updated = await FruitModel.findByIdAndUpdate(target._id, {
-					[FruitKey.Amount]: target.amount + args.amount,
-				});
+				const updated = await FruitModel.findByIdAndUpdate(
+					target._id,
+					{
+						[FruitKey.Amount]: target.amount + args.amount,
+					},
+					{ returnDocument: 'after' },
+				);
 
 				if (updated === null) throw new Error(`update failed for fruit [${target.name}]`);
 
