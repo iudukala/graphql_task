@@ -11,17 +11,17 @@ jest.mock('../graphql/dirnameESM.js', () => ({
 	getDirname: () => __dirname,
 }));
 
-beforeAll(async () => {
+beforeEach(async () => {
 	dotenv.config();
 	await initializeDBForTesting(process.env['DB_URI']);
 });
 
 afterAll(async () => {
-	mongoose.disconnect();
+	mongoose.connection.close();
 });
 
 describe('storeFruitToFruitStorage() endpoint test', () => {
-	test('finds an existing fruit', async () => {
+	test("ensures fruit doesn't exist, creates it and validates created data", async () => {
 		await perfromQuery(
 			`query{
 				findFruit(name: "lemon"){
@@ -33,7 +33,7 @@ describe('storeFruitToFruitStorage() endpoint test', () => {
 		});
 
 		const createMutName = 'createFruitForFruitStorage';
-		perfromQuery(
+		await perfromQuery(
 			`mutation{
 				${createMutName}(
 					name: "lemon", description: "lemony description", limit: 20){
