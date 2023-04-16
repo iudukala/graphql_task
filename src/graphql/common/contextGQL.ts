@@ -1,5 +1,5 @@
 import { GQLContextType } from './type_GQLContextType.js';
-import { tempDataFruit } from '../../tempData.js';
+import { fruitSampleData } from '../../__tests__/helpers/sampleDataFruit.js';
 import dotenv from 'dotenv';
 
 // fetching environment variables set in the .env file
@@ -12,5 +12,5 @@ if (process.env['DB_URI'] === null || process.env['DB_URI'] === undefined)
  */
 export const contextGQL: GQLContextType = {
 	DB_URI: process.env['DB_URI'],
-	fruits: tempDataFruit,
+	fruits: fruitSampleData,
 };
