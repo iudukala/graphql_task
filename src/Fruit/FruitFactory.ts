@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto.js';
 import { FruitKey } from './enum_fruitKey.js';
 
 import type { FruitConstructArgs } from './types.js';
-import type { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX.js';
+import type { FruitTypeGQL } from '../graphql/nexus_types/type_FruitGQL.js';
 
 /**
  *

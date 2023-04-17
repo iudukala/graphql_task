@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { Fruit } from '../Fruit/Fruit.js';
 import { connectDB } from './connectDB.js';
 import { mapToPersistenceModel } from './mapToPersistenceModel.js';
-import { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX.js';
+import { FruitTypeGQL } from '../graphql/nexus_types/type_FruitGQL.js';
 
 /**
  * takes a fruit and commits it to the database. would make sense to convert this to a generic function but currently the only domain entity is fruit.

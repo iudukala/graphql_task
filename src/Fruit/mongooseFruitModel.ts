@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX.js';
+import { FruitTypeGQL } from '../graphql/nexus_types/type_FruitGQL.js';
 import { FruitKey } from './enum_fruitKey.js';
 
 /**

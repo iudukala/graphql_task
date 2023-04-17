@@ -1,7 +1,7 @@
 import { objectType } from 'nexus';
 import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
 
-export const FruitNX = objectType({
+export const FruitGQLType = objectType({
 	name: FRUIT_NAME,
 	definition(t) {
 		t.nonNull.id('id');

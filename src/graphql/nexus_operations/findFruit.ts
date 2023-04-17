@@ -1,7 +1,7 @@
 import { extendType, nonNull, stringArg } from 'nexus';
 import { GQLContextType } from '../common/type_GQLContextType.js';
 import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.js';
-import { FruitTypeGQL } from '../nexus_types/FruitTypeGQLNX.js';
+import { FruitTypeGQL } from '../nexus_types/type_FruitGQL.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { Fruit } from '../../Fruit/Fruit.js';
 import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';

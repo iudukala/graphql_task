@@ -2,7 +2,7 @@ import { FruitKey } from './enum_fruitKey.js';
 import { FruitDescriptionVO } from './FruitDescriptionVO.js';
 import { Entity } from '../core/Entity.js';
 
-import type { FruitTypeGQL } from '../graphql/nexus_types/FruitTypeGQLNX.js';
+import type { FruitTypeGQL } from '../graphql/nexus_types/type_FruitGQL.js';
 import type { FruitConstructArgs, FruitInternalProps } from './types.js';
 import mongoose from 'mongoose';
 
