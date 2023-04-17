@@ -2,9 +2,9 @@
 
 - nexus requires --transpile-only to remove type checking only leaves ide type checks.
 
-- found an issue where a typescript const enum wasn't being accepted by the omit utility function. worked as expected when using pick<> to select the fields required but didn't when trying to use it to exclude the fields to extract the required ones. (turned out to be an issue with enums. const enums are static enough to be inlined at compilation so i don't see why they're insufficient for type construction. switched to const asserted object
-  )
+- found an issue where a const enum wasn't being accepted by the omit utility function in typescript. worked as expected when using pick<> to select the fields required but didn't when trying to use it to exclude the fields to extract the required ones. turned out to be an issue with enums. const enums are static enough to be inlined at compilation so i don't see why they're insufficient for type construction. switched to const asserted object <https://github.com/microsoft/TypeScript/issues/40944>
 
+- the name of a fruit is required to be unique, which would allow them act as an identifier for fruit
 - [no] the name of a fruit is required to be unique, ensured through a domain service. no need for a separate id field since name can be used for identification. however, using the name as the ID introduces two issues: (+ using a uuid separately allows it to be uniquely identified even amoung different types of entities. useful?)
 
 - would break the convention of having a globally unique identifier for each entity object
@@ -18,7 +18,6 @@
 - another option was to copy the name from the fruit field to the id field and maintain two copies. not a major issue since all objects are immutable and fields are not changed individually.
 
 - the issue with omit is not an issue with the behaviour of omit. it's to do with the behaviour in enums.
-  <https://github.com/microsoft/TypeScript/issues/40944>
 
 - switched to cons asserted object from enum. allows for a single source of truth and additional compiler checks. also avoids issues related to unexpected behaviours from enums
 
