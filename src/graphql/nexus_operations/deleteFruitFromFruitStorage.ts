@@ -35,22 +35,23 @@ export const deleteFruitFromFruitStorage = extendType({
 				if (args.forceDelete || target.amount === 0) {
 					const updated = await repo.delete(FruitMapper.toDomain(target));
 
-					if (updated === null)
-						return { successful: false, message: `delete failed for fruit [${target.name}]` };
+					if (updated === null) return failureMessage(`delete failed for fruit [${target.name}]`);
 
-					return {
-						successful: true,
-						message: `deleted fruit [${target.name}] with amount ${target.amount}`,
-					};
+					return successMessage(`deleted fruit [${target.name}] with amount ${target.amount}`);
 				}
 
-				return {
-					successful: false,
-					message:
-						`fruit name: ${target.name} has an amount of ${target.amount}; ` +
+				return failureMessage(
+					`fruit name: ${target.name} has an amount of ${target.amount}; ` +
 						`cannot delete fruits with an amount > 0 if 'forceDelete: true' is not specified`,
-				};
+				);
 			},
 		});
 	},
 });
+
+const failureMessage = (message: string) => {
+	return { successful: false, message: message };
+};
+const successMessage = (message: string) => {
+	return { successful: true, message: message };
+};
