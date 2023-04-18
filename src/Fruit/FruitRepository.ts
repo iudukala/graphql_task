@@ -3,8 +3,7 @@ import { connectDB } from '../persistence/connectDB.js';
 import { mapToPersistenceModel } from '../persistence/mapToPersistenceModel.js';
 import { Fruit } from './Fruit.js';
 import { FruitKey } from './enum_fruitKey.js';
-import { FruitModel } from './mongooseFruitModel.js';
-
+import { FruitModel, FruitModelType } from './mongooseFruitModel.js';
 class FruitRepository {
 	private readonly DB_URI: string;
 
@@ -38,7 +37,7 @@ class FruitRepository {
 	commitToPersistence = async (fruit: Fruit): Promise<boolean> => {
 		await connectDB(this.DB_URI);
 
-		const newFruit = await mapToPersistenceModel(fruit)
+		const newFruit: FruitModelType = await mapToPersistenceModel(fruit)
 			.save()
 			.catch(error => {
 				throw new Error('database commit failed: ' + error);

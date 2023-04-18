@@ -1,14 +1,9 @@
 import { FruitKey } from './enum_fruitKey.js';
 import { FruitDescriptionVO } from './FruitDescriptionVO.js';
 import { Entity } from '../core/Entity.js';
-
-import type { FruitTypeGQL } from '../graphql/nexus_types/type_FruitGQL.js';
-import type { FruitConstructArgs, FruitInternalProps } from './types.js';
 import mongoose from 'mongoose';
+import type { FruitConstructArgs, FruitInternalProps, PersistenceFruitModel } from './types.js';
 
-type PersistenceFruitModel = Omit<FruitTypeGQL, typeof FruitKey.ID> & {
-	_id: mongoose.Types.ObjectId;
-};
 /** @template FruitInternal, FruitTypeGQL */
 export class Fruit extends Entity<FruitInternalProps> {
 	/**
