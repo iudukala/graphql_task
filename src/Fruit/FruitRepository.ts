@@ -3,9 +3,8 @@ import { connectDB } from '../persistence/connectDB.js';
 import { Fruit } from './Fruit.js';
 import { FruitKey } from './enum_fruitKey.js';
 import { FruitModel } from './mongooseFruitModel.js';
-import { FruitModelType } from './types.js';
 import { FruitMapper } from './FruitMapper.js';
-class FruitRepository {
+export class FruitRepository {
 	private readonly DB_URI: string;
 
 	constructor(DB_URI: string) {
@@ -35,10 +34,15 @@ class FruitRepository {
 		return target;
 	};
 
-	commitToPersistence = async (fruit: Fruit): Promise<boolean> => {
+	/**
+	 * @description takes a fruit and commits it to the database. would make sense to convert this to a generic function but currently the only domain entity is fruit.
+	 * @param fruit fruit object
+	 * @returns  the committed object cast to a form that the nexus resolvers recognize
+	 */
+	commitToPersistence = async (fruit: Fruit): Promise<true> => {
 		await connectDB(this.DB_URI);
 
-		const newFruit: FruitModelType = await FruitMapper.toPersistence(fruit)
+		await FruitMapper.toPersistence(fruit)
 			.save()
 			.catch(error => {
 				throw new Error('database commit failed: ' + error);
