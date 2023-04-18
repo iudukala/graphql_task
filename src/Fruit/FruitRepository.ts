@@ -5,7 +5,7 @@ import { FruitKey } from './enum_fruitKey.js';
 import { FruitModel } from './mongooseFruitModel.js';
 import { FruitModelType } from './types.js';
 import { FruitMapper } from './FruitMapper.js';
-class FruitRepository {
+export class FruitRepository {
 	private readonly DB_URI: string;
 
 	constructor(DB_URI: string) {
@@ -35,7 +35,7 @@ class FruitRepository {
 		return target;
 	};
 
-	commitToPersistence = async (fruit: Fruit): Promise<boolean> => {
+	commitToPersistence = async (fruit: Fruit): Promise<true> => {
 		await connectDB(this.DB_URI);
 
 		const newFruit: FruitModelType = await FruitMapper.toPersistence(fruit)
@@ -43,6 +43,8 @@ class FruitRepository {
 			.catch(error => {
 				throw new Error('database commit failed: ' + error);
 			});
+
+
 
 		mongoose.connection.close();
 		return true;
