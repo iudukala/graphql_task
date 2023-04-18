@@ -1,4 +1,6 @@
+import mongoose from 'mongoose';
 import { connectDB } from '../persistence/connectDB.js';
+import { mapToPersistenceModel } from '../persistence/mapToPersistenceModel.js';
 import { Fruit } from './Fruit.js';
 import { FruitKey } from './enum_fruitKey.js';
 import { FruitModel } from './mongooseFruitModel.js';
@@ -31,5 +33,18 @@ class FruitRepository {
 			throw new Error(`fruit not found for name: [${fruitName}]`);
 
 		return target;
+	};
+
+	commitToPersistence = async (fruit: Fruit): Promise<boolean> => {
+		await connectDB(this.DB_URI);
+
+		const newFruit = await mapToPersistenceModel(fruit)
+			.save()
+			.catch(error => {
+				throw new Error('database commit failed: ' + error);
+			});
+
+		mongoose.connection.close();
+		return true;
 	};
 }

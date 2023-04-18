@@ -31,10 +31,6 @@ export const deleteFruitFromFruitStorage = extendType({
 					else return `delete successful for fruit ${target.name} with id [${target._id}]`;
 				}
 
-
-
-
-
 				return (
 					`fruit name: ${target.name} has an amount of ${target.amount}.` +
 					`cannot delete fruits with an amount > 0 if 'forceDelete: true' is not specified`
