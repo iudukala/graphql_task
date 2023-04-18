@@ -5,7 +5,7 @@ import { Fruit } from '../../Fruit/Fruit.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
 import { FruitMapper } from '../../Fruit/FruitMapper.js';
-import { FruitRepository } from '../../Fruit/FruitRepository.js';
+import { FruitRepo } from '../../Fruit/FruitRepository.js';
 import type { FruitConstructArgs, FruitDTO } from '../../Fruit/types.js';
 
 /**
@@ -26,7 +26,7 @@ export const createFruitForFruitStorage = extendType({
 
 			resolve: async (_, args: FruitConstructArgs, context: GQLContextType) => {
 				const newFruit: Fruit = Fruit.createNewFruit(args);
-				await new FruitRepository(context.DB_URI).commitToPersistence(newFruit);
+				await new FruitRepo(context.DB_URI).commitToPersistence(newFruit);
 
 				return FruitMapper.toPersistence(newFruit) as FruitDTO;
 			},

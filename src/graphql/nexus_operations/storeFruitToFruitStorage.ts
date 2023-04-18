@@ -46,9 +46,10 @@ export const storeFruitToFruitStorage = extendType({
 					{ returnDocument: 'after' },
 				);
 
-				if (updated === null) throw new Error(`update failed for fruit [${target.name}]`);
+				if (updated === null || updated === undefined)
+					throw new Error(`update failed for fruit [${target.name}]`);
 
-				return FruitMapper.toPersistence(FruitMapper.toDomain(updated)) as FruitDTO;
+				return [updated].map(FruitMapper.toDomain).map(FruitMapper.toDTO)[0];
 			},
 		});
 	},

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { Fruit } from '../Fruit/Fruit.js';
-import { FruitModelType, PersistenceFruitModel } from '../Fruit/types.js';
+import { FruitDTO, FruitModelType, PersistenceFruitModel } from '../Fruit/types.js';
 import { FruitKey } from './enum_fruitKey.js';
 import { FruitModel } from './mongooseFruitModel.js';
 
@@ -33,5 +33,20 @@ export class FruitMapper {
 			[FruitKey.Limit]: fruit.props.limit,
 			[FruitKey.Amount]: fruit.props.amount,
 		});
+	};
+
+	/**
+	 * @description translates a fruit object to an intermidiary DTO
+	 * @param fruit fruit object to be translated
+	 * @returns DTO
+	 */
+	static toDTO = (fruit: Fruit): FruitDTO => {
+		return {
+			[FruitKey.ID]: fruit.id,
+			[FruitKey.Name]: fruit.props.name,
+			[FruitKey.Description]: fruit.props.description.value,
+			[FruitKey.Limit]: fruit.props.limit,
+			[FruitKey.Amount]: fruit.props.amount,
+		};
 	};
 }
