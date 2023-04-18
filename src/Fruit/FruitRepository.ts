@@ -4,10 +4,12 @@ import { Fruit } from './Fruit.js';
 import { FruitKey } from './enum_fruitKey.js';
 import { FruitModel } from './mongooseFruitModel.js';
 import { FruitMapper } from './FruitMapper.js';
+import { FruitModelType } from './types.js';
 export class FruitRepository {
 	private readonly DB_URI: string;
 
 	constructor(DB_URI: string) {
+		connectDB(DB_URI);
 		this.DB_URI = DB_URI;
 	}
 
@@ -24,12 +26,12 @@ export class FruitRepository {
 	 * @description locates a fruit by it's name
 	 * @param fruitName the name to query for
 	 */
-	findFruitByName = async (fruitName: string) => {
+	findFruitByName = async (fruitName: string): Promise<FruitModelType | null> => {
 		await connectDB(this.DB_URI);
 		const target = await FruitModel.findOne({ [FruitKey.Name]: fruitName }).exec();
 
-		if (target === null || target === undefined)
-			throw new Error(`fruit not found for name: [${fruitName}]`);
+		if (target === null || target === undefined) return null;
+		// throw new Error(`fruit not found for name: [${fruitName}]`);
 
 		return target;
 	};
@@ -40,6 +42,7 @@ export class FruitRepository {
 	 * @returns  the committed object cast to a form that the nexus resolvers recognize
 	 */
 	commitToPersistence = async (fruit: Fruit): Promise<true> => {
+		//todo: validation through domain service
 		await connectDB(this.DB_URI);
 
 		await FruitMapper.toPersistence(fruit)
@@ -50,5 +53,17 @@ export class FruitRepository {
 
 		mongoose.connection.close();
 		return true;
+	};
+
+	delete = async (fruitName: string, forceDelete: boolean): Promise<string> => {
+		const target = await this.findFruitByName(fruitName);
+
+
+		if (forceDelete || target.amount === 0) {
+			const updated = await FruitModel.findByIdAndDelete(target._id);
+
+			if (updated === null) throw new Error(`delete failed for fruit [${target.name}]`);
+			else return `delete successful for fruit ${target.name} with id [${target._id}]`;
+		}
 	};
 }
