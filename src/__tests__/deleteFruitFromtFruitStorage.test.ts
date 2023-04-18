@@ -2,6 +2,8 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { initializeDBForTesting } from './helpers/initTestEnvironment.js';
 import { perfromQuery } from './helpers/performQuery.js';
+import { MUTATION_RETURN_TYPE_NAME } from '../graphql/nexus_types/MUTATION_RETURN_NAME.js';
+import { NexusGenObjects } from '../graphql/nexus_autogen_artifacts/nexus_typegen.js';
 
 /**
  * replacing the import.meta access call for directory name since jest has effectively no esm support
@@ -20,9 +22,7 @@ afterAll(async () => {
 });
 
 describe('deleteFruitFromFruitStorage() endpoint test', () => {
-	test.skip('ensures fruit exists, deletes and validated removal', async () => {
-		jest.setTimeout(10000);
-
+	test('ensures fruit exists, deletes and validated removal', async () => {
 		await perfromQuery(
 			`query{
 				findFruit(name: "apple"){
@@ -33,18 +33,20 @@ describe('deleteFruitFromFruitStorage() endpoint test', () => {
 			expect(result.data).not.toBe(null);
 		});
 
-		const mutationName = 'deleteFruitFromFruitStorage';
+		const MUT_NAME = 'deleteFruitFromFruitStorage';
 		await perfromQuery(
 			`mutation{
-				${mutationName}(
-					name: "apple", forceDelete: false)
+				${MUT_NAME}(
+					name: "apple", forceDelete: false){
+						successful
+					}
 			}`,
 		).then(result => {
-			// const returned = FruitMapper.toDomain(result.data?.[mutationName])
-			// //  as FruitDTO;
-			// expect(returned.name).toBe('lemon');
-			// expect(returned.limit).toBe(20);
-			// expect(returned.amount).toBe(0);
+			const returned = result.data?.[MUT_NAME] as NexusGenObjects[typeof MUTATION_RETURN_TYPE_NAME];
+
+			expect(returned.successful).toBe(true);
 		});
 	});
 });
+
+//todo: add another test where force delete is necessary
