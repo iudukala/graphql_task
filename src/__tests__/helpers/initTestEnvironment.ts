@@ -1,8 +1,8 @@
 import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
 import { fruitSampleData } from '../data/sampleDataFruit.js';
 import { connectDB } from '../../persistence/connectDB.js';
-import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.js';
 import mongoose from 'mongoose';
+import { FruitMapper } from '../../Fruit/FruitMapper.js';
 
 /**
  * clears out existing data and adds new
@@ -21,6 +21,6 @@ export async function initializeDBForTesting(DB_URI: string | null | undefined) 
 	} catch (exception) {
 		console.error('test environment init failure: ' + exception);
 	} finally {
-		await FruitModel.insertMany([...fruitSampleData.map(mapToPersistenceModel)]);
+		await FruitModel.insertMany([...fruitSampleData.map(FruitMapper.toPersistence)]);
 	}
 }

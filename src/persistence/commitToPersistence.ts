@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import { Fruit } from '../Fruit/Fruit.js';
 import { connectDB } from './connectDB.js';
-import { mapToPersistenceModel } from './mapToPersistenceModel.js';
 import { FruitModelType, FruitDTO } from '../Fruit/types.js';
+import { FruitMapper } from '../Fruit/FruitMapper.js';
 
 /**
  * @description takes a fruit and commits it to the database. would make sense to convert this to a generic function but currently the only domain entity is fruit.
@@ -13,7 +13,7 @@ import { FruitModelType, FruitDTO } from '../Fruit/types.js';
 export async function commitToPersistence(fruit: Fruit, DB_URI: string): Promise<FruitDTO> {
 	await connectDB(DB_URI);
 
-	const newFruit: FruitModelType = await mapToPersistenceModel(fruit)
+	const newFruit: FruitModelType = await FruitMapper.toPersistence(fruit)
 		.save()
 		.catch(error => {
 			throw new Error('database commit failed: ' + error);

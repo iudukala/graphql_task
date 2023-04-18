@@ -1,13 +1,12 @@
 import { extendType, stringArg, intArg, nonNull } from 'nexus';
 import { AllNexusArgsDefs } from 'nexus/dist/core.js';
 import { GQLContextType } from '../common/type_GQLContextType.js';
-import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
-import { Fruit } from '../../Fruit/Fruit.js';
 import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
 import { findFruitByName } from './helpers/findFruitByName.js';
 import { FruitDTO } from '../../Fruit/types.js';
+import { FruitMapper } from '../../Fruit/FruitMapper.js';
 
 type FruitModifyArgs = Omit<
 	FruitDTO,
@@ -49,7 +48,7 @@ export const storeFruitToFruitStorage = extendType({
 
 				if (updated === null) throw new Error(`update failed for fruit [${target.name}]`);
 
-				return mapToPersistenceModel(Fruit.reconstituteFruit(updated)) as FruitDTO;
+				return FruitMapper.toPersistence(FruitMapper.toDomain(updated)) as FruitDTO;
 			},
 		});
 	},
