@@ -3,10 +3,10 @@ import { AllNexusArgsDefs } from 'nexus/dist/core.js';
 import { GQLContextType } from '../common/type_GQLContextType.js';
 import { Fruit } from '../../Fruit/Fruit.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
-import type { FruitConstructArgs, FruitDTO } from '../../Fruit/types.js';
 import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
 import { FruitMapper } from '../../Fruit/FruitMapper.js';
 import { FruitRepository } from '../../Fruit/FruitRepository.js';
+import type { FruitConstructArgs, FruitDTO } from '../../Fruit/types.js';
 
 /**
  * mutation for adding a new fruit.
