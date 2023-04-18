@@ -44,7 +44,7 @@
 		"arrow-parens": ["error", "as-needed"],
 		"quote-props": ["error", "consistent-as-needed"],
 		"camelcase": "off",
-		"newline-per-chained-call": ["error", { "ignoreChainWithDepth": 2 }],
+		"newline-per-chained-call": ["error", { "ignoreChainWithDepth": 3 }],
 		"brace-style": ["error", "1tbs", { "allowSingleLine": true } ],
 		"linebreak-style": ["error", "unix"],
 		"no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
