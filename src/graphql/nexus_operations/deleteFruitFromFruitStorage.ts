@@ -1,8 +1,8 @@
 import { booleanArg, extendType, nonNull, stringArg } from 'nexus';
 import { AllNexusArgsDefs } from 'nexus/dist/core.js';
+import { FruitMapper } from '../../Fruit/FruitMapper.js';
 import { FruitRepo } from '../../Fruit/FruitRepository.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
-import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
 import { GQLContextType } from '../common/type_GQLContextType.js';
 
 type DeleteMutationArgs = { [FruitKey.Name]: string; forceDelete?: boolean | null };
@@ -27,8 +27,7 @@ export const deleteFruitFromFruitStorage = extendType({
 				const target = await repo.findFruitByName(args.name);
 
 				if (args.forceDelete || target.amount === 0) {
-					const updated = await FruitModel.findByIdAndDelete(target._id);
-					// const updated = await model.delete(FruitMapper.toDomain(target));
+					const updated = await repo.delete(FruitMapper.toDomain(target));
 
 					if (updated === null) throw new Error(`delete failed for fruit [${target.name}]`);
 					else return `delete successful for fruit ${target.name} with id [${target._id}]`;

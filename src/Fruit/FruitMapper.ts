@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { Fruit } from '../Fruit/Fruit.js';
-import { FruitDTO, FruitModelType, PersistenceFruitModel } from '../Fruit/types.js';
+import { FruitDTO, FruitModelType } from '../Fruit/types.js';
 import { FruitKey } from './enum_fruitKey.js';
 import { FruitModel } from './mongooseFruitModel.js';
 
@@ -10,7 +10,7 @@ export class FruitMapper {
 	 * @param  fruitProps fruit object data
 	 * @returns constructed fruit object
 	 */
-	static toDomain = (fruitProps: PersistenceFruitModel): Fruit => {
+	static toDomain = (fruitProps: FruitModelType): Fruit => {
 		return Fruit.reconstitute({
 			[FruitKey.ID]: fruitProps._id.toString(),
 			[FruitKey.Name]: fruitProps.name.trim(),
