@@ -11,9 +11,15 @@ type Fruit {
 
 type Mutation {
 	createFruitForFruitStorage(description: String!, limit: Int!, name: String!): Fruit!
-	deleteFruitFromFruitStorage(forceDelete: Boolean, name: String!): String!
+	deleteFruitFromFruitStorage(forceDelete: Boolean, name: String!): MutationReturn!
 	removeFruitFromFruitStorage(amount: Int!, name: String!): Fruit!
 	storeFruitToFruitStorage(amount: Int!, name: String!): Fruit!
+}
+
+type MutationReturn {
+	id: ID!
+	message: String!
+	successful: Boolean!
 }
 
 type Query {

@@ -3,6 +3,7 @@
  */
 
 export { FruitGQLType as FruitNX } from './nexus_types/FruitGQLType.js';
+export { MutationReturnType } from './nexus_types/MutationReturnGQL.js';
 export { findFruit } from './nexus_operations/findFruit.js';
 export { createFruitForFruitStorage } from './nexus_operations/createFruitForFruitStorage.js';
 export { storeFruitToFruitStorage } from './nexus_operations/storeFruitToFruitStorage.js';

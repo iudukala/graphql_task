@@ -3,7 +3,7 @@
  * Do not make changes to this file directly
  */
 
-import type { GQLContextType } from './../common/type_GQLContextType.js';
+import type { GQLContextType } from './../common/type_GQLContextType';
 
 declare global {
 	interface NexusGen extends NexusGenTypes {}
@@ -31,6 +31,12 @@ export interface NexusGenObjects {
 		name: string; // String!
 	};
 	Mutation: {};
+	MutationReturn: {
+		// root type
+		id: string; // ID!
+		message: string; // String!
+		successful: boolean; // Boolean!
+	};
 	Query: {};
 }
 
@@ -54,9 +60,15 @@ export interface NexusGenFieldTypes {
 	Mutation: {
 		// field return type
 		createFruitForFruitStorage: NexusGenRootTypes['Fruit']; // Fruit!
-		deleteFruitFromFruitStorage: string; // String!
+		deleteFruitFromFruitStorage: NexusGenRootTypes['MutationReturn']; // MutationReturn!
 		removeFruitFromFruitStorage: NexusGenRootTypes['Fruit']; // Fruit!
 		storeFruitToFruitStorage: NexusGenRootTypes['Fruit']; // Fruit!
+	};
+	MutationReturn: {
+		// field return type
+		id: string; // ID!
+		message: string; // String!
+		successful: boolean; // Boolean!
 	};
 	Query: {
 		// field return type
@@ -76,9 +88,15 @@ export interface NexusGenFieldTypeNames {
 	Mutation: {
 		// field return type name
 		createFruitForFruitStorage: 'Fruit';
-		deleteFruitFromFruitStorage: 'String';
+		deleteFruitFromFruitStorage: 'MutationReturn';
 		removeFruitFromFruitStorage: 'Fruit';
 		storeFruitToFruitStorage: 'Fruit';
+	};
+	MutationReturn: {
+		// field return type name
+		id: 'ID';
+		message: 'String';
+		successful: 'Boolean';
 	};
 	Query: {
 		// field return type name

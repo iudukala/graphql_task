@@ -1,9 +1,7 @@
-import { perfromQuery } from './helpers/performQuery.js';
-import { initializeDBForTesting } from './helpers/initTestEnvironment.js';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import { FruitDTO } from '../Fruit/types.js';
-import { FruitMapper } from '../Fruit/FruitMapper.js';
+import { initializeDBForTesting } from './helpers/initTestEnvironment.js';
+import { perfromQuery } from './helpers/performQuery.js';
 
 /**
  * replacing the import.meta access call for directory name since jest has effectively no esm support

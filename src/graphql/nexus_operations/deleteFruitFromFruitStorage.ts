@@ -4,6 +4,7 @@ import { FruitMapper } from '../../Fruit/FruitMapper.js';
 import { FruitRepo } from '../../Fruit/FruitRepository.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { GQLContextType } from '../common/type_GQLContextType.js';
+import { MUTATION_RETURN_TYPE_NAME } from '../nexus_types/MUTATION_RETURN_NAME.js';
 
 type DeleteMutationArgs = { [FruitKey.Name]: string; forceDelete?: boolean | null };
 /**
@@ -14,7 +15,7 @@ export const deleteFruitFromFruitStorage = extendType({
 	type: 'Mutation',
 	definition(t) {
 		t.nonNull.field('deleteFruitFromFruitStorage', {
-			type: 'String',
+			type: MUTATION_RETURN_TYPE_NAME,
 
 			args: <Record<keyof DeleteMutationArgs, AllNexusArgsDefs>>{
 				[FruitKey.Name]: nonNull(stringArg()),
