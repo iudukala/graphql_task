@@ -24,9 +24,9 @@ export type FruitInternalProps = Omit<
 	[FruitKey.Description]: FruitDescriptionVO;
 };
 
-export type PersistenceFruitModel = Omit<FruitDTO, typeof FruitKey.ID> & {
-	_id: mongoose.Types.ObjectId;
-};
+// export type PersistenceFruitModel = Omit<FruitDTO, typeof FruitKey.ID> & {
+// 	_id: mongoose.Types.ObjectId;
+// };
 
 /**
  * mongoose model of Fruit type

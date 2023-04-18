@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import { connectDB } from '../persistence/connectDB.js';
 import { Fruit } from './Fruit.js';
+import { FruitMapper } from './FruitMapper.js';
 import { FruitKey } from './enum_fruitKey.js';
 import { FruitModel } from './mongooseFruitModel.js';
-import { FruitMapper } from './FruitMapper.js';
 import { FruitModelType } from './types.js';
 
 export class FruitRepo {
@@ -42,30 +42,27 @@ export class FruitRepo {
 	 * @param fruit fruit object
 	 * @returns  the committed object cast to a form that the nexus resolvers recognize
 	 */
-	commitToPersistence = async (fruit: Fruit): Promise<true> => {
+	commitToPersistence = async (fruit: Fruit): Promise<FruitModelType> => {
 		//todo: validation through domain service
 		await connectDB(this.DB_URI);
 
-		await FruitMapper.toPersistence(fruit).save();
-		// .catch(error => {
-		// 	throw new Error('database commit failed: ' + error);
-		// });
+		const committed: FruitModelType = await FruitMapper.toPersistence(fruit)
+			.save()
+			.catch(error => {
+				throw new Error('database commit failed: ' + error);
+			});
 
 		mongoose.connection.close();
-		return true;
+		return committed;
 	};
 
-	// deleteByID = async (fruitName: string, forceDelete: boolean): Promise<string> => {
-	delete = async (fruit: Fruit): Promise<string> => {
+	delete = async (fruit: Fruit): Promise<FruitModelType> => {
 		await connectDB(this.DB_URI);
 		const target = await this.findFruitByName(fruit.props.name);
 
-		const updated = await FruitModel.findByIdAndDelete(target._id);
-		// if (forceDelete || target.amount === 0) {
-		// 	const updated = await FruitModel.findByIdAndDelete(target._id);
+		const deleted = await FruitModel.findByIdAndDelete(target._id);
+		if (deleted === null) throw new Error(`delete failed for fruit [${target.name}]`);
 
-		if (updated === null) throw new Error(`delete failed for fruit [${target.name}]`);
-		else return `delete successful for fruit ${target.name} with id [${target._id}]`;
+		return deleted;
 	};
-	// return 'x';
 }
