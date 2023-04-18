@@ -17,7 +17,6 @@ type Mutation {
 }
 
 type MutationReturn {
-	id: ID!
 	message: String!
 	successful: Boolean!
 }

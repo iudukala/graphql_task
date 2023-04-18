@@ -3,7 +3,7 @@
  * Do not make changes to this file directly
  */
 
-import type { GQLContextType } from './../common/type_GQLContextType';
+import type { GQLContextType } from './../common/type_GQLContextType.js';
 
 declare global {
 	interface NexusGen extends NexusGenTypes {}
@@ -33,7 +33,6 @@ export interface NexusGenObjects {
 	Mutation: {};
 	MutationReturn: {
 		// root type
-		id: string; // ID!
 		message: string; // String!
 		successful: boolean; // Boolean!
 	};
@@ -66,7 +65,6 @@ export interface NexusGenFieldTypes {
 	};
 	MutationReturn: {
 		// field return type
-		id: string; // ID!
 		message: string; // String!
 		successful: boolean; // Boolean!
 	};
@@ -94,7 +92,6 @@ export interface NexusGenFieldTypeNames {
 	};
 	MutationReturn: {
 		// field return type name
-		id: 'ID';
 		message: 'String';
 		successful: 'Boolean';
 	};

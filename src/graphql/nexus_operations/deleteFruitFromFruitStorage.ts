@@ -5,6 +5,7 @@ import { FruitRepo } from '../../Fruit/FruitRepository.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { GQLContextType } from '../common/type_GQLContextType.js';
 import { MUTATION_RETURN_TYPE_NAME } from '../nexus_types/MUTATION_RETURN_NAME.js';
+import { NexusGenObjects } from '../nexus_autogen_artifacts/nexus_typegen.js';
 
 type DeleteMutationArgs = { [FruitKey.Name]: string; forceDelete?: boolean | null };
 /**
@@ -22,7 +23,11 @@ export const deleteFruitFromFruitStorage = extendType({
 				forceDelete: booleanArg(),
 			},
 
-			resolve: async (_, args: DeleteMutationArgs, context: GQLContextType) => {
+			resolve: async (
+				_,
+				args: DeleteMutationArgs,
+				context: GQLContextType,
+			): Promise<NexusGenObjects[typeof MUTATION_RETURN_TYPE_NAME]> => {
 				const repo = new FruitRepo(context.DB_URI);
 
 				const target = await repo.findFruitByName(args.name);
@@ -30,14 +35,21 @@ export const deleteFruitFromFruitStorage = extendType({
 				if (args.forceDelete || target.amount === 0) {
 					const updated = await repo.delete(FruitMapper.toDomain(target));
 
-					if (updated === null) throw new Error(`delete failed for fruit [${target.name}]`);
-					else return `delete successful for fruit ${target.name} with id [${target._id}]`;
+					if (updated === null)
+						return { successful: false, message: `delete failed for fruit [${target.name}]` };
+
+					return {
+						successful: true,
+						message: `deleted fruit [${target.name}] with amount ${target.amount}`,
+					};
 				}
 
-				return (
-					`fruit name: ${target.name} has an amount of ${target.amount}.` +
-					`cannot delete fruits with an amount > 0 if 'forceDelete: true' is not specified`
-				);
+				return {
+					successful: false,
+					message:
+						`fruit name: ${target.name} has an amount of ${target.amount}; ` +
+						`cannot delete fruits with an amount > 0 if 'forceDelete: true' is not specified`,
+				};
 			},
 		});
 	},
