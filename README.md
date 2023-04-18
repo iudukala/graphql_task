@@ -57,3 +57,7 @@
 - [x] Use Jest for your testing
 
 - [x] Use <https://nexusjs.org/> to automatically generate your GraphQL schemas
+
+## improvements
+
+- ensure immutability better
