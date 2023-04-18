@@ -1,11 +1,7 @@
 import mongoose from 'mongoose';
 import { FruitTypeGQL } from '../graphql/nexus_types/type_FruitGQL.js';
-import { FruitKey } from './enum_fruitKey.js';
+import { FruitModelType } from './types.js';
 
-/**
- * mongoose model of Fruit type
- */
-export type FruitModelType = Omit<FruitTypeGQL, typeof FruitKey.ID> & mongoose.Document;
 export const FruitModel = mongoose.model<FruitModelType>(
 	'Fruit',
 	new mongoose.Schema<FruitTypeGQL>({

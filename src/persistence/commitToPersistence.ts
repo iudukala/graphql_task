@@ -3,10 +3,10 @@ import { Fruit } from '../Fruit/Fruit.js';
 import { connectDB } from './connectDB.js';
 import { mapToPersistenceModel } from './mapToPersistenceModel.js';
 import { FruitTypeGQL } from '../graphql/nexus_types/type_FruitGQL.js';
+import { FruitModelType } from '../Fruit/types.js';
 
 /**
- * takes a fruit and commits it to the database. would make sense to convert this to a generic function but currently the only domain entity is fruit.
- *
+ * @description takes a fruit and commits it to the database. would make sense to convert this to a generic function but currently the only domain entity is fruit.
  * @param {Fruit} fruit fruit object
  * @param {string} DB_URI database connection uri
  * @returns {Promise<FruitTypeGQL>} the committed object cast to a form that the nexus resolvers recognize
@@ -14,7 +14,7 @@ import { FruitTypeGQL } from '../graphql/nexus_types/type_FruitGQL.js';
 export async function commitToPersistence(fruit: Fruit, DB_URI: string): Promise<FruitTypeGQL> {
 	await connectDB(DB_URI);
 
-	const newFruit = await mapToPersistenceModel(fruit)
+	const newFruit: FruitModelType = await mapToPersistenceModel(fruit)
 		.save()
 		.catch(error => {
 			throw new Error('database commit failed: ' + error);
