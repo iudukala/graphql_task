@@ -44,4 +44,13 @@ export class Fruit extends Entity<FruitInternalProps> {
 			[FruitKey.Amount]: fruitProps.amount,
 		});
 	}
+
+	// static reconstituteFruitX(fruitProps: PersistenceFruitModel): Fruit {
+	// 	return new Fruit(fruitProps._id.toString(), {
+	// 		[FruitKey.Name]: fruitProps.name.trim(),
+	// 		[FruitKey.Description]: FruitDescriptionVO.create(fruitProps.description?.trim()),
+	// 		[FruitKey.Limit]: fruitProps.limit,
+	// 		[FruitKey.Amount]: fruitProps.amount,
+	// 	});
+	// }
 }

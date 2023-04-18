@@ -3,7 +3,8 @@ import { connectDB } from '../persistence/connectDB.js';
 import { mapToPersistenceModel } from '../persistence/mapToPersistenceModel.js';
 import { Fruit } from './Fruit.js';
 import { FruitKey } from './enum_fruitKey.js';
-import { FruitModel, FruitModelType } from './mongooseFruitModel.js';
+import { FruitModel } from './mongooseFruitModel.js';
+import { FruitModelType } from './types.js';
 class FruitRepository {
 	private readonly DB_URI: string;
 
