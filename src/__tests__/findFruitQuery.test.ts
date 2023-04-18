@@ -1,8 +1,8 @@
 import { perfromQuery } from './helpers/performQuery.js';
 import { initializeDBForTesting } from './helpers/initTestEnvironment.js';
-import { FruitTypeGQL } from '../graphql/nexus_types/type_FruitGQL.js';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import { FruitDTO } from '../Fruit/types.js';
 
 /**
  * replacing the import.meta access call for directory name since jest has effectively no esm support
@@ -30,7 +30,7 @@ describe('findFruit() query tests', () => {
 			}`,
 		);
 
-		expect((result.data?.findFruit as [FruitTypeGQL])[0].name).toBe('apple');
+		expect((result.data?.findFruit as [FruitDTO])[0].name).toBe('apple');
 	});
 
 	test('finds a non-existent fruit', async () => {

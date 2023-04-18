@@ -1,8 +1,8 @@
 import { perfromQuery } from './helpers/performQuery.js';
 import { initializeDBForTesting } from './helpers/initTestEnvironment.js';
-import { FruitTypeGQL } from '../graphql/nexus_types/type_FruitGQL.js';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import { FruitDTO } from '../Fruit/types.js';
 
 /**
  * replacing the import.meta access call for directory name since jest has effectively no esm support
@@ -45,7 +45,7 @@ describe('storeFruitToFruitStorage() endpoint test', () => {
 				}
 			}`,
 		).then(result => {
-			const returned = result.data?.[createMutName] as FruitTypeGQL;
+			const returned = result.data?.[createMutName] as FruitDTO;
 
 			expect(returned.name).toBe('lemon');
 			expect(returned.limit).toBe(20);

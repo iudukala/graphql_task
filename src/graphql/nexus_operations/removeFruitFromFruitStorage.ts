@@ -4,13 +4,13 @@ import { GQLContextType } from '../common/type_GQLContextType.js';
 import { mapToPersistenceModel } from '../../persistence/mapToPersistenceModel.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
-import { FruitTypeGQL } from '../nexus_types/type_FruitGQL.js';
 import { Fruit } from '../../Fruit/Fruit.js';
 import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
 import { findFruitByName } from './helpers/findFruitByName.js';
+import { FruitDTO } from '../../Fruit/types.js';
 
 type FruitModifyArgs = Omit<
-	FruitTypeGQL,
+	FruitDTO,
 	typeof FruitKey.ID | typeof FruitKey.Limit | typeof FruitKey.Description
 >;
 
@@ -49,7 +49,7 @@ export const removeFruitFromFruitStorage = extendType({
 
 				if (updated === null) throw new Error(`update failed for fruit [${target.name}]`);
 
-				return mapToPersistenceModel(Fruit.reconstituteFruit(updated)) as FruitTypeGQL;
+				return mapToPersistenceModel(Fruit.reconstituteFruit(updated)) as FruitDTO;
 			},
 		});
 	},
