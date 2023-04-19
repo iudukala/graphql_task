@@ -20,7 +20,8 @@ export class FruitRepo {
 	 */
 	exists = async (fruitName: string): Promise<boolean> => {
 		await connectDB(this.DB_URI);
-		return !!(await this.findFruitByName(fruitName));
+
+		return !!(await FruitModel.findOne({ [FruitKey.Name]: fruitName }).exec());
 	};
 
 	/**
