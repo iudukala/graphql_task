@@ -20,30 +20,36 @@ afterAll(async () => {
 	mongoose.connection.close();
 });
 
-describe('storeFruitToFruitStorage() endpoint test', () => {
+describe('createFruitForFruitStorage() endpoint test', () => {
 	test("ensures fruit doesn't exist, creates it and validates created data", async () => {
 		jest.setTimeout(10000);
 
 		await perfromQuery(
 			`query{
-				findFruit(name: "apple"){
-					amount
+				findFruit(name: "lemon"){
+					name
 				}
 			}`,
 		).then(result => {
-			expect((result.data?.findFruit as [FruitDTO])[0].amount).toBe(0);
+			expect(result.data).toBe(null);
 		});
 
-		const MUT_NAME = 'storeFruitToFruitStorage';
+		const createMutName = 'createFruitForFruitStorage';
 		await perfromQuery(
 			`mutation{
-				${MUT_NAME}(
-					name: "apple", amount: 1){
+				${createMutName}(
+					name: "lemon", description: "lemony description", limit: 20){
+						name
 						amount
+						limit
 				}
 			}`,
 		).then(result => {
-			expect((result.data?.[MUT_NAME] as FruitDTO).amount).toBe(1);
+			const returned = result.data?.[createMutName] as FruitDTO;
+
+			expect(returned.name).toBe('lemon');
+			expect(returned.limit).toBe(20);
+			expect(returned.amount).toBe(0);
 		});
 	});
 });
