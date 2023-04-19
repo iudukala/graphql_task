@@ -1,12 +1,11 @@
-import { extendType, stringArg, intArg, nonNull } from 'nexus';
+import { extendType, intArg, nonNull, stringArg } from 'nexus';
 import { AllNexusArgsDefs } from 'nexus/dist/core.js';
-import { GQLContextType } from '../common/type_GQLContextType.js';
-import { FruitKey } from '../../Fruit/enum_fruitKey.js';
-import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
-import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
-import { findFruitByName } from './helpers/findFruitByName.js';
-import { FruitDTO } from '../../Fruit/types.js';
 import { FruitMapper } from '../../Fruit/FruitMapper.js';
+import { FruitRepo } from '../../Fruit/FruitRepository.js';
+import { FruitKey } from '../../Fruit/enum_fruitKey.js';
+import { FruitDTO } from '../../Fruit/types.js';
+import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
+import { GQLContextType } from '../common/type_GQLContextType.js';
 
 type FruitModifyArgs = Omit<
 	FruitDTO,
@@ -30,25 +29,20 @@ export const removeFruitFromFruitStorage = extendType({
 			},
 
 			resolve: async (_discard, args: FruitModifyArgs, context: GQLContextType) => {
-				const target = await findFruitByName(args.name, context.DB_URI);
+				const repo = new FruitRepo(context.DB_URI);
+				const targetFruit = FruitMapper.toDomain(await repo.findFruitByName(args.name));
 
-				if (target.amount - args.amount < 0)
+				if (targetFruit.props.amount - args.amount < 0)
 					throw new Error(
-						`specified amount (${args.amount}) deducts beyond zero.` +
-							`current value: ${target.amount}`,
+						`specified amount (${args.amount}) deducts beyond zero. ` +
+							`current value: ${targetFruit.props.amount}`,
 					);
 
-				const updated = await FruitModel.findByIdAndUpdate(
-					target._id,
-					{
-						[FruitKey.Amount]: target.amount - args.amount,
-					},
-					{ returnDocument: 'after' },
-				).lean();
+				const updated = await repo.commitToPersistence(targetFruit, {
+					[FruitKey.Amount]: targetFruit.props.amount - args.amount,
+				});
 
-				if (updated === null) throw new Error(`update failed for fruit [${target.name}]`);
-
-				return FruitMapper.toPersistence(FruitMapper.toDomain(updated)) as FruitDTO;
+				return [updated].map(FruitMapper.toDomain).map(FruitMapper.toDTO)[0];
 			},
 		});
 	},

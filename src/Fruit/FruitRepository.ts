@@ -4,7 +4,7 @@ import { Fruit } from './Fruit.js';
 import { FruitMapper } from './FruitMapper.js';
 import { FruitKey } from './enum_fruitKey.js';
 import { FruitModel } from './mongooseFruitModel.js';
-import { FruitModelType } from './types.js';
+import { FruitInternalProps, FruitModelType } from './types.js';
 
 export class FruitRepo {
 	private readonly DB_URI: string;
@@ -40,11 +40,25 @@ export class FruitRepo {
 	/**
 	 * @description takes a fruit and commits it to the database. would make sense to convert this to a generic function but currently the only domain entity is fruit.
 	 * @param fruit fruit object
+	 * @param updateData data to update fruit with (if updating existing fruit)
 	 * @returns  the committed object cast to a form that the nexus resolvers recognize
 	 */
-	commitToPersistence = async (fruit: Fruit): Promise<FruitModelType> => {
+	commitToPersistence = async (
+		fruit: Fruit,
+		updateData?: Partial<FruitInternalProps>,
+	): Promise<FruitModelType> => {
 		//todo: validation through domain service
 		await connectDB(this.DB_URI);
+
+		if (updateData) {
+			const updated = await FruitModel.findByIdAndUpdate(fruit.id, updateData, {
+				returnDocument: 'after',
+			});
+			// .lean();
+			if (updated === null) throw new Error(`update failed for fruit [${fruit.props.name}]`);
+
+			return updated;
+		}
 
 		const committed: FruitModelType = await FruitMapper.toPersistence(fruit)
 			.save()
@@ -56,6 +70,11 @@ export class FruitRepo {
 		return committed;
 	};
 
+	/**
+	 *
+	 * @param fruit fruit to delete
+	 * @returns deleted fruit model returned from mongoose
+	 */
 	delete = async (fruit: Fruit): Promise<FruitModelType> => {
 		await connectDB(this.DB_URI);
 		const target = await this.findFruitByName(fruit.props.name);

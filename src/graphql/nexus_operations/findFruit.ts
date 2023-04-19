@@ -1,12 +1,11 @@
 import { extendType, nonNull, stringArg } from 'nexus';
-import { GQLContextType } from '../common/type_GQLContextType.js';
-import { FruitKey } from '../../Fruit/enum_fruitKey.js';
-import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
-import { findFruitByName } from './helpers/findFruitByName.js';
-import { FruitDTO } from '../../Fruit/types.js';
 import { FruitMapper } from '../../Fruit/FruitMapper.js';
+import { FruitRepo } from '../../Fruit/FruitRepository.js';
+import { FruitKey } from '../../Fruit/enum_fruitKey.js';
+import { FruitDTO } from '../../Fruit/types.js';
+import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
+import { GQLContextType } from '../common/type_GQLContextType.js';
 
-// todo: change to 'findFruit()'
 export const findFruit = extendType({
 	type: 'Query',
 
@@ -18,9 +17,13 @@ export const findFruit = extendType({
 				[FruitKey.Name]: nonNull(stringArg()),
 			},
 
-			resolve: async (_discard, args: { [FruitKey.Name]: string }, context: GQLContextType) => {
-				const target = await findFruitByName(args.name, context.DB_URI);
-				return [FruitMapper.toPersistence(FruitMapper.toDomain(target)) as FruitDTO];
+			resolve: async (
+				_discard,
+				args: { [FruitKey.Name]: string },
+				context: GQLContextType,
+			): Promise<Array<FruitDTO>> => {
+				const target = await new FruitRepo(context.DB_URI).findFruitByName(args.name);
+				return [target].map(FruitMapper.toDomain).map(FruitMapper.toDTO);
 			},
 		});
 	},

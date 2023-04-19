@@ -1,12 +1,12 @@
-import { extendType, stringArg, intArg, nonNull } from 'nexus';
+import { extendType, intArg, nonNull, stringArg } from 'nexus';
 import { AllNexusArgsDefs } from 'nexus/dist/core.js';
-import { GQLContextType } from '../common/type_GQLContextType.js';
+import { FruitMapper } from '../../Fruit/FruitMapper.js';
+import { FruitRepo } from '../../Fruit/FruitRepository.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
-import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
-import { findFruitByName } from './helpers/findFruitByName.js';
 import { FruitDTO } from '../../Fruit/types.js';
-import { FruitMapper } from '../../Fruit/FruitMapper.js';
+import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
+import { GQLContextType } from '../common/type_GQLContextType.js';
 
 type FruitModifyArgs = Omit<
 	FruitDTO,
@@ -30,7 +30,7 @@ export const storeFruitToFruitStorage = extendType({
 			},
 
 			resolve: async (_discard, args: FruitModifyArgs, context: GQLContextType) => {
-				const target = await findFruitByName(args.name, context.DB_URI);
+				const target = await new FruitRepo(context.DB_URI).findFruitByName(args.name);
 
 				if (target.amount + args.amount > target.limit)
 					throw new Error(
