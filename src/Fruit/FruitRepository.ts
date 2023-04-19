@@ -54,7 +54,6 @@ export class FruitRepo {
 			const updated = await FruitModel.findByIdAndUpdate(fruit.id, updateData, {
 				returnDocument: 'after',
 			});
-			// .lean();
 			if (updated === null) throw new Error(`update failed for fruit [${fruit.props.name}]`);
 
 			return updated;
