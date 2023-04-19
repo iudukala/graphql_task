@@ -28,7 +28,11 @@ export const storeFruitToFruitStorage = extendType({
 				[FruitKey.Amount]: nonNull(intArg()),
 			},
 
-			resolve: async (_discard, args: FruitModifyArgs, context: GQLContextType) => {
+			resolve: async (
+				_discard,
+				args: FruitModifyArgs,
+				context: GQLContextType,
+			): Promise<FruitDTO> => {
 				const repo = new FruitRepo(context.DB_URI);
 				const target = FruitMapper.toDomain(await repo.findFruitByName(args.name));
 

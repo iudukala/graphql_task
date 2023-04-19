@@ -1,12 +1,13 @@
-import { extendType, stringArg, intArg, nonNull } from 'nexus';
+import { extendType, intArg, nonNull, stringArg } from 'nexus';
 import { AllNexusArgsDefs } from 'nexus/dist/core.js';
-import { GQLContextType } from '../common/type_GQLContextType.js';
 import { Fruit } from '../../Fruit/Fruit.js';
-import { FruitKey } from '../../Fruit/enum_fruitKey.js';
-import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
+import { FruitService } from '../../Fruit/FruitDomainService.js';
 import { FruitMapper } from '../../Fruit/FruitMapper.js';
 import { FruitRepo } from '../../Fruit/FruitRepository.js';
+import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import type { FruitConstructArgs, FruitDTO } from '../../Fruit/types.js';
+import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
+import { GQLContextType } from '../common/type_GQLContextType.js';
 
 /**
  * mutation for adding a new fruit.
@@ -24,11 +25,17 @@ export const createFruitForFruitStorage = extendType({
 				[FruitKey.Limit]: nonNull(intArg()),
 			},
 
-			resolve: async (_, args: FruitConstructArgs, context: GQLContextType) => {
+			resolve: async (_, args: FruitConstructArgs, context: GQLContextType): Promise<FruitDTO> => {
+				const repo = new FruitRepo(context.DB_URI);
+
+				if (await new FruitService(repo).ensureUnique(args.name)) {
+					throw new Error('fruit names must be unique');
+				}
+
 				const newFruit: Fruit = Fruit.createNewFruit(args);
 				await new FruitRepo(context.DB_URI).commitToPersistence(newFruit);
 
-				return FruitMapper.toPersistence(newFruit) as FruitDTO;
+				return FruitMapper.toDTO(newFruit);
 			},
 		});
 	},
