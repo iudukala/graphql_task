@@ -23,6 +23,7 @@ afterAll(async () => {
 
 describe('deleteFruitFromFruitStorage() endpoint test', () => {
 	test('ensures fruit exists, deletes and validated removal', async () => {
+		//checking if fruit exists
 		await perfromQuery(
 			`query{
 				findFruit(name: "apple"){
@@ -30,9 +31,11 @@ describe('deleteFruitFromFruitStorage() endpoint test', () => {
 				}
 			}`,
 		).then(result => {
-			expect(result.data).not.toBe(null);
+			type ResponseType = { findFruit: [{ name: string }] };
+			expect((result.data as ResponseType).findFruit[0].name).toBe('apple');
 		});
 
+		// deleting fruit
 		const MUT_NAME = 'deleteFruitFromFruitStorage';
 		await perfromQuery(
 			`mutation{
@@ -43,8 +46,18 @@ describe('deleteFruitFromFruitStorage() endpoint test', () => {
 			}`,
 		).then(result => {
 			const returned = result.data?.[MUT_NAME] as NexusGenObjects[typeof MUTATION_RETURN_TYPE_NAME];
-
 			expect(returned.successful).toBe(true);
+		});
+
+		//checking if fruit exists again, after deletion
+		await perfromQuery(
+			`query{
+				findFruit(name: "apple"){
+					name
+				}
+			}`,
+		).then(result => {
+			expect(result.data).toBe(null);
 		});
 	});
 });
