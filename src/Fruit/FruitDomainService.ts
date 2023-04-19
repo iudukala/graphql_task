@@ -10,6 +10,7 @@ export class FruitService {
 
 	public async ensureUnique(fruitName: string): Promise<boolean> {
 		const target: FruitModelType = await this.repo.findFruitByName(fruitName);
+		console.log(JSON.stringify(target));
 
 		return !!target;
 	}

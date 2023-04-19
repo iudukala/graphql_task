@@ -28,7 +28,7 @@ export const createFruitForFruitStorage = extendType({
 			resolve: async (_, args: FruitConstructArgs, context: GQLContextType): Promise<FruitDTO> => {
 				const repo = new FruitRepo(context.DB_URI);
 
-				if (await new FruitService(repo).ensureUnique(args.name)) {
+				if (!await new FruitService(repo).ensureUnique(args.name)) {
 					throw new Error('fruit names must be unique');
 				}
 
