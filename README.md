@@ -16,7 +16,6 @@
 
 <!-- - another option was to copy the name from the fruit field to the id field and maintain two copies. not a major issue since all objects are immutable and fields are not changed individually. -->
 
-
 - switched to cons asserted object from enum. allows for a single source of truth and additional compiler checks. also avoids issues related to unexpected behaviours from enums
 
 <!-- - i commit a lot when i'm building something while learning. and to avoid having dozens of files changed across each commit to make diffing between commits easier to debug something -->

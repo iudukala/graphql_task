@@ -1,4 +1,4 @@
-import { FruitModel } from '../../Fruit/mongooseFruitModel.js';
+import { FruitModel } from '../../persistence/mongooseFruitModel.js';
 import { fruitSampleData } from '../data/sampleDataFruit.js';
 import { connectDB } from '../../persistence/connectDB.js';
 import mongoose from 'mongoose';

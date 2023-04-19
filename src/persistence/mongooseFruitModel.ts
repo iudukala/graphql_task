@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { FruitModelType, FruitDTO } from './types.js';
+import { FruitModelType, FruitDTO } from '../Fruit/types.js';
 
 export const FruitModel = mongoose.model<FruitModelType>(
 	'Fruit',

@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 
 // fetching environment variables set in the .env file and initializing the connection string var
 dotenv.config();
+// await initializeDBForTesting(process.env['DB_URI']);
 
 express()
 	.use(
@@ -21,4 +22,3 @@ express()
 
 console.log('running on :4000/graphql');
 
-// await initializeDBForTesting(process.env['DB_URI']);
