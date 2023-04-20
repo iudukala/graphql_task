@@ -37,12 +37,12 @@ export class Fruit extends Entity<FruitInternalProps> {
 	 * @returns constructed fruit object
 	 */
 	static reconstitute(fruitData: FruitDTO): Fruit {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const { [FruitKey.ID]: _discard, ...noID } = fruitData;
+
 		return new Fruit({
 			[FruitKey.ID]: fruitData.id.toString(),
-			[FruitKey.Name]: fruitData.name,
-			[FruitKey.Description]: fruitData.description,
-			[FruitKey.Limit]: fruitData.limit,
-			[FruitKey.Amount]: fruitData.amount,
+			...noID,
 		});
 	}
 }
