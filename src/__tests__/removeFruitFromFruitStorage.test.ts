@@ -21,9 +21,7 @@ afterAll(async () => {
 });
 
 describe('removeFruitFromFruitStorage() endpoint test', () => {
-	test('ensures fruit exists,  validates created data', async () => {
-		jest.setTimeout(10000);
-
+	test('reduces a valid amount from an existing fruit', async () => {
 		await perfromQuery(
 			`query{
 				findFruit(name: "apple"){

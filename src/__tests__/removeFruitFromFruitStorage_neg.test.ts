@@ -21,8 +21,8 @@ afterAll(async () => {
 });
 
 describe('removeFruitFromFruitStorage() endpoint test', () => {
-	test('ensures fruit exists, increases the amount and reduces it beyond zero', async () => {
-		jest.setTimeout(10000);
+	test('attempts to reduce a fruit\'s amount beyond zero', async () => {
+		jest.setTimeout(5000);
 
 		await perfromQuery(
 			`query{

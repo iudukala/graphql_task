@@ -22,8 +22,8 @@ afterAll(async () => {
 });
 
 describe('deleteFruitFromFruitStorage() endpoint test', () => {
-	test('ensures fruit exists, deletes and validated removal', async () => {
-		//checking if fruit exists
+	test('deletes an existing fruit', async () => {
+		// checking existence
 		await perfromQuery(
 			`query{
 				findFruit(name: "apple"){

@@ -33,7 +33,7 @@ describe('findFruit() query tests', () => {
 		expect((result.data?.findFruit as [FruitDTO])[0].name).toBe('apple');
 	});
 
-	test('finds a non-existent fruit', async () => {
+	test('searches for a non-existent fruit', async () => {
 		const result = await perfromQuery(
 			`query{
 				findFruit(name: "lemon"){
