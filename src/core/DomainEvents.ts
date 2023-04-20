@@ -1,8 +1,9 @@
+import { Domain } from 'domain';
 import { AggregateRoot } from './AggregateRoot.js';
 import { IDomainEvent } from './IDomainEvent.js';
 
 export class DomainEvents {
-	private static handlersMap: Record<string, (event: IDomainEvent) => void> = {};
+	private static handlersMap: Record<string, Array<(event: IDomainEvent) => void>> = {};
 	private static markedAggregates: Array<AggregateRoot<any>> = [];
 
 	/**
@@ -12,11 +13,14 @@ export class DomainEvents {
 	 * the unit of work.
 	 */
 
-	public static markAggregateForDispatch(aggregate: AggregateRoot<any>): void {
-		const aggregateFound = !!this.findMarkedAggregateByID(aggregate.id);
+	public static markAggregateForDispatch(aggregateArg: AggregateRoot<any>): void {
+		// const aggregateFound = !!this.findMarkedAggregateByID(aggregateArg.id);
+		const aggregateFound =
+			DomainEvents.markedAggregates.filter(aggrItem => aggrItem.id === aggregateArg.id).length ===
+			0;
 
 		if (!aggregateFound) {
-			this.markedAggregates.push(aggregate);
+			this.markedAggregates.push(aggregateArg);
 		}
 	}
 
@@ -29,8 +33,7 @@ export class DomainEvents {
 	// 	this.markedAggregates.splice(index, 1);
 	// }
 
-	// private static findMarkedAggregateByID(id: UniqueEntityID): AggregateRoot<any> {
-	// 	let found: AggregateRoot<any> = null;
+	// private static findMarkedAggregateByID(id: UniqueEntityID): AggregateRoot<any> { // 	let found: AggregateRoot<any> = null;
 	// 	for (let aggregate of this.markedAggregates) {
 	// 		if (aggregate.id.equals(id)) {
 	// 			found = aggregate;
@@ -48,7 +51,7 @@ export class DomainEvents {
 	// 		aggregate.clearEvents();
 	// 		this.removeAggregateFromMarkedDispatchList(aggregate);
 	// 	}
-	// }
+	// }Array<
 
 	public static register(callback: (event: IDomainEvent) => void, eventClassName: string): void {
 		if (!this.handlersMap.hasOwnProperty(eventClassName)) {
