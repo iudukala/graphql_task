@@ -39,7 +39,7 @@
 
 ## progress
 
-- [ ] All code written should follow Domain Driven Design
+- [x] All code written should follow Domain Driven Design
 
 - [ ] When the fruit is created, updated, or deleted; a domain event should be emitted.
 

@@ -10,12 +10,12 @@ const constructArgs: Array<FruitConstructArgs> = [
 	{
 		name: 'orange',
 		description: 'orange, the fruit',
-		limit: 30,
+		limit: 10,
 	},
 	{
 		name: 'pineapple',
 		description: 'pineapple, the fruit',
-		limit: 20,
+		limit: 10,
 	},
 	{
 		name: 'watermelon',
@@ -25,7 +25,7 @@ const constructArgs: Array<FruitConstructArgs> = [
 	{
 		name: 'peach',
 		description: 'peach, the fruit',
-		limit: 70,
+		limit: 10,
 	},
 ];
 
