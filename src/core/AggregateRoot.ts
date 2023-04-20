@@ -1,10 +1,16 @@
+import { DomainEvents } from './DomainEvents.js';
 import { Entity } from './Entity.js';
 import { IDomainEvent } from './IDomainEvent.js';
 
 export abstract class AggregateRoot<T> extends Entity<T> {
-	private domainEvents: Array<IDomainEvent> = [];
+	private _domainEvents: Array<IDomainEvent> = [];
 
-	protected addDomainEvent(domainEvent: IDomainEvent): void {
-		this.domainEvents.push(domainEvent);
+	get domainEvents(): IDomainEvent[] {
+		return this._domainEvents;
+	}
+
+	protected addDomainEvent(event: IDomainEvent): void {
+		this.domainEvents.push(event);
+		DomainEvents.markAggregateForDispatch(this);
 	}
 }
