@@ -42,7 +42,7 @@ export const removeFruitFromFruitStorage = extendType({
 							`current value: ${targetFruit.props.amount}`,
 					);
 
-				const updated = await repo.commitToPersistence(targetFruit, {
+				const updated = await repo.save(targetFruit, {
 					[FruitKey.Amount]: targetFruit.props.amount - args.amount,
 				});
 

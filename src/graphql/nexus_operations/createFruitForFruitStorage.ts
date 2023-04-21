@@ -33,7 +33,7 @@ export const createFruitForFruitStorage = extendType({
 				}
 
 				const newFruit: Fruit = Fruit.createNewFruit(args);
-				await new FruitRepo(context.DB_URI).commitToPersistence(newFruit, undefined, undefined);
+				await new FruitRepo(context.DB_URI).save(newFruit, undefined, undefined);
 
 				return FruitMapper.toDTO(newFruit);
 			},

@@ -42,7 +42,7 @@ export const storeFruitToFruitStorage = extendType({
 							`(${target.props.limit}). current value: ${target.props.amount}`,
 					);
 
-				const updated = await repo.commitToPersistence(target, {
+				const updated = await repo.save(target, {
 					[FruitKey.Amount]: target.props.amount + args.amount,
 				});
 

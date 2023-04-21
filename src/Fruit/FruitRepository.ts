@@ -45,12 +45,11 @@ export class FruitRepo {
 	 * @param session mongoose session object if part of atomic transaction
 	 * @returns  the committed object cast to a form that the nexus resolvers recognize
 	 */
-	commitToPersistence = async (
+	save = async (
 		fruit: Fruit,
 		updateData?: Partial<FruitInternalProps>,
 		session?: mongoose.mongo.ClientSession,
 	): Promise<FruitModelType> => {
-		//todo: validation through domain service
 		await connectDB(this.DB_URI);
 
 		if (updateData) {
