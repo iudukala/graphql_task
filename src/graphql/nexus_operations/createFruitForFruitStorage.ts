@@ -40,7 +40,7 @@ export const createFruitForFruitStorage = extendType({
 				// try{
 
 				// 	new FruitRepo(context.DB_URI).save(newFruit);
-				// 	// newFruit.
+				// 	newFruit.addDomainEvent()
 
 				// // 	// newFruit.add
 

@@ -3,6 +3,9 @@ import { DomainEventModel } from '../infrastructure/persistence/DomainEventModel
 import { DomainEvent } from './DomainEvent.js';
 import { Entity } from './Entity.js';
 
+/**
+ * abstract class for entities that act as the aggregate root. not functionally necessary currently since the domain only contains one entities.
+ */
 export abstract class AggregateRoot<T> extends Entity<T> {
 	private _domainEvents: Array<DomainEvent> = [];
 
@@ -15,8 +18,8 @@ export abstract class AggregateRoot<T> extends Entity<T> {
 		// DomainEventManager.markAggregateForDispatch(this);
 
 		new DomainEventModel({
-			dateTimeOccured: new Date(),
-			fruitID: this.id,
+			dateTimeOccured: event.dateTimeOccured,
+			fruitID: event.getEntityID(),
 		}).save({ session: session });
 	}
 }
