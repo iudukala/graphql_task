@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
-import { AggregateRoot } from '../core/AggregateRoot.js';
-import { FruitDescriptionVO } from './FruitDescriptionVO.js';
 import { FruitKey } from './enum_fruitKey.js';
+import { FruitDescriptionVO } from './FruitDescriptionVO.js';
+import { Entity } from '../core/Entity.js';
+import mongoose from 'mongoose';
 import { FruitConstructArgs, FruitDTO, FruitInternalProps } from './types.js';
 
-export class Fruit extends AggregateRoot<FruitInternalProps> {
+export class Fruit extends Entity<FruitInternalProps> {
 	/**
 	 * @param fruitData data to construct the object with
 	 */

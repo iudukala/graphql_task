@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
-import { FruitCreatedEvent } from '../../Fruit/FruitCreatedEvent.js';
+import { FruitMutatedEvent } from '../../Fruit/FruitCreatedEvent.js';
 
-export const DomainEventModel = mongoose.model(
+export const FruitEventModel = mongoose.model(
 	'domain_event',
-	new mongoose.Schema<FruitCreatedEvent>({
+	new mongoose.Schema<FruitMutatedEvent>({
 		fruitID: String,
 		dateTimeOccured: Date,
+		mutationType: String,
 	}),
 	'outbox',
 );

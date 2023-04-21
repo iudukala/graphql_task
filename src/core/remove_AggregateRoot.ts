@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { DomainEventModel } from '../infrastructure/persistence/DomainEventModel.js';
+import { FruitEventModel } from '../infrastructure/persistence/DomainEventModel.js';
 import { DomainEvent } from './DomainEvent.js';
 import { Entity } from './Entity.js';
 
@@ -16,10 +16,12 @@ export abstract class AggregateRoot<T> extends Entity<T> {
 	public addDomainEvent(event: DomainEvent, session: mongoose.mongo.ClientSession): void {
 		// this.domainEvents.push(event);
 		// DomainEventManager.markAggregateForDispatch(this);
+		//
+		// 	new DomainEventModel({
+		// 		dateTimeOccured: event.dateTimeOccured,
+		// 		fruitID: event.getEntityID(),
+		// 	}).save({ session: session });
 
-		new DomainEventModel({
-			dateTimeOccured: event.dateTimeOccured,
-			fruitID: event.getEntityID(),
-		}).save({ session: session });
+
 	}
 }
