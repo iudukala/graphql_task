@@ -1,5 +1,5 @@
 import { Domain } from 'domain';
-import { AggregateRoot } from './AggregateRoot.js';
+import { AggregateRoot } from './remove_AggregateRoot.js';
 import { DomainEvent } from './DomainEvent.js';
 
 export class DomainEventManager {

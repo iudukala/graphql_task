@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { DomainEventModel } from '../infrastructure/persistence/FruitEventModel.js';
 import { DomainEvent } from './DomainEvent.js';
 import { Entity } from './Entity.js';
 

@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { extendType, intArg, nonNull, stringArg } from 'nexus';
 import { AllNexusArgsDefs } from 'nexus/dist/core.js';
 import { Fruit } from '../../Fruit/Fruit.js';
@@ -33,37 +32,9 @@ export const createFruitForFruitStorage = extendType({
 				if (await new FruitService(repo).doesExist(args.name)) {
 					throw new Error('fruit names must be unique');
 				}
-
 				const newFruit: Fruit = Fruit.createNewFruit(args);
 
-				const session = await mongoose.startSession();
-				session.startTransaction();
-
-				// try {
 				await new FruitRepo(context.DB_URI).save(newFruit);
-
-				// await connectDB(context.DB_URI);
-				// await new DomainEventModel(
-				// 	new FruitMutatedEvent(newFruit, FRUIT_MUTATION_EVENT.CREATED),
-				// ).save();
-
-				// 	await session.commitTransaction();
-				// } catch (exception) {
-				// 	console.error('transaction failed: ' + exception);
-				// } finally {
-				// 	await session.endSession();
-				// }
-
-				// 	newFruit.addDomainEvent()
-
-				// // 	// newFruit.add
-
-				// }
-				// session.withTransaction(() => {
-				// 	return new FruitRepo(context.DB_URI).save(newFruit);
-				// });
-				// await new FruitRepo(context.DB_URI).save(newFruit);
-
 				return FruitMapper.toDTO(newFruit);
 			},
 		});

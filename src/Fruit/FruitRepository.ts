@@ -67,6 +67,7 @@ export class FruitRepo {
 			});
 			if (updated === null) throw new Error(`update failed for fruit [${fruit.props.name}]`);
 
+			// adding a domain event to outbox to be raised
 			await new DomainEventModel(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.UPDATED)).save();
 			return updated;
 		}
@@ -76,6 +77,7 @@ export class FruitRepo {
 			.catch(error => {
 				throw new Error('database commit failed: ' + error);
 			});
+		// adding a domain event to outbox to be raised
 		await new DomainEventModel(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.CREATED)).save();
 
 		mongoose.connection.close();
@@ -96,6 +98,9 @@ export class FruitRepo {
 		const target = await this.findFruitByName(fruit.props.name, session);
 
 		const deleted = await FruitModel.findByIdAndDelete(target._id, { session: session });
+		// adding a domain event to outbox to be raised
+		await new DomainEventModel(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.DELETED)).save();
+
 		if (deleted === null) throw new Error(`delete failed for fruit [${target.name}]`);
 
 		return deleted;
