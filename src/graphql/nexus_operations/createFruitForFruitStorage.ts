@@ -9,9 +9,6 @@ import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import type { FruitConstructArgs, FruitDTO } from '../../Fruit/types.js';
 import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
 import { GQLContextType } from '../common/type_GQLContextType.js';
-import { DomainEventModel } from '../../infrastructure/persistence/DomainEventModel.js';
-import { FRUIT_MUTATION_EVENT, FruitMutatedEvent } from '../../Fruit/events/FruitMutatedEvent.js';
-import { connectDB } from '../../infrastructure/persistence/connectDB.js';
 // import { FruitEventModel } from '../../infrastructure/persistence/FruitEventModel.js';
 
 /**
@@ -45,10 +42,10 @@ export const createFruitForFruitStorage = extendType({
 				// try {
 				await new FruitRepo(context.DB_URI).save(newFruit);
 
-				await connectDB(context.DB_URI);
-				await new DomainEventModel(
-					new FruitMutatedEvent(newFruit, FRUIT_MUTATION_EVENT.CREATED),
-				).save();
+				// await connectDB(context.DB_URI);
+				// await new DomainEventModel(
+				// 	new FruitMutatedEvent(newFruit, FRUIT_MUTATION_EVENT.CREATED),
+				// ).save();
 
 				// 	await session.commitTransaction();
 				// } catch (exception) {

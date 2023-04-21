@@ -6,6 +6,8 @@ import { Fruit } from '../Fruit.js';
  */
 export const FRUIT_MUTATION_EVENT = {
 	CREATED: 'CREATED',
+	UPDATED: 'UPDATED',
+	DELTED: 'DELETED',
 } as const;
 
 export class FruitMutatedEvent implements DomainEvent {

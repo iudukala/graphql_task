@@ -5,6 +5,8 @@ import { FruitMapper } from './FruitMapper.js';
 import { FruitKey } from './enum_fruitKey.js';
 import { FruitModel } from '../infrastructure/persistence/FruitModel.js';
 import { FruitInternalProps, FruitModelType } from './types.js';
+import { DomainEventModel } from '../infrastructure/persistence/DomainEventModel.js';
+import { FRUIT_MUTATION_EVENT, FruitMutatedEvent } from './events/FruitMutatedEvent.js';
 
 export class FruitRepo {
 	private readonly DB_URI: string;
@@ -65,6 +67,7 @@ export class FruitRepo {
 			});
 			if (updated === null) throw new Error(`update failed for fruit [${fruit.props.name}]`);
 
+			await new DomainEventModel(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.UPDATED)).save();
 			return updated;
 		}
 
@@ -73,6 +76,7 @@ export class FruitRepo {
 			.catch(error => {
 				throw new Error('database commit failed: ' + error);
 			});
+		await new DomainEventModel(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.CREATED)).save();
 
 		mongoose.connection.close();
 		return committed;
