@@ -1,6 +1,7 @@
-import { DomainEventManager } from './DomainEventManager.js';
-import { Entity } from './Entity.js';
+import mongoose from 'mongoose';
+import { DomainEventModel } from '../infrastructure/persistence/DomainEventModel.js';
 import { DomainEvent } from './DomainEvent.js';
+import { Entity } from './Entity.js';
 
 export abstract class AggregateRoot<T> extends Entity<T> {
 	private _domainEvents: Array<DomainEvent> = [];
@@ -9,8 +10,13 @@ export abstract class AggregateRoot<T> extends Entity<T> {
 		return this._domainEvents;
 	}
 
-	protected addDomainEvent(event: DomainEvent): void {
-		this.domainEvents.push(event);
-		DomainEventManager.markAggregateForDispatch(this);
+	public addDomainEvent(event: DomainEvent, session: mongoose.mongo.ClientSession): void {
+		// this.domainEvents.push(event);
+		// DomainEventManager.markAggregateForDispatch(this);
+
+		new DomainEventModel({
+			dateTimeOccured: new Date(),
+			fruitID: this.id,
+		}).save({ session: session });
 	}
 }
