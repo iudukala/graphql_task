@@ -3,7 +3,7 @@ import { connectDB } from '../infrastructure/persistence/connectDB.js';
 import { Fruit } from './Fruit.js';
 import { FruitMapper } from './FruitMapper.js';
 import { FruitKey } from './enum_fruitKey.js';
-import { FruitModel } from '../infrastructure/persistence/mongooseFruitModel.js';
+import { FruitModel } from '../infrastructure/persistence/fruitModel.js';
 import { FruitInternalProps, FruitModelType } from './types.js';
 
 export class FruitRepo {

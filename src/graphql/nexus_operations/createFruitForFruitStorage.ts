@@ -35,11 +35,11 @@ export const createFruitForFruitStorage = extendType({
 
 				const newFruit: Fruit = Fruit.createNewFruit(args);
 
-				const mongoSession = await mongoose.startSession();
-				mongoSession.withTransaction(() => {
-					return new FruitRepo(context.DB_URI).save(newFruit);
-				});
-				// await new FruitRepo(context.DB_URI).save(newFruit);
+				// const session = await mongoose.startSession();
+				// session.withTransaction(() => {
+				// 	return new FruitRepo(context.DB_URI).save(newFruit);
+				// });
+				await new FruitRepo(context.DB_URI).save(newFruit);
 
 				return FruitMapper.toDTO(newFruit);
 			},
