@@ -1,13 +1,11 @@
 import mongoose from 'mongoose';
-import { FruitModelType, FruitDTO } from '../../Fruit/types.js';
+import { FruitCreatedEvent } from '../../Fruit/FruitCreatedEvent.js';
 
-export const FruitModel = mongoose.model<FruitModelType>(
-	'Fruit',
-	new mongoose.Schema<FruitDTO>({
-		name: String,
-		description: String,
-		limit: Number,
-		amount: Number,
+export const DomainEventModel = mongoose.model(
+	'domain_event',
+	new mongoose.Schema<FruitCreatedEvent>({
+		fruitID: String,
+		dateTimeOccured: Date,
 	}),
-	'Fruit',
+	'outbox',
 );

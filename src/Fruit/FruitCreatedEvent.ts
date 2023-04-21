@@ -3,14 +3,14 @@ import { Fruit } from './Fruit.js';
 
 export class FruitCreatedEvent implements DomainEvent {
 	dateTimeOccured: Date;
-	fruit: Fruit;
+	fruitID: string;
 
 	constructor(fruit: Fruit) {
 		this.dateTimeOccured = new Date();
-		this.fruit = fruit;
+		this.fruitID = fruit.id;
 	}
 
 	getEntityID(): string {
-		return this.fruit.id;
+		return this.fruitID;
 	}
 }

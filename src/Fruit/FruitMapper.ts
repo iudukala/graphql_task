@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { Fruit } from '../Fruit/Fruit.js';
 import { FruitDTO, FruitModelType } from '../Fruit/types.js';
 import { FruitKey } from './enum_fruitKey.js';
-import { FruitModel } from '../infrastructure/persistence/fruitModel.js';
+import { FruitModel } from '../infrastructure/persistence/FruitModel.js';
 
 export class FruitMapper {
 	/**
