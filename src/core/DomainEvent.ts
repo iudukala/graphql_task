@@ -1,6 +1,6 @@
 import { Entity } from './Entity.js';
 
-export interface IDomainEvent {
+export interface DomainEvent {
 	dateTimeOccured: Date;
 	getEntityID: () => Entity<unknown>['id'];
 }

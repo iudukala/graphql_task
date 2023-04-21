@@ -1,9 +1,9 @@
 import { Domain } from 'domain';
 import { AggregateRoot } from './AggregateRoot.js';
-import { IDomainEvent } from './IDomainEvent.js';
+import { DomainEvent } from './DomainEvent.js';
 
-export class DomainEvents {
-	private static handlersMap: Record<string, Array<(event: IDomainEvent) => void>> = {};
+export class DomainEventManager {
+	private static handlersMap: Record<string, Array<(event: DomainEvent) => void>> = {};
 	private static markedAggregates: Array<AggregateRoot<any>> = [];
 
 	/**
@@ -16,7 +16,7 @@ export class DomainEvents {
 	public static markAggregateForDispatch(aggregateArg: AggregateRoot<any>): void {
 		// const aggregateFound = !!this.findMarkedAggregateByID(aggregateArg.id);
 		const aggregateFound =
-			DomainEvents.markedAggregates.filter(aggrItem => aggrItem.id === aggregateArg.id).length ===
+			DomainEventManager.markedAggregates.filter(aggrItem => aggrItem.id === aggregateArg.id).length ===
 			0;
 
 		if (!aggregateFound) {
@@ -25,7 +25,7 @@ export class DomainEvents {
 	}
 
 	private static dispatchAggregateEvents(aggregate: AggregateRoot<any>): void {
-		aggregate.domainEvents.forEach((event: IDomainEvent) => this.dispatch(event));
+		aggregate.domainEvents.forEach((event: DomainEvent) => this.dispatch(event));
 	}
 
 	// private static removeAggregateFromMarkedDispatchList(aggregate: AggregateRoot<any>): void {
@@ -53,11 +53,11 @@ export class DomainEvents {
 	// 	}
 	// }Array<
 
-	public static register(callback: (event: IDomainEvent) => void, eventClassName: string): void {
+	public static register(handler: (event: DomainEvent) => void, eventClassName: string): void {
 		if (!this.handlersMap.hasOwnProperty(eventClassName)) {
 			this.handlersMap[eventClassName] = [];
 		}
-		this.handlersMap[eventClassName].push(callback);
+		this.handlersMap[eventClassName].push(handler);
 	}
 
 	// public static clearHandlers(): void {
@@ -68,7 +68,7 @@ export class DomainEvents {
 	// 	this.markedAggregates = [];
 	// }
 
-	private static dispatch(event: IDomainEvent): void {
+	private static dispatch(event: DomainEvent): void {
 		const eventClassName: string = event.constructor.name;
 
 		if (this.handlersMap.hasOwnProperty(eventClassName)) {

@@ -1,7 +1,7 @@
-import { IDomainEvent } from '../core/IDomainEvent.js';
+import { DomainEvent } from '../core/DomainEvent.js';
 import { Fruit } from './Fruit.js';
 
-export class FruitCreatedEvent implements IDomainEvent {
+export class FruitCreatedEvent implements DomainEvent {
 	dateTimeOccured: Date;
 	fruit: Fruit;
 
