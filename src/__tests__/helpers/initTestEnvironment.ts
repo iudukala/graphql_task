@@ -1,6 +1,6 @@
-import { FruitModel } from '../../persistence/mongooseFruitModel.js';
+import { FruitModel } from '../../infrastructure/persistence/mongooseFruitModel.js';
 import { fruitSampleData } from '../data/sampleDataFruit.js';
-import { connectDB } from '../../persistence/connectDB.js';
+import { connectDB } from '../../infrastructure/persistence/connectDB.js';
 import mongoose from 'mongoose';
 import { FruitMapper } from '../../Fruit/FruitMapper.js';
 

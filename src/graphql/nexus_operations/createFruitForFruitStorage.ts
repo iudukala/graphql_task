@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { extendType, intArg, nonNull, stringArg } from 'nexus';
 import { AllNexusArgsDefs } from 'nexus/dist/core.js';
 import { Fruit } from '../../Fruit/Fruit.js';
@@ -33,7 +34,12 @@ export const createFruitForFruitStorage = extendType({
 				}
 
 				const newFruit: Fruit = Fruit.createNewFruit(args);
-				await new FruitRepo(context.DB_URI).save(newFruit, undefined, undefined);
+
+				const mongoSession = await mongoose.startSession();
+				mongoSession.withTransaction(() => {
+					return new FruitRepo(context.DB_URI).save(newFruit);
+				});
+				// await new FruitRepo(context.DB_URI).save(newFruit);
 
 				return FruitMapper.toDTO(newFruit);
 			},
