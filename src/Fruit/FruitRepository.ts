@@ -42,11 +42,13 @@ export class FruitRepo {
 	 * @description takes a fruit and commits it to the database. would make sense to convert this to a generic function but currently the only domain entity is fruit.
 	 * @param fruit fruit object
 	 * @param updateData data to update fruit with (if updating existing fruit)
+	 * @param session mongoose session object if part of atomic transaction
 	 * @returns  the committed object cast to a form that the nexus resolvers recognize
 	 */
 	commitToPersistence = async (
 		fruit: Fruit,
 		updateData?: Partial<FruitInternalProps>,
+		session?: mongoose.mongo.ClientSession,
 	): Promise<FruitModelType> => {
 		//todo: validation through domain service
 		await connectDB(this.DB_URI);
