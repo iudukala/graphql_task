@@ -21,16 +21,22 @@ export class FruitRepo {
 	exists = async (fruitName: string): Promise<boolean> => {
 		await connectDB(this.DB_URI);
 
-		return !!(await FruitModel.findOne({ [FruitKey.Name]: fruitName }).exec());
+		return !!(await FruitModel.findOne({ [FruitKey.Name]: fruitName }, undefined).exec());
 	};
 
 	/**
 	 * @description locates a fruit by it's name
 	 * @param fruitName the name to query for
+	 * @param session optional mongoose session object if part of atomic transaction
 	 */
-	findFruitByName = async (fruitName: string): Promise<FruitModelType> => {
+	findFruitByName = async (
+		fruitName: string,
+		session?: mongoose.mongo.ClientSession,
+	): Promise<FruitModelType> => {
 		await connectDB(this.DB_URI);
-		const target = await FruitModel.findOne({ [FruitKey.Name]: fruitName }).exec();
+		const target = await FruitModel.findOne({ [FruitKey.Name]: fruitName }, undefined, {
+			session: session,
+		}).exec();
 
 		if (target === null || target === undefined)
 			throw new Error(`fruit not found for name: [${fruitName}]`);
@@ -42,7 +48,7 @@ export class FruitRepo {
 	 * @description takes a fruit and commits it to the database. would make sense to convert this to a generic function but currently the only domain entity is fruit.
 	 * @param fruit fruit object
 	 * @param updateData data to update fruit with (if updating existing fruit)
-	 * @param session mongoose session object if part of atomic transaction
+	 * @param session optional mongoose session object if part of atomic transaction
 	 * @returns  the committed object cast to a form that the nexus resolvers recognize
 	 */
 	save = async (
@@ -55,6 +61,7 @@ export class FruitRepo {
 		if (updateData) {
 			const updated = await FruitModel.findByIdAndUpdate(fruit.id, updateData, {
 				returnDocument: 'after',
+				session: session,
 			});
 			if (updated === null) throw new Error(`update failed for fruit [${fruit.props.name}]`);
 
@@ -62,7 +69,7 @@ export class FruitRepo {
 		}
 
 		const committed: FruitModelType = await FruitMapper.toPersistence(fruit)
-			.save()
+			.save({ session: session })
 			.catch(error => {
 				throw new Error('database commit failed: ' + error);
 			});
@@ -74,13 +81,17 @@ export class FruitRepo {
 	/**
 	 *
 	 * @param fruit fruit to delete
+	 * @param session optional mongoose session object if part of atomic transaction
 	 * @returns deleted fruit model returned from mongoose
 	 */
-	delete = async (fruit: Fruit): Promise<FruitModelType> => {
+	delete = async (
+		fruit: Fruit,
+		session?: mongoose.mongo.ClientSession,
+	): Promise<FruitModelType> => {
 		await connectDB(this.DB_URI);
-		const target = await this.findFruitByName(fruit.props.name);
+		const target = await this.findFruitByName(fruit.props.name, session);
 
-		const deleted = await FruitModel.findByIdAndDelete(target._id);
+		const deleted = await FruitModel.findByIdAndDelete(target._id, { session: session });
 		if (deleted === null) throw new Error(`delete failed for fruit [${target.name}]`);
 
 		return deleted;
