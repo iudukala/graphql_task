@@ -29,7 +29,6 @@ export class FruitRepo {
 	/**
 	 * @description locates a fruit by it's name
 	 * @param fruitName the name to query for
-	 * @param session optional mongoose session object if part of atomic transaction
 	 */
 	findFruitByName = async (fruitName: string): Promise<FruitModelType> => {
 		await connectDB(this.DB_URI);
@@ -45,7 +44,6 @@ export class FruitRepo {
 	 * @description takes a fruit and commits it to the database. would make sense to convert this to a generic function but currently the only domain entity is fruit.
 	 * @param fruit fruit object
 	 * @param updateData data to update fruit with (if updating existing fruit)
-	 * @param session optional mongoose session object if part of atomic transaction
 	 * @returns  the committed object cast to a form that the nexus resolvers recognize
 	 */
 	save = async (
@@ -103,23 +101,31 @@ export class FruitRepo {
 	/**
 	 *
 	 * @param fruit fruit to delete
-	 * @param session optional mongoose session object if part of atomic transaction
 	 * @returns deleted fruit model returned from mongoose
 	 */
-	delete = async (
-		fruit: Fruit,
-		session?: mongoose.mongo.ClientSession,
-	): Promise<FruitModelType> => {
+	delete = async (fruit: Fruit): Promise<FruitModelType> => {
 		await connectDB(this.DB_URI);
-		const target = await this.findFruitByName(fruit.props.name);
+		const session: mongoose.mongo.ClientSession | undefined = await startTransaction();
 
-		const deleted = await FruitModel.findByIdAndDelete(target._id, { session: session });
-		// adding a domain event to outbox to be raised
-		// await fruit.addDomainEvent(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.DELETED), session);
+		try {
+			// const committedModel: FruitModelType = await performUpdatedOrCommit();
+			const target = await this.findFruitByName(fruit.props.name);
 
-		if (deleted === null) throw new Error(`delete failed for fruit [${target.name}]`);
+			const deleted = await FruitModel.findByIdAndDelete(target._id, { session: session });
+			if (deleted === null) throw new Error(`delete failed for fruit [${target.name}]`);
 
-		return deleted;
+			await session?.commitTransaction();
+			return deleted;
+		} catch (exception) {
+			await session?.abortTransaction();
+			throw new Error(
+				`database commit failed. transaction mode flag: ${FruitRepo.ATOMIC_TRANSACTION_FLAG}\n` +
+					exception,
+			);
+		} finally {
+			await session?.endSession();
+			mongoose.connection.close();
+		}
 	};
 }
 

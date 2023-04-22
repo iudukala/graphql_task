@@ -2,7 +2,7 @@ import { FruitDTO } from '../Fruit/types.js';
 import { perfromQuery } from './helpers/performQuery.js';
 
 describe('createFruitForFruitStorage() endpoint test', () => {
-	test('ensure fruit doesn\'t exist', async () => {
+	test("ensure fruit doesn't exist", async () => {
 		await perfromQuery(
 			`query{
 				findFruit(name: "lemon"){
