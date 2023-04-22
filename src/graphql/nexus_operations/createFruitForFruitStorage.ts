@@ -25,7 +25,11 @@ export const createFruitForFruitStorage = extendType({
 				[FruitKey.Limit]: nonNull(intArg()),
 			},
 
-			resolve: async (_, args: FruitConstructArgs, context: GQLContextType): Promise<FruitDTO> => {
+			resolve: async (
+				_discard,
+				args: FruitConstructArgs,
+				context: GQLContextType,
+			): Promise<FruitDTO> => {
 				const repo = new FruitRepo(context.DB_URI);
 
 				if (await new FruitService(repo).doesExist(args.name)) {

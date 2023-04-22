@@ -14,7 +14,6 @@ type FruitModifyArgs = Omit<
 
 /**
  * mutation for updating the the amount of an existing fruit.
- *
  * signature : storeFruitToFruitStorage(name: string, amount: int)
  */
 export const storeFruitToFruitStorage = extendType({

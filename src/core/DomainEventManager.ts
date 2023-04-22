@@ -1,32 +1,51 @@
-import { Domain } from 'domain';
-import { AggregateRoot } from './remove_AggregateRoot.js';
+import { DomainEventModel } from '../infrastructure/persistence/DomainEventModel.js';
+import { connectDB } from '../infrastructure/persistence/connectDB.js';
 import { DomainEvent } from './DomainEvent.js';
+import cron from 'node-cron';
 
 export class DomainEventManager {
 	private static handlersMap: Record<string, Array<(event: DomainEvent) => void>> = {};
-	private static markedAggregates: Array<AggregateRoot<any>> = [];
 
-	/**
-	 * @static
-	 * @desc Called by aggregate root objects that have created domain
-	 * events to eventually be dispatched when the infrastructure commits
-	 * the unit of work.
-	 */
-
-	public static markAggregateForDispatch(aggregateArg: AggregateRoot<any>): void {
-		// const aggregateFound = !!this.findMarkedAggregateByID(aggregateArg.id);
-		const aggregateFound =
-			DomainEventManager.markedAggregates.filter(aggrItem => aggrItem.id === aggregateArg.id)
-				.length === 0;
-
-		if (!aggregateFound) {
-			this.markedAggregates.push(aggregateArg);
+	public static register(handler: (event: DomainEvent) => void, eventClassName: string): void {
+		if (!Object.prototype.hasOwnProperty.call(DomainEventManager.handlersMap, eventClassName)) {
+			this.handlersMap[eventClassName] = [];
 		}
+		this.handlersMap[eventClassName].push(handler);
 	}
 
-	private static dispatchAggregateEvents(aggregate: AggregateRoot<any>): void {
-		aggregate.domainEvents.forEach((event: DomainEvent) => this.dispatch(event));
+	static start(DB_URI: string) {
+		cron
+			.schedule('*/3 * * * * *', () => {
+				// console.log('ping --------');
+				this.dispatchEvents(DB_URI);
+			})
+			.start();
 	}
+
+	static async dispatchEvents(DB_URI: string) {
+		await connectDB(DB_URI);
+		(await DomainEventModel.find()).map(event => console.log(event))
+
+		console.log('\n');
+	}
+	// private static markedAggregates: Array<AggregateRoot<any>> = [];
+
+	// /**
+
+	// public static markAggregateForDispatch(aggregateArg: AggregateRoot<any>): void {
+	// 	// const aggregateFound = !!this.findMarkedAggregateByID(aggregateArg.id);
+	// 	const aggregateFound =
+	// 		DomainEventManager.markedAggregates.filter(aggrItem => aggrItem.id === aggregateArg.id)
+	// 			.length === 0;
+
+	// 	if (!aggregateFound) {
+	// 		this.markedAggregates.push(aggregateArg);
+	// 	}
+	// }
+
+	// private static dispatchAggregateEvents(aggregate: AggregateRoot<any>): void {
+	// 	aggregate.domainEvents.forEach((event: DomainEvent) => this.dispatch(event));
+	// }
 
 	// private static removeAggregateFromMarkedDispatchList(aggregate: AggregateRoot<any>): void {
 	// 	const index = this.markedAggregates.findIndex(a => a.equals(aggregate));
@@ -53,13 +72,6 @@ export class DomainEventManager {
 	// 	}
 	// }Array<
 
-	public static register(handler: (event: DomainEvent) => void, eventClassName: string): void {
-		if (!this.handlersMap.hasOwnProperty(eventClassName)) {
-			this.handlersMap[eventClassName] = [];
-		}
-		this.handlersMap[eventClassName].push(handler);
-	}
-
 	// public static clearHandlers(): void {
 	// 	this.handlersMap = {};
 	// }
@@ -68,14 +80,14 @@ export class DomainEventManager {
 	// 	this.markedAggregates = [];
 	// }
 
-	private static dispatch(event: DomainEvent): void {
-		const eventClassName: string = event.constructor.name;
+	// private static dispatch(event: DomainEvent): void {
+	// 	const eventClassName: string = event.constructor.name;
 
-		if (this.handlersMap.hasOwnProperty(eventClassName)) {
-			const handlers: any[] = this.handlersMap[eventClassName];
-			for (let handler of handlers) {
-				handler(event);
-			}
-		}
-	}
+	// 	if (this.handlersMap.hasOwnProperty(eventClassName)) {
+	// 		const handlers: any[] = this.handlersMap[eventClassName];
+	// 		for (let handler of handlers) {
+	// 			handler(event);
+	// 		}
+	// 	}
+	// }
 }

@@ -3,17 +3,21 @@ import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import { FruitRepo } from './Fruit/FruitRepository.js';
 import { nexusSchema } from './graphql/schemaConfigNexus.js';
+import cron from 'node-cron';
+import { DomainEventManager } from './core/DomainEventManager.js';
 
 // fetching environment variables set in the .env file and initializing the connection string var
 dotenv.config();
 
 // initializing the database connection string
-const DB_CONN_STR = process.env['DB_URI'];
+const DB_CONN_STR = process.env['DB_URI_LOCAL'];
 if (DB_CONN_STR === null || DB_CONN_STR === undefined)
 	throw new Error('database connection string empty');
 
 // setting flag for using mongodb transactions. (cannot use transactions if not part of replica set)
-FruitRepo.ENABLE_ATOMIC_TRANSACTIONS = true;
+FruitRepo.ENABLE_ATOMIC_TRANSACTIONS = false;
+
+DomainEventManager.start(DB_CONN_STR);
 
 express()
 	.use(
