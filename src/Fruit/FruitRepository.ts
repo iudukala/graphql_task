@@ -108,7 +108,6 @@ export class FruitRepo {
 		const session: mongoose.mongo.ClientSession | undefined = await startTransaction();
 
 		try {
-			// const committedModel: FruitModelType = await performUpdatedOrCommit();
 			const target = await this.findFruitByName(fruit.props.name);
 
 			const deleted = await FruitModel.findByIdAndDelete(target._id, { session: session });
