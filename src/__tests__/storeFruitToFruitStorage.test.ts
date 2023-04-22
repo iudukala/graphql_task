@@ -2,7 +2,7 @@ import { FruitDTO } from '../Fruit/types.js';
 import { perfromQuery } from './helpers/performQuery.js';
 
 describe('storeFruitToFruitStorage() endpoint test', () => {
-	test('check existing fruit', async () => {
+	test('check existing fruit amount', async () => {
 		await perfromQuery(
 			`query{
 				findFruit(name: "apple"){
@@ -14,7 +14,7 @@ describe('storeFruitToFruitStorage() endpoint test', () => {
 		});
 	});
 
-	test("increments the fruit's amount by a valid count", async () => {
+	test('increment the amount by a valid count', async () => {
 		const MUT_NAME = 'storeFruitToFruitStorage';
 		await perfromQuery(
 			`mutation{

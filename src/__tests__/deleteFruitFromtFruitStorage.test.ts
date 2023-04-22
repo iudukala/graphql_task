@@ -16,7 +16,7 @@ describe('deleteFruitFromFruitStorage() endpoint test', () => {
 		});
 	});
 
-	test('deletes an existing fruit', async () => {
+	test('delete an existing fruit', async () => {
 		const MUT_NAME = 'deleteFruitFromFruitStorage';
 		await perfromQuery(
 			`mutation{
@@ -31,7 +31,7 @@ describe('deleteFruitFromFruitStorage() endpoint test', () => {
 		});
 	});
 
-	test('checking if fruit exists again, after deletion', async () => {
+	test("ensure fruit doesn't exist after deletion", async () => {
 		await perfromQuery(
 			`query{
 				findFruit(name: "apple"){

@@ -2,7 +2,7 @@ import { FruitDTO } from '../Fruit/types.js';
 import { perfromQuery } from './helpers/performQuery.js';
 
 describe('createFruitForFruitStorage() endpoint test', () => {
-	test('check existence', async () => {
+	test('ensure fruit doesn\'t exist', async () => {
 		await perfromQuery(
 			`query{
 				findFruit(name: "lemon"){
@@ -14,7 +14,7 @@ describe('createFruitForFruitStorage() endpoint test', () => {
 		});
 	});
 
-	test('creates a fruit and validates created data', async () => {
+	test('create a fruit and validate created data', async () => {
 		const createMutName = 'createFruitForFruitStorage';
 		await perfromQuery(
 			`mutation{

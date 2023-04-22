@@ -1,7 +1,7 @@
 import { perfromQuery } from './helpers/performQuery.js';
 
 describe('createFruitForFruitStorage() endpoint test', () => {
-	test('attempts to create a fruit with an invalid description', async () => {
+	test('ensure fruit doesn\'t exist', async () => {
 		await perfromQuery(
 			`query{
 				findFruit(name: "lemon"){
@@ -11,7 +11,9 @@ describe('createFruitForFruitStorage() endpoint test', () => {
 		).then(result => {
 			expect(result.data).toBe(null);
 		});
+	});
 
+	test('attempt to create a fruit with an invalid description', async () => {
 		await perfromQuery(
 			`mutation{
 				createFruitForFruitStorage(

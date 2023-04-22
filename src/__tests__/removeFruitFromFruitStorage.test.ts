@@ -2,7 +2,7 @@ import { FruitDTO } from '../Fruit/types.js';
 import { perfromQuery } from './helpers/performQuery.js';
 
 describe('removeFruitFromFruitStorage() endpoint test', () => {
-	test('check existing fruit', async () => {
+	test('ensure existing fruit amount = 0', async () => {
 		await perfromQuery(
 			`query{
 				findFruit(name: "apple"){
@@ -27,7 +27,7 @@ describe('removeFruitFromFruitStorage() endpoint test', () => {
 		});
 	});
 
-	test('reduces a valid amount from an existing fruit', async () => {
+	test('reduce a valid amount from an existing fruit', async () => {
 		await perfromQuery(
 			`mutation{
 				removeFruitFromFruitStorage(
