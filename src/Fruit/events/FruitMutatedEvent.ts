@@ -12,16 +12,17 @@ export const FRUIT_MUTATION_EVENT = {
 
 export class FruitMutatedEvent implements DomainEvent {
 	dateTimeOccured: Date;
-	fruitID: string;
+	serializedFruit: string;
 	mutationType: keyof typeof FRUIT_MUTATION_EVENT;
 
 	constructor(fruit: Fruit, mutationType: keyof typeof FRUIT_MUTATION_EVENT) {
+		this.serializedFruit = JSON.stringify(fruit);
+
 		this.dateTimeOccured = new Date();
-		this.fruitID = fruit.id;
 		this.mutationType = mutationType;
 	}
 
 	getEntityID(): string {
-		return this.fruitID;
+		return (JSON.parse(this.serializedFruit) as Fruit).id;
 	}
 }
