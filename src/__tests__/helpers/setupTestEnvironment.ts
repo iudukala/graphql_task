@@ -20,6 +20,7 @@ jest.mock('../../graphql/dirnameESM.js', () => ({
  */
 beforeAll(async () => {
 	dotenv.config();
+
 	await connectDB(process.env['DB_URI']);
 	FruitRepo.ATOMIC_TRANSACTION_FLAG = true;
 

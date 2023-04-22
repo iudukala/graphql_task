@@ -70,46 +70,33 @@ export class FruitRepo {
 			return undefined;
 		})();
 
-		if (updateData) {
-			const updated = await FruitModel.findByIdAndUpdate(fruit.id, updateData, {
-				returnDocument: 'after',
-				session: session,
-			});
-			if (updated === null) throw new Error(`update failed for fruit [${fruit.props.name}]`);
-
-			// adding a domain event to outbox to be raised
-
-			// await new DomainEventModel(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.UPDATED)).save();
-			await fruit.addDomainEvent(
-				new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.DELETED),
-				session,
-			);
-			return updated;
-		}
-
-		// console.log(DomainEventManager.ATOMIC_TRANSACTION_FLAG);
-		// mod
-
-		const fruitToCommit: FruitModelType = FruitMapper.toPersistence(fruit);
-		// .save({
-		// 	session: session,
-		// });
-
 		try {
-			// const committed: FruitModelType = await FruitMapper.toPersistence(fruit)
+			if (updateData) {
+				const updated = await FruitModel.findByIdAndUpdate(fruit.id, updateData, {
+					returnDocument: 'after',
+					session: session,
+				});
+				if (updated === null) throw new Error(`update failed for fruit [${fruit.props.name}]`);
+
+				// adding a domain event to outbox to be raised
+				await fruit.addDomainEvent(
+					new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.DELETED),
+					session,
+				);
+
+				await session?.commitTransaction();
+				return updated;
+			}
+
+			const fruitToCommit: FruitModelType = FruitMapper.toPersistence(fruit);
 			await fruitToCommit.save({ session: session });
-
-			// .catch(error => {
-			// 	throw new Error('database commit failed: ' + error);
-			// });
-
-			// adding a domain event to outbox to be raised
 			await fruit.addDomainEvent(
 				new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.CREATED),
 				session,
 			);
 
 			await session?.commitTransaction();
+			return fruitToCommit;
 		} catch (exception) {
 			await session?.abortTransaction();
 			throw new Error(
@@ -118,18 +105,8 @@ export class FruitRepo {
 			);
 		} finally {
 			await session?.endSession();
+			mongoose.connection.close();
 		}
-
-		// const committed: FruitModelType = await FruitMapper.toPersistence(fruit)
-		// 	.save({ session: session })
-		// 	.catch(error => {
-		// 		throw new Error('database commit failed: ' + error);
-		// 	});
-		// // adding a domain event to outbox to be raised
-		// await new DomainEventModel(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.CREATED)).save();
-
-		mongoose.connection.close();
-		return fruitToCommit;
 	};
 
 	/**
