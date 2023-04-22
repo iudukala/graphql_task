@@ -1,24 +1,5 @@
-import { perfromQuery } from './helpers/performQuery.js';
-import { initializeDBForTesting } from './helpers/setupTestEnvironment.js';
-import dotenv from 'dotenv';
-import mongoose from 'mongoose';
 import { FruitDTO } from '../Fruit/types.js';
-
-/**
- * replacing the import.meta access call for directory name since jest has effectively no esm support
- */
-jest.mock('../graphql/dirnameESM.js', () => ({
-	getDirname: () => __dirname,
-}));
-
-beforeEach(async () => {
-	dotenv.config();
-	await initializeDBForTesting(process.env['DB_URI']);
-});
-
-afterAll(async () => {
-	mongoose.connection.close();
-});
+import { perfromQuery } from './helpers/performQuery.js';
 
 describe('findFruit() query tests', () => {
 	test('finds an existing fruit', async () => {

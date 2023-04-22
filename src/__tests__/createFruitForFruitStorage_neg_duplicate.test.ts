@@ -1,26 +1,8 @@
 import { FruitDTO } from '../Fruit/types.js';
 import { perfromQuery } from './helpers/performQuery.js';
 
-/**
- * replacing the import.meta access call for directory name since jest has effectively no esm support
- */
-// jest.mock('../graphql/dirnameESM.js', () => ({
-// 	getDirname: () => __dirname,
-// }));
-
-// beforeEach(async () => {
-// 	dotenv.config();
-// 	await initializeDBForTesting(process.env['DB_URI']);
-// });
-
-// afterAll(async () => {
-// 	mongoose.connection.close();
-// });
-
 describe('createFruitForFruitStorage() endpoint negative test', () => {
-	test("attempts to create a duplicate fruit", async () => {
-		jest.setTimeout(10000);
-
+	test('check existence', async () => {
 		await perfromQuery(
 			`query{
 				findFruit(name: "apple"){
@@ -30,7 +12,9 @@ describe('createFruitForFruitStorage() endpoint negative test', () => {
 		).then(result => {
 			expect((result.data?.findFruit as [FruitDTO])[0].name).toBe('apple');
 		});
+	});
 
+	test('attempt to create a duplicate fruit', async () => {
 		const createMutName = 'createFruitForFruitStorage';
 		await perfromQuery(
 			`mutation{

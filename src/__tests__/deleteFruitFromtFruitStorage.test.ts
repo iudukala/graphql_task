@@ -1,29 +1,9 @@
-import dotenv from 'dotenv';
-import mongoose from 'mongoose';
-import { initializeDBForTesting } from './helpers/setupTestEnvironment.js';
-import { perfromQuery } from './helpers/performQuery.js';
 import { MUTATION_RETURN_TYPE_NAME } from '../graphql/nexus_types/MUTATION_RETURN_NAME.js';
 import { NexusGenObjects } from '../infrastructure/nexus_autogen_artifacts/nexus_typegen.js';
-
-/**
- * replacing the import.meta access call for directory name since jest has effectively no esm support
- */
-jest.mock('../graphql/dirnameESM.js', () => ({
-	getDirname: () => __dirname,
-}));
-
-beforeEach(async () => {
-	dotenv.config();
-	await initializeDBForTesting(process.env['DB_URI']);
-});
-
-afterAll(async () => {
-	mongoose.connection.close();
-});
+import { perfromQuery } from './helpers/performQuery.js';
 
 describe('deleteFruitFromFruitStorage() endpoint test', () => {
-	test('deletes an existing fruit', async () => {
-		// checking existence
+	test('check existence', async () => {
 		await perfromQuery(
 			`query{
 				findFruit(name: "apple"){
@@ -34,8 +14,9 @@ describe('deleteFruitFromFruitStorage() endpoint test', () => {
 			type ResponseType = { findFruit: [{ name: string }] };
 			expect((result.data as ResponseType).findFruit[0].name).toBe('apple');
 		});
+	});
 
-		// deleting fruit
+	test('deletes an existing fruit', async () => {
 		const MUT_NAME = 'deleteFruitFromFruitStorage';
 		await perfromQuery(
 			`mutation{
@@ -48,8 +29,9 @@ describe('deleteFruitFromFruitStorage() endpoint test', () => {
 			const returned = result.data?.[MUT_NAME] as NexusGenObjects[typeof MUTATION_RETURN_TYPE_NAME];
 			expect(returned.successful).toBe(true);
 		});
+	});
 
-		//checking if fruit exists again, after deletion
+	test('checking if fruit exists again, after deletion', async () => {
 		await perfromQuery(
 			`query{
 				findFruit(name: "apple"){

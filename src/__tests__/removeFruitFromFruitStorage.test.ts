@@ -1,27 +1,8 @@
-import { perfromQuery } from './helpers/performQuery.js';
-import { initializeDBForTesting } from './helpers/setupTestEnvironment.js';
-import dotenv from 'dotenv';
-import mongoose from 'mongoose';
 import { FruitDTO } from '../Fruit/types.js';
-
-/**
- * replacing the import.meta access call for directory name since jest has effectively no esm support
- */
-jest.mock('../graphql/dirnameESM.js', () => ({
-	getDirname: () => __dirname,
-}));
-
-beforeEach(async () => {
-	dotenv.config();
-	await initializeDBForTesting(process.env['DB_URI']);
-});
-
-afterAll(async () => {
-	mongoose.connection.close();
-});
+import { perfromQuery } from './helpers/performQuery.js';
 
 describe('removeFruitFromFruitStorage() endpoint test', () => {
-	test('reduces a valid amount from an existing fruit', async () => {
+	test('check existing fruit', async () => {
 		await perfromQuery(
 			`query{
 				findFruit(name: "apple"){
@@ -31,7 +12,9 @@ describe('removeFruitFromFruitStorage() endpoint test', () => {
 		).then(result => {
 			expect((result.data?.findFruit as [FruitDTO])[0].amount).toBe(0);
 		});
+	});
 
+	test('increase stored amount', async () => {
 		await perfromQuery(
 			`mutation{
 				storeFruitToFruitStorage(
@@ -42,7 +25,9 @@ describe('removeFruitFromFruitStorage() endpoint test', () => {
 		).then(result => {
 			expect((result.data?.['storeFruitToFruitStorage'] as FruitDTO).amount).toBe(2);
 		});
+	});
 
+	test('reduces a valid amount from an existing fruit', async () => {
 		await perfromQuery(
 			`mutation{
 				removeFruitFromFruitStorage(
