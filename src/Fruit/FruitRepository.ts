@@ -113,6 +113,11 @@ export class FruitRepo {
 			const deleted = await FruitModel.findByIdAndDelete(target._id, { session: session });
 			if (deleted === null) throw new Error(`delete failed for fruit [${target.name}]`);
 
+			await fruit.addDomainEvent(
+				new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.DELETED),
+				session,
+			);
+
 			await session?.commitTransaction();
 			return deleted;
 		} catch (exception) {
