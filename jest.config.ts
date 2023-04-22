@@ -28,6 +28,8 @@ const config: JestConfigWithTsJest = {
 	extensionsToTreatAsEsm: ['.ts'],
 
 	transformIgnorePatterns: ['node_modules/'],
+
+	setupFilesAfterEnv: ['<rootDir>/__tests__/helpers/setupTestEnvironment.ts'],
 };
 
 export default config;

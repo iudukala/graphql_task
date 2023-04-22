@@ -1,24 +1,21 @@
-import { perfromQuery } from './helpers/performQuery.js';
-import { initializeDBForTesting } from './helpers/initTestEnvironment.js';
-import dotenv from 'dotenv';
-import mongoose from 'mongoose';
 import { FruitDTO } from '../Fruit/types.js';
+import { perfromQuery } from './helpers/performQuery.js';
 
 /**
  * replacing the import.meta access call for directory name since jest has effectively no esm support
  */
-jest.mock('../graphql/dirnameESM.js', () => ({
-	getDirname: () => __dirname,
-}));
+// jest.mock('../graphql/dirnameESM.js', () => ({
+// 	getDirname: () => __dirname,
+// }));
 
-beforeEach(async () => {
-	dotenv.config();
-	await initializeDBForTesting(process.env['DB_URI']);
-});
+// beforeEach(async () => {
+// 	dotenv.config();
+// 	await initializeDBForTesting(process.env['DB_URI']);
+// });
 
-afterAll(async () => {
-	mongoose.connection.close();
-});
+// afterAll(async () => {
+// 	mongoose.connection.close();
+// });
 
 describe('createFruitForFruitStorage() endpoint negative test', () => {
 	test("attempts to create a duplicate fruit", async () => {
