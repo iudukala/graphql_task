@@ -1,3 +1,4 @@
+import { FruitDTO } from '../Fruit/types.js';
 import { MUTATION_RETURN_TYPE_NAME } from '../graphql/nexus_types/MUTATION_RETURN_NAME.js';
 import { NexusGenObjects } from '../infrastructure/nexus_autogen_artifacts/nexus_typegen.js';
 import { perfromQuery } from './helpers/performQuery.js';
@@ -11,8 +12,7 @@ describe('deleteFruitFromFruitStorage() endpoint test', () => {
 				}
 			}`,
 		).then(result => {
-			type ResponseType = { findFruit: [{ name: string }] };
-			expect((result.data as ResponseType).findFruit[0].name).toBe('apple');
+			expect((result.data?.['findFruit'] as [Partial<FruitDTO>])[0].name).toBe('apple');
 		});
 	});
 
@@ -43,5 +43,3 @@ describe('deleteFruitFromFruitStorage() endpoint test', () => {
 		});
 	});
 });
-
-//todo: add another test where force delete is necessary
