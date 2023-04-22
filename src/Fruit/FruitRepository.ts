@@ -23,7 +23,7 @@ export class FruitRepo {
 	exists = async (fruitName: string): Promise<boolean> => {
 		await connectDB(this.DB_URI);
 
-		return !!(await FruitModel.findOne({ [FruitKey.Name]: fruitName }, undefined).exec());
+		return !!(await FruitModel.findOne({ [FruitKey.Name]: fruitName }).exec());
 	};
 
 	/**
@@ -31,14 +31,9 @@ export class FruitRepo {
 	 * @param fruitName the name to query for
 	 * @param session optional mongoose session object if part of atomic transaction
 	 */
-	findFruitByName = async (
-		fruitName: string,
-		session?: mongoose.mongo.ClientSession,
-	): Promise<FruitModelType> => {
+	findFruitByName = async (fruitName: string): Promise<FruitModelType> => {
 		await connectDB(this.DB_URI);
-		const target = await FruitModel.findOne({ [FruitKey.Name]: fruitName }, undefined, {
-			session: session,
-		}).exec();
+		const target = await FruitModel.findOne({ [FruitKey.Name]: fruitName }).exec();
 
 		if (target === null || target === undefined)
 			throw new Error(`fruit not found for name: [${fruitName}]`);
@@ -58,19 +53,9 @@ export class FruitRepo {
 		updateData?: Partial<FruitInternalProps>,
 	): Promise<FruitModelType> => {
 		await connectDB(this.DB_URI);
+		const session: mongoose.mongo.ClientSession | undefined = await startTransaction();
 
-		const session: mongoose.mongo.ClientSession | undefined = await (async () => {
-			if (FruitRepo.ATOMIC_TRANSACTION_FLAG) {
-				const innerSession = await mongoose.startSession();
-				innerSession.startTransaction();
-
-				return innerSession;
-			}
-
-			return undefined;
-		})();
-
-		try {
+		const performUpdatedOrCommit = async (): Promise<FruitModelType> => {
 			if (updateData) {
 				const updated = await FruitModel.findByIdAndUpdate(fruit.id, updateData, {
 					returnDocument: 'after',
@@ -80,23 +65,29 @@ export class FruitRepo {
 
 				// adding a domain event to outbox to be raised
 				await fruit.addDomainEvent(
-					new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.DELETED),
+					new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.UPDATED),
 					session,
 				);
 
-				await session?.commitTransaction();
 				return updated;
+			} else {
+				const newFruit: FruitModelType = FruitMapper.toPersistence(fruit);
+				await newFruit.save({ session: session });
+				await fruit.addDomainEvent(
+					new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.CREATED),
+					session,
+				);
+
+				return newFruit;
 			}
+		};
 
-			const fruitToCommit: FruitModelType = FruitMapper.toPersistence(fruit);
-			await fruitToCommit.save({ session: session });
-			await fruit.addDomainEvent(
-				new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.CREATED),
-				session,
-			);
-
+		// attempting transaction
+		try {
+			const committedModel: FruitModelType = await performUpdatedOrCommit();
 			await session?.commitTransaction();
-			return fruitToCommit;
+
+			return committedModel;
 		} catch (exception) {
 			await session?.abortTransaction();
 			throw new Error(
@@ -120,12 +111,8 @@ export class FruitRepo {
 		session?: mongoose.mongo.ClientSession,
 	): Promise<FruitModelType> => {
 		await connectDB(this.DB_URI);
-		const target = await this.findFruitByName(fruit.props.name, session);
+		const target = await this.findFruitByName(fruit.props.name);
 
-		// if (DomainEventManager.ATOMIC_TRANSACTION_FLAG) {
-		// 	const session = await mongoose.startSession();
-		// 	session.startTransaction();
-		// }
 		const deleted = await FruitModel.findByIdAndDelete(target._id, { session: session });
 		// adding a domain event to outbox to be raised
 		// await fruit.addDomainEvent(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.DELETED), session);
@@ -135,3 +122,13 @@ export class FruitRepo {
 		return deleted;
 	};
 }
+
+const startTransaction = async () => {
+	if (FruitRepo.ATOMIC_TRANSACTION_FLAG) {
+		const innerSession = await mongoose.startSession();
+		innerSession.startTransaction();
+
+		return innerSession;
+	}
+	return undefined;
+};
