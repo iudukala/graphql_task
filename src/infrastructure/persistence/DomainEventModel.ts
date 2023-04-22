@@ -7,6 +7,7 @@ export const DomainEventModel = mongoose.model(
 		serializedFruit: String,
 		dateTimeOccured: Date,
 		mutationType: String,
+		eventClass: String,
 	}),
 	'tr_outbox',
 );

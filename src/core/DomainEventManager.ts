@@ -11,10 +11,25 @@ export class DomainEventManager {
 		if (!Object.prototype.hasOwnProperty.call(DomainEventManager.handlersMap, eventClassName)) {
 			this.handlersMap[eventClassName] = [];
 		}
+
 		this.handlersMap[eventClassName].push(handler);
 	}
 
+	// private static dispatch(event: DomainEvent): void {
+	// 	const eventClassName: string = event.constructor.name;
+
+	// 	if (this.handlersMap.hasOwnProperty(eventClassName)) {
+	// 		const handlers: any[] = this.handlersMap[eventClassName];
+	// 		for (let handler of handlers) {
+	// 			handler(event);
+	// 		}
+	// 	}
+	// }
+
 	static start(DB_URI: string) {
+		const logEvent = (event: DomainEvent): void => {
+			console.log(event.eventClass);
+		};
 		cron
 			.schedule('*/3 * * * * *', () => {
 				this.dispatchEvents(DB_URI);
@@ -24,8 +39,12 @@ export class DomainEventManager {
 
 	static async dispatchEvents(DB_URI: string) {
 		await connectDB(DB_URI);
-		(await DomainEventModel.find()).map(event => {
+
+		const fetchedEvents = await DomainEventModel.find();
+		fetchedEvents.forEach(event => {
 			console.log({
+				event: event.eventClass,
+
 				type: event.mutationType,
 				fruitname: (JSON.parse(event.serializedFruit) as Fruit).props.name,
 			});
@@ -33,6 +52,7 @@ export class DomainEventManager {
 
 		console.log('\n');
 	}
+
 	// private static markedAggregates: Array<AggregateRoot<any>> = [];
 
 	// /**
