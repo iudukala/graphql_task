@@ -7,8 +7,9 @@ import { connectDB } from '../../infrastructure/persistence/connectDB.js';
 import { fruitSampleData } from '../data/sampleDataFruit.js';
 
 // using a separate local database (without transaction capabilities since mongo instance is not part of replica set) for running tests
-export const TEST_DB_URI_IDENTIFIER: 'DB_URI_LOCAL' | 'DB_URI' = 'DB_URI';
-const ATOMIC_TRANSACTION_FLAG = true;
+export const TEST_DB_URI_IDENTIFIER: 'DB_URI_LOCAL' | 'DB_URI' = 'DB_URI_LOCAL';
+// no transaction capabilities on local non replica set member
+const ATOMIC_TRANSACTION_FLAG = false;
 
 /**
  * replacing the import.meta access call for directory name since jest has effectively no esm support

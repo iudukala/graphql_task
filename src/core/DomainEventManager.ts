@@ -1,3 +1,4 @@
+import { Fruit } from '../Fruit/Fruit.js';
 import { DomainEventModel } from '../infrastructure/persistence/DomainEventModel.js';
 import { connectDB } from '../infrastructure/persistence/connectDB.js';
 import { DomainEvent } from './DomainEvent.js';
@@ -24,7 +25,12 @@ export class DomainEventManager {
 
 	static async dispatchEvents(DB_URI: string) {
 		await connectDB(DB_URI);
-		(await DomainEventModel.find()).map(event => console.log(event))
+		(await DomainEventModel.find()).map(event => {
+			console.log({
+				type: event.mutationType,
+				fruitname: (JSON.parse(event.serializedFruit) as Fruit).props.name,
+			});
+		});
 
 		console.log('\n');
 	}

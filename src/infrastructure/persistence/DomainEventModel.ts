@@ -8,5 +8,5 @@ export const DomainEventModel = mongoose.model(
 		dateTimeOccured: Date,
 		mutationType: String,
 	}),
-	'outbox',
+	'tr_outbox',
 );
