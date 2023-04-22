@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { AggregateRoot } from '../core/remove_AggregateRoot.js';
+import { AggregateRoot } from '../core/AggregateRoot.js';
 import { FruitDescriptionVO } from './FruitDescriptionVO.js';
 import { FruitKey } from './enum_fruitKey.js';
 import { FruitConstructArgs, FruitDTO, FruitInternalProps } from './types.js';

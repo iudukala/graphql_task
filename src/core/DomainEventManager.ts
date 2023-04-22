@@ -17,7 +17,6 @@ export class DomainEventManager {
 	static start(DB_URI: string) {
 		cron
 			.schedule('*/3 * * * * *', () => {
-				// console.log('ping --------');
 				this.dispatchEvents(DB_URI);
 			})
 			.start();
