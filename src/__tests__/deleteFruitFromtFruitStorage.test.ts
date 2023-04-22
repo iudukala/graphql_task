@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { initializeDBForTesting } from './helpers/initTestEnvironment.js';
 import { perfromQuery } from './helpers/performQuery.js';
 import { MUTATION_RETURN_TYPE_NAME } from '../graphql/nexus_types/MUTATION_RETURN_NAME.js';
-import { NexusGenObjects } from '../graphql/nexus_autogen_artifacts/nexus_typegen.js';
+import { NexusGenObjects } from '../infrastructure/nexus_autogen_artifacts/nexus_typegen.js';
 
 /**
  * replacing the import.meta access call for directory name since jest has effectively no esm support

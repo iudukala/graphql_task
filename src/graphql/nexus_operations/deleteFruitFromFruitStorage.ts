@@ -5,7 +5,7 @@ import { FruitRepo } from '../../Fruit/FruitRepository.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import { GQLContextType } from '../common/type_GQLContextType.js';
 import { MUTATION_RETURN_TYPE_NAME } from '../nexus_types/MUTATION_RETURN_NAME.js';
-import { NexusGenObjects } from '../nexus_autogen_artifacts/nexus_typegen.js';
+import { NexusGenObjects } from '../../infrastructure/nexus_autogen_artifacts/nexus_typegen.js';
 
 type DeleteMutationArgs = { [FruitKey.Name]: string; forceDelete?: boolean | null };
 /**

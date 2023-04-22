@@ -3,7 +3,7 @@
  * Do not make changes to this file directly
  */
 
-import type { GQLContextType } from './../common/type_GQLContextType.js';
+import type { GQLContextType } from './../../graphql/common/type_GQLContextType.js';
 
 declare global {
 	interface NexusGen extends NexusGenTypes {}

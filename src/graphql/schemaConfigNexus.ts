@@ -1,26 +1,26 @@
 import { join } from 'path';
 import { makeSchema } from 'nexus';
 import * as nexusTypes from './index.js';
-import { getDirname } from './dirnameESM.js';
-
-const NEXUS_AUTOGEN_DIR_NAME = 'nexus_autogen_artifacts';
+import { getDirectoryPath } from './dirnameESM.js';
 
 // refactored out as function to mock during testing; jest has no esm support
-const DIRNAME = getDirname();
+const DIRPATH = getDirectoryPath();
+
+const AUTOGEN_DIR_PATH = join('..', 'infrastructure', 'nexus_autogen_artifacts');
 
 export const nexusSchema = makeSchema({
 	types: nexusTypes,
 
 	outputs: {
-		typegen: join(DIRNAME, NEXUS_AUTOGEN_DIR_NAME, 'nexus_typegen.ts'),
-		schema: join(DIRNAME, NEXUS_AUTOGEN_DIR_NAME, 'schema.graphql'),
+		typegen: join(DIRPATH, AUTOGEN_DIR_PATH, 'nexus_typegen.ts'),
+		schema: join(DIRPATH, AUTOGEN_DIR_PATH, 'schema.graphql'),
 	},
 	contextType: {
-		module: join(DIRNAME, 'common', 'type_GQLContextType.ts'),
+		module: join(DIRPATH, 'common', 'type_GQLContextType.ts'),
 		export: 'GQLContextType',
 	},
 	shouldGenerateArtifacts: false,
 
 	// prettier config to apply to output artifacts
-	prettierConfig: join(DIRNAME, '../../.prettierrc'),
+	prettierConfig: join(DIRPATH, '../../.prettierrc'),
 });

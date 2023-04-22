@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { FruitKey } from './enum_fruitKey.js';
 import type { FruitDescriptionVO } from './FruitDescriptionVO.js';
 import { FRUIT_NAME } from '../globals/FRUIT_NAME.js';
-import { NexusGenObjects } from '../graphql/nexus_autogen_artifacts/nexus_typegen.js';
+import { NexusGenObjects } from '../infrastructure/nexus_autogen_artifacts/nexus_typegen.js';
 
 export type FruitDTO = NexusGenObjects[typeof FRUIT_NAME];
 
