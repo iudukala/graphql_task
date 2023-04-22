@@ -8,7 +8,6 @@ import { FruitKey } from '../../Fruit/enum_fruitKey.js';
 import type { FruitConstructArgs, FruitDTO } from '../../Fruit/types.js';
 import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
 import { GQLContextType } from '../common/type_GQLContextType.js';
-// import { FruitEventModel } from '../../infrastructure/persistence/FruitEventModel.js';
 
 /**
  * mutation for adding a new fruit.
