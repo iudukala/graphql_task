@@ -24,7 +24,7 @@ beforeAll(async () => {
 	dotenv.config();
 	await connectDB(process.env[TEST_DB_URI_IDENTIFIER]);
 
-	FruitRepo.ATOMIC_TRANSACTION_FLAG = ATOMIC_TRANSACTION_FLAG;
+	FruitRepo.ENABLE_ATOMIC_TRANSACTIONS = ATOMIC_TRANSACTION_FLAG;
 
 	try {
 		const collectionExists = (await mongoose.connection.db.listCollections().toArray())

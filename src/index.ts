@@ -2,14 +2,18 @@ import dotenv from 'dotenv';
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import { FruitRepo } from './Fruit/FruitRepository.js';
-import { contextGQL } from './graphql/common/contextGQL.js';
 import { nexusSchema } from './graphql/schemaConfigNexus.js';
 
 // fetching environment variables set in the .env file and initializing the connection string var
 dotenv.config();
-// await initializeDBForTesting(process.env['DB_URI']);
 
-FruitRepo.ATOMIC_TRANSACTION_FLAG = true;
+// initializing the database connection string
+const DB_CONN_STR = process.env['DB_URI'];
+if (DB_CONN_STR === null || DB_CONN_STR === undefined)
+	throw new Error('database connection string empty');
+
+// setting flag for using mongodb transactions. (cannot use transactions if not part of replica set)
+FruitRepo.ENABLE_ATOMIC_TRANSACTIONS = true;
 
 express()
 	.use(
@@ -17,7 +21,9 @@ express()
 		graphqlHTTP({
 			schema: nexusSchema,
 			graphiql: true,
-			context: contextGQL,
+			context: {
+				DB_URI: DB_CONN_STR,
+			},
 			pretty: false,
 		}),
 	)

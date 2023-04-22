@@ -8,7 +8,7 @@ import { FRUIT_MUTATION_EVENT, FruitMutatedEvent } from './events/FruitMutatedEv
 import { FruitInternalProps, FruitModelType } from './types.js';
 
 export class FruitRepo {
-	static ATOMIC_TRANSACTION_FLAG: boolean | undefined;
+	static ENABLE_ATOMIC_TRANSACTIONS = false;
 	private readonly DB_URI: string;
 
 	constructor(DB_URI: string) {
@@ -89,7 +89,7 @@ export class FruitRepo {
 		} catch (exception) {
 			await session?.abortTransaction();
 			throw new Error(
-				`database commit failed. transaction mode flag: ${FruitRepo.ATOMIC_TRANSACTION_FLAG}\n` +
+				`database commit failed. transaction mode flag: ${FruitRepo.ENABLE_ATOMIC_TRANSACTIONS}\n` +
 					exception,
 			);
 		} finally {
@@ -118,7 +118,7 @@ export class FruitRepo {
 		} catch (exception) {
 			await session?.abortTransaction();
 			throw new Error(
-				`database commit failed. transaction mode flag: ${FruitRepo.ATOMIC_TRANSACTION_FLAG}\n` +
+				`database commit failed. transaction mode flag: ${FruitRepo.ENABLE_ATOMIC_TRANSACTIONS}\n` +
 					exception,
 			);
 		} finally {
@@ -129,7 +129,7 @@ export class FruitRepo {
 }
 
 const startTransaction = async () => {
-	if (FruitRepo.ATOMIC_TRANSACTION_FLAG) {
+	if (FruitRepo.ENABLE_ATOMIC_TRANSACTIONS) {
 		const innerSession = await mongoose.startSession();
 		innerSession.startTransaction();
 
