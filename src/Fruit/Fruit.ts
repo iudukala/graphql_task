@@ -1,10 +1,11 @@
-import { FruitKey } from './enum_fruitKey.js';
-import { FruitDescriptionVO } from './FruitDescriptionVO.js';
-import { Entity } from '../core/Entity.js';
 import mongoose from 'mongoose';
+import { AggregateRoot } from '../core/remove_AggregateRoot.js';
+import { FruitDescriptionVO } from './FruitDescriptionVO.js';
+import { FruitKey } from './enum_fruitKey.js';
 import { FruitConstructArgs, FruitDTO, FruitInternalProps } from './types.js';
 
-export class Fruit extends Entity<FruitInternalProps> {
+// export class Fruit extends Entity<FruitInternalProps> {
+export class Fruit extends AggregateRoot<FruitInternalProps> {
 	/**
 	 * @param fruitData data to construct the object with
 	 */
@@ -18,7 +19,7 @@ export class Fruit extends Entity<FruitInternalProps> {
 	}
 
 	/**
-	 * @description factory function to build new fruit objects. using the static reconstitute function to avoid duplicating construction logic
+	 * @description static factory function to build new fruit objects
 	 * @param fruitProps data about new fruit object
 	 * @returns a new immutable Fruit object
 	 */

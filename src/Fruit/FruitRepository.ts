@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
+import { DomainEventManager } from '../core/DomainEventManager.js';
+import { DomainEventModel } from '../infrastructure/persistence/DomainEventModel.js';
+import { FruitModel } from '../infrastructure/persistence/FruitModel.js';
 import { connectDB } from '../infrastructure/persistence/connectDB.js';
 import { Fruit } from './Fruit.js';
 import { FruitMapper } from './FruitMapper.js';
 import { FruitKey } from './enum_fruitKey.js';
-import { FruitModel } from '../infrastructure/persistence/FruitModel.js';
-import { FruitInternalProps, FruitModelType } from './types.js';
-import { DomainEventModel } from '../infrastructure/persistence/DomainEventModel.js';
 import { FRUIT_MUTATION_EVENT, FruitMutatedEvent } from './events/FruitMutatedEvent.js';
+import { FruitInternalProps, FruitModelType } from './types.js';
 
 export class FruitRepo {
 	private readonly DB_URI: string;
@@ -56,9 +57,16 @@ export class FruitRepo {
 	save = async (
 		fruit: Fruit,
 		updateData?: Partial<FruitInternalProps>,
-		session?: mongoose.mongo.ClientSession,
+		// session?: mongoose.mongo.ClientSession,
 	): Promise<FruitModelType> => {
 		await connectDB(this.DB_URI);
+
+		let session;
+		if (DomainEventManager.ATOMIC_TRANSACTION_FLAG) {
+			// const session = await mongoose.startSession();
+			session = await mongoose.startSession();
+			session.startTransaction();
+		}
 
 		if (updateData) {
 			const updated = await FruitModel.findByIdAndUpdate(fruit.id, updateData, {
@@ -72,13 +80,45 @@ export class FruitRepo {
 			return updated;
 		}
 
-		const committed: FruitModelType = await FruitMapper.toPersistence(fruit)
-			.save({ session: session })
-			.catch(error => {
-				throw new Error('database commit failed: ' + error);
+		console.log(DomainEventManager.ATOMIC_TRANSACTION_FLAG);
+
+		// mod
+		const committed: FruitModelType = FruitMapper.toPersistence(fruit);
+		// .save({
+		// 	session: session,
+		// });
+
+		try {
+			// const committed: FruitModelType = await FruitMapper.toPersistence(fruit)
+			await committed.save({
+				session: session,
 			});
-		// adding a domain event to outbox to be raised
-		await new DomainEventModel(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.CREATED)).save();
+			// .catch(error => {
+			// 	throw new Error('database commit failed: ' + error);
+			// });
+
+			// adding a domain event to outbox to be raised
+			// await new DomainEventModel(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.CREATED)).save();
+			await fruit.addDomainEvent(
+				new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.DELETED),
+				session,
+			);
+
+			await session?.commitTransaction();
+		} catch (exception) {
+			await session?.abortTransaction();
+			throw new Error('database commit failed: ' + exception);
+		} finally {
+			await session?.endSession();
+		}
+
+		// const committed: FruitModelType = await FruitMapper.toPersistence(fruit)
+		// 	.save({ session: session })
+		// 	.catch(error => {
+		// 		throw new Error('database commit failed: ' + error);
+		// 	});
+		// // adding a domain event to outbox to be raised
+		// await new DomainEventModel(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.CREATED)).save();
 
 		mongoose.connection.close();
 		return committed;
@@ -97,9 +137,13 @@ export class FruitRepo {
 		await connectDB(this.DB_URI);
 		const target = await this.findFruitByName(fruit.props.name, session);
 
+		// if (DomainEventManager.ATOMIC_TRANSACTION_FLAG) {
+		// 	const session = await mongoose.startSession();
+		// 	session.startTransaction();
+		// }
 		const deleted = await FruitModel.findByIdAndDelete(target._id, { session: session });
 		// adding a domain event to outbox to be raised
-		await new DomainEventModel(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.DELETED)).save();
+		// await fruit.addDomainEvent(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.DELETED), session);
 
 		if (deleted === null) throw new Error(`delete failed for fruit [${target.name}]`);
 

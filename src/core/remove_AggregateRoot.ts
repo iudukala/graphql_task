@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { DomainEventModel } from '../infrastructure/persistence/DomainEventModel.js';
 import { DomainEvent } from './DomainEvent.js';
 import { Entity } from './Entity.js';
 
@@ -12,7 +13,19 @@ export abstract class AggregateRoot<T> extends Entity<T> {
 		return this._domainEvents;
 	}
 
-	public addDomainEvent(event: DomainEvent, session: mongoose.mongo.ClientSession): void {
+	public async addDomainEvent(
+		event: DomainEvent,
+		session?: mongoose.mongo.ClientSession,
+	): Promise<void> {
+		// const session = await mongoose.startSession();
+		// session.startTransaction();
+
+		// try {
+		await new DomainEventModel(event).save({ session: session });
+		// } catch (error) {
+		// console.log
+		// }
+
 		// this.domainEvents.push(event);
 		// DomainEventManager.markAggregateForDispatch(this);
 		//
@@ -20,7 +33,20 @@ export abstract class AggregateRoot<T> extends Entity<T> {
 		// 		dateTimeOccured: event.dateTimeOccured,
 		// 		fruitID: event.getEntityID(),
 		// 	}).save({ session: session });
-
-
 	}
 }
+
+// const registerCustomer = async (req, res) => {
+// 	const session = await mongoose.startSession();
+// 	session.startTransaction();
+// 	try {
+// 		await CustomerRegistrationCode.findByIdAndUpdate(req.body._id, { used: true }, { session });
+// 		const customer = await Customer.create({ firstName: req.body.firstName }, { session });
+// 		await session.commitTransaction();
+// 	} catch (error) {
+// 		console.error('abort transaction');
+// 		await session.abortTransaction();
+// 	} finally {
+// 		session.endSession();
+// 	}
+// };

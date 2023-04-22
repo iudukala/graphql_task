@@ -5,6 +5,7 @@ import { DomainEvent } from './DomainEvent.js';
 export class DomainEventManager {
 	private static handlersMap: Record<string, Array<(event: DomainEvent) => void>> = {};
 	private static markedAggregates: Array<AggregateRoot<any>> = [];
+	static ATOMIC_TRANSACTION_FLAG: boolean | undefined;
 
 	/**
 	 * @static
@@ -16,8 +17,8 @@ export class DomainEventManager {
 	public static markAggregateForDispatch(aggregateArg: AggregateRoot<any>): void {
 		// const aggregateFound = !!this.findMarkedAggregateByID(aggregateArg.id);
 		const aggregateFound =
-			DomainEventManager.markedAggregates.filter(aggrItem => aggrItem.id === aggregateArg.id).length ===
-			0;
+			DomainEventManager.markedAggregates.filter(aggrItem => aggrItem.id === aggregateArg.id)
+				.length === 0;
 
 		if (!aggregateFound) {
 			this.markedAggregates.push(aggregateArg);
