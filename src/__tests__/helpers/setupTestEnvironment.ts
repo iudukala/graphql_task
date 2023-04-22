@@ -4,6 +4,7 @@ import { connectDB } from '../../infrastructure/persistence/connectDB.js';
 import mongoose from 'mongoose';
 import { FruitMapper } from '../../Fruit/FruitMapper.js';
 import dotenv from 'dotenv';
+import { DomainEventManager } from '../../core/DomainEventManager.js';
 
 /**
  * replacing the import.meta access call for directory name since jest has effectively no esm support
@@ -12,12 +13,16 @@ jest.mock('../../graphql/dirnameESM.js', () => ({
 	getDirectoryPath: () => __dirname,
 }));
 
+// jest.setTimeout(100000);
+
 /**
  * jest setup hook that runs once per test file. clears out existing data and adds new data for testing
  */
 beforeAll(async () => {
 	dotenv.config();
 	await connectDB(process.env['DB_URI']);
+
+	DomainEventManager.ATOMIC_TRANSACTION_FLAG = true;
 
 	try {
 		const collectionExists = (await mongoose.connection.db.listCollections().toArray())
