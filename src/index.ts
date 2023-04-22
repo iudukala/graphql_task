@@ -14,7 +14,7 @@ if (DB_URI === null || DB_URI === undefined)
 	throw new Error('database connection string empty');
 
 // setting flag for using mongodb transactions. (cannot use transactions if not part of replica set)
-FruitRepo.ENABLE_ATOMIC_TRANSACTIONS = false;
+FruitRepo.ENABLE_TRANSACTIONS = false;
 
 DomainEventManager.start(DB_URI);
 
