@@ -5,7 +5,6 @@ import { DomainEvent } from './DomainEvent.js';
 export class DomainEventManager {
 	private static handlersMap: Record<string, Array<(event: DomainEvent) => void>> = {};
 	private static markedAggregates: Array<AggregateRoot<any>> = [];
-	static ATOMIC_TRANSACTION_FLAG: boolean | undefined;
 
 	/**
 	 * @static

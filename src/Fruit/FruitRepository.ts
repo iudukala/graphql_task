@@ -1,6 +1,4 @@
 import mongoose from 'mongoose';
-import { DomainEventManager } from '../core/DomainEventManager.js';
-import { DomainEventModel } from '../infrastructure/persistence/DomainEventModel.js';
 import { FruitModel } from '../infrastructure/persistence/FruitModel.js';
 import { connectDB } from '../infrastructure/persistence/connectDB.js';
 import { Fruit } from './Fruit.js';
@@ -10,6 +8,7 @@ import { FRUIT_MUTATION_EVENT, FruitMutatedEvent } from './events/FruitMutatedEv
 import { FruitInternalProps, FruitModelType } from './types.js';
 
 export class FruitRepo {
+	static ATOMIC_TRANSACTION_FLAG: boolean | undefined;
 	private readonly DB_URI: string;
 
 	constructor(DB_URI: string) {
@@ -57,16 +56,19 @@ export class FruitRepo {
 	save = async (
 		fruit: Fruit,
 		updateData?: Partial<FruitInternalProps>,
-		// session?: mongoose.mongo.ClientSession,
 	): Promise<FruitModelType> => {
 		await connectDB(this.DB_URI);
 
-		let session;
-		if (DomainEventManager.ATOMIC_TRANSACTION_FLAG) {
-			// const session = await mongoose.startSession();
-			session = await mongoose.startSession();
-			session.startTransaction();
-		}
+		const session: mongoose.mongo.ClientSession | undefined = await (async () => {
+			if (FruitRepo.ATOMIC_TRANSACTION_FLAG) {
+				const innerSession = await mongoose.startSession();
+				innerSession.startTransaction();
+
+				return innerSession;
+			}
+
+			return undefined;
+		})();
 
 		if (updateData) {
 			const updated = await FruitModel.findByIdAndUpdate(fruit.id, updateData, {
@@ -76,38 +78,44 @@ export class FruitRepo {
 			if (updated === null) throw new Error(`update failed for fruit [${fruit.props.name}]`);
 
 			// adding a domain event to outbox to be raised
-			await new DomainEventModel(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.UPDATED)).save();
+
+			// await new DomainEventModel(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.UPDATED)).save();
+			await fruit.addDomainEvent(
+				new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.DELETED),
+				session,
+			);
 			return updated;
 		}
 
-		console.log(DomainEventManager.ATOMIC_TRANSACTION_FLAG);
-
+		// console.log(DomainEventManager.ATOMIC_TRANSACTION_FLAG);
 		// mod
-		const committed: FruitModelType = FruitMapper.toPersistence(fruit);
+
+		const fruitToCommit: FruitModelType = FruitMapper.toPersistence(fruit);
 		// .save({
 		// 	session: session,
 		// });
 
 		try {
 			// const committed: FruitModelType = await FruitMapper.toPersistence(fruit)
-			await committed.save({
-				session: session,
-			});
+			await fruitToCommit.save({ session: session });
+
 			// .catch(error => {
 			// 	throw new Error('database commit failed: ' + error);
 			// });
 
 			// adding a domain event to outbox to be raised
-			// await new DomainEventModel(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.CREATED)).save();
 			await fruit.addDomainEvent(
-				new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.DELETED),
+				new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.CREATED),
 				session,
 			);
 
 			await session?.commitTransaction();
 		} catch (exception) {
 			await session?.abortTransaction();
-			throw new Error('database commit failed: ' + exception);
+			throw new Error(
+				`database commit failed. transaction mode flag: ${FruitRepo.ATOMIC_TRANSACTION_FLAG}\n` +
+					exception,
+			);
 		} finally {
 			await session?.endSession();
 		}
@@ -121,7 +129,7 @@ export class FruitRepo {
 		// await new DomainEventModel(new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.CREATED)).save();
 
 		mongoose.connection.close();
-		return committed;
+		return fruitToCommit;
 	};
 
 	/**

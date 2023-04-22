@@ -1,10 +1,10 @@
-import { FruitModel } from '../../infrastructure/persistence/FruitModel.js';
-import { fruitSampleData } from '../data/sampleDataFruit.js';
-import { connectDB } from '../../infrastructure/persistence/connectDB.js';
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { FruitMapper } from '../../Fruit/FruitMapper.js';
-import dotenv from 'dotenv';
-import { DomainEventManager } from '../../core/DomainEventManager.js';
+import { FruitRepo } from '../../Fruit/FruitRepository.js';
+import { FruitModel } from '../../infrastructure/persistence/FruitModel.js';
+import { connectDB } from '../../infrastructure/persistence/connectDB.js';
+import { fruitSampleData } from '../data/sampleDataFruit.js';
 
 /**
  * replacing the import.meta access call for directory name since jest has effectively no esm support
@@ -21,8 +21,7 @@ jest.mock('../../graphql/dirnameESM.js', () => ({
 beforeAll(async () => {
 	dotenv.config();
 	await connectDB(process.env['DB_URI']);
-
-	DomainEventManager.ATOMIC_TRANSACTION_FLAG = true;
+	FruitRepo.ATOMIC_TRANSACTION_FLAG = true;
 
 	try {
 		const collectionExists = (await mongoose.connection.db.listCollections().toArray())
