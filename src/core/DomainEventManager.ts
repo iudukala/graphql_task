@@ -1,10 +1,12 @@
-import { Fruit } from '../Fruit/Fruit.js';
+import cron from 'node-cron';
+import { FruitMutatedEvent } from '../Fruit/events/FruitMutatedEvent.js';
+import { logEventSummary } from '../Fruit/events/logEventSummary.js';
 import { DomainEventModel } from '../infrastructure/persistence/DomainEventModel.js';
 import { connectDB } from '../infrastructure/persistence/connectDB.js';
 import { DomainEvent } from './DomainEvent.js';
-import cron from 'node-cron';
 
 export class DomainEventManager {
+	private static CRON_PERIOD_SEC = 3;
 	private static handlersMap: Record<string, Array<(event: DomainEvent) => void>> = {};
 
 	public static register(handler: (event: DomainEvent) => void, eventClassName: string): void {
@@ -15,23 +17,11 @@ export class DomainEventManager {
 		this.handlersMap[eventClassName].push(handler);
 	}
 
-	// private static dispatch(event: DomainEvent): void {
-	// 	const eventClassName: string = event.constructor.name;
+	static init(DB_URI: string) {
+		DomainEventManager.register(logEventSummary, FruitMutatedEvent.name);
 
-	// 	if (this.handlersMap.hasOwnProperty(eventClassName)) {
-	// 		const handlers: any[] = this.handlersMap[eventClassName];
-	// 		for (let handler of handlers) {
-	// 			handler(event);
-	// 		}
-	// 	}
-	// }
-
-	static start(DB_URI: string) {
-		const logEvent = (event: DomainEvent): void => {
-			console.log(event.eventClass);
-		};
 		cron
-			.schedule('*/3 * * * * *', () => {
+			.schedule(`*/${this.CRON_PERIOD_SEC} * * * * *`, () => {
 				this.dispatchEvents(DB_URI);
 			})
 			.start();
@@ -40,18 +30,29 @@ export class DomainEventManager {
 	static async dispatchEvents(DB_URI: string) {
 		await connectDB(DB_URI);
 
-		const fetchedEvents = await DomainEventModel.find();
-		fetchedEvents.forEach(event => {
-			console.log({
-				event: event.eventClass,
+		(await DomainEventModel.find()).forEach(event => {
+			const eventClassName = event.eventClass;
 
-				type: event.mutationType,
-				fruitname: (JSON.parse(event.serializedFruit) as Fruit).props.name,
+			if (!Object.prototype.hasOwnProperty.call(this.handlersMap, eventClassName)) {
+				throw new Error('no handler found for event class ' + eventClassName);
+			}
+
+			this.handlersMap[eventClassName].forEach(handler => {
+				handler(event);
 			});
 		});
-
-		console.log('\n');
 	}
+
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	// private static markedAggregates: Array<AggregateRoot<any>> = [];
 

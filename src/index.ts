@@ -16,7 +16,7 @@ if (DB_URI === null || DB_URI === undefined)
 // setting flag for using mongodb transactions. (cannot use transactions if not part of replica set)
 FruitRepo.ENABLE_TRANSACTIONS = false;
 
-DomainEventManager.start(DB_URI);
+DomainEventManager.init(DB_URI);
 
 express()
 	.use(
