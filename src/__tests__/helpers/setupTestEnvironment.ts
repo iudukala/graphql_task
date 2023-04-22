@@ -6,20 +6,15 @@ import { FruitMapper } from '../../Fruit/FruitMapper.js';
 import dotenv from 'dotenv';
 
 /**
- * clears out existing data and adds new
- *
- * @param DB_URI database connection uri
- */
-// export async function initializeDBForTesting(DB_URI: string | null | undefined) {
-// export const initializeDBForTesting = async () => {
-
-/**
  * replacing the import.meta access call for directory name since jest has effectively no esm support
  */
 jest.mock('../../graphql/dirnameESM.js', () => ({
 	getDirectoryPath: () => __dirname,
 }));
 
+/**
+ * jest setup hook that runs once per test file. clears out existing data and adds new data for testing
+ */
 beforeAll(async () => {
 	dotenv.config();
 	await connectDB(process.env['DB_URI']);
@@ -37,6 +32,9 @@ beforeAll(async () => {
 	}
 });
 
+/**
+ * jest teardown hook. closes database connection
+ */
 afterAll(async () => {
 	mongoose.connection.close();
 });
