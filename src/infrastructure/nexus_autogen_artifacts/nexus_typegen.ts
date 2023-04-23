@@ -3,7 +3,7 @@
  * Do not make changes to this file directly
  */
 
-import type { GQLContextType } from './../../graphql/common/type_GQLContextType.js';
+import type { GQLContextType } from './../../graphql/common/type_GQLContextType';
 
 declare global {
 	interface NexusGen extends NexusGenTypes {}
@@ -129,7 +129,7 @@ export interface NexusGenArgTypes {
 		updateFruitForFruitStorage: {
 			// args
 			description?: string | null; // String
-			limit?: number | null; // Int
+			limit: number; // Int!
 			name: string; // String!
 		};
 	};

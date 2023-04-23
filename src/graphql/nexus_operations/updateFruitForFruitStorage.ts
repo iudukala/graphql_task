@@ -1,6 +1,6 @@
 import { extendType, intArg, nonNull, stringArg } from 'nexus';
 import { AllNexusArgsDefs } from 'nexus/dist/core.js';
-import { Fruit } from '../../Fruit/Fruit.js';
+import { FruitDescriptionVO } from '../../Fruit/FruitDescriptionVO.js';
 import { FruitMapper } from '../../Fruit/FruitMapper.js';
 import { FruitRepo } from '../../Fruit/FruitRepository.js';
 import { FruitKey } from '../../Fruit/enum_fruitKey.js';
@@ -12,6 +12,8 @@ type FruitUpdateArgs = Partial<Omit<FruitDTO, typeof FruitKey.ID | typeof FruitK
 	// [FruitKey.Name]: FruitDTO[typeof FruitKey.Name];
 	[FruitKey.Name]: string;
 };
+
+
 /**
  * mutation for updating the description and/or limit of an existing fruit.
  * signature : updateFruitForFruitStorage(name: string, description: string, limit: int)
@@ -24,14 +26,13 @@ export const updateFruitForFruitStorage = extendType({
 
 			args: <Record<keyof FruitUpdateArgs, AllNexusArgsDefs>>{
 				[FruitKey.Name]: nonNull(stringArg()),
-				[FruitKey.Description]: nonNull(stringArg()),
+				[FruitKey.Description]: stringArg(),
 				[FruitKey.Limit]: nonNull(intArg()),
 			},
 
 			resolve: async (
 				_discard,
 				args: FruitUpdateArgs,
-				// args: { name: string; limit: number; description: string },
 				context: GQLContextType,
 			): Promise<FruitDTO> => {
 				const repo = new FruitRepo(context.DB_URI);
@@ -44,20 +45,13 @@ export const updateFruitForFruitStorage = extendType({
 				// 	);
 
 				const updated = await repo.save(target, {
-					[FruitKey.Description]: 's',
-					// ? FruitDescriptionVO.create(args.description).value
-					// : undefined,
-					// [FruitKey.Limit]: args.limit ? args.limit : undefined,
-					[FruitKey.Limit]: 55,
-				});
-				const x = Fruit.createNewFruit({
-					name: 'apple',
-					description: 'apple, the fruit',
-					limit: 10,
+					[FruitKey.Description]: args.description
+						? FruitDescriptionVO.create(args.description).value
+						: undefined,
+					[FruitKey.Limit]: args.limit ? args.limit : undefined,
 				});
 
-				// return [updated].map(FruitMapper.toDomain).map(FruitMapper.toDTO)[0] as FruitDTO;
-				return FruitMapper.toDTO(x);
+				return [updated].map(FruitMapper.toDomain).map(FruitMapper.toDTO)[0] as FruitDTO;
 			},
 		});
 	},
