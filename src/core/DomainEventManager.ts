@@ -41,8 +41,9 @@ export class DomainEventManager {
 
 			this.handlersMap[eventClassName].forEach(async handler => {
 				handler(event);
-				// todo
-				// await event.deleteOne();
+
+				// remove handled event from transactional outbox
+				await event.deleteOne();
 			});
 		});
 	}

@@ -6,13 +6,11 @@ export const logEventSummary = (eventArg: DomainEvent): void => {
 	const event = eventArg as FruitMutatedEvent;
 
 	console.log(
-		'events fetched: ' +
-			{
+		'events consumed: ' +
+			JSON.stringify({
 				event: event.eventClass,
 				type: event.mutationType,
 				fruitname: (JSON.parse(event.serializedFruit) as Fruit).props.name,
-			},
+			}),
 	);
-
-	// console.log('asdfasdf');
 };
