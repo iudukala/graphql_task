@@ -1,4 +1,4 @@
-export const mutationNames = {
+export const MUTATION_NAME = {
 	CREATE: 'createFruitForFruitStorage',
 	UPDATE: 'updateFruitForFruitStorage',
 	REMOVE: 'removeFruitFromFruitStorage',
