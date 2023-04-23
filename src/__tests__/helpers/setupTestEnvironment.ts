@@ -5,9 +5,11 @@ import { FruitRepo } from '../../Fruit/FruitRepository.js';
 import { FruitModel } from '../../infrastructure/persistence/FruitModel.js';
 import { connectDB } from '../../infrastructure/persistence/connectDB.js';
 import { fruitSampleData } from '../data/sampleDataFruit.js';
+import { DomainEventModel } from '../../infrastructure/persistence/DomainEventModel.js';
 
 // using a separate local database (without transaction capabilities since mongo instance is not part of replica set) for running tests
 export const TEST_DB_URI_IDENTIFIER: 'DB_URI_LOCAL' | 'DB_URI' = 'DB_URI_LOCAL';
+
 // no transaction capabilities on local non replica set member
 const ATOMIC_TRANSACTION_FLAG = false;
 
@@ -27,14 +29,18 @@ beforeAll(async () => {
 
 	FruitRepo.ENABLE_TRANSACTIONS = ATOMIC_TRANSACTION_FLAG;
 
-	try {
-		const collectionExists = (await mongoose.connection.db.listCollections().toArray())
-			.map(collection => collection.name)
-			.includes(FruitModel.collection.collectionName);
+	const collectionsFound = (await mongoose.connection.db.listCollections().toArray()).map(
+		collection => collection.name,
+	);
 
-		if (collectionExists) await FruitModel.collection.drop();
+	try {
+		// dropping collections
+		if (collectionsFound.includes(FruitModel.collection.collectionName))
+			await FruitModel.collection.drop();
+		if (collectionsFound.includes(DomainEventModel.collection.collectionName))
+			await DomainEventModel.collection.drop();
 	} catch (exception) {
-		console.error('test environment init failure: ' + exception);
+		console.error('test environment init failure when dropping collections: ' + exception);
 	} finally {
 		await FruitModel.insertMany([...fruitSampleData.map(FruitMapper.toPersistence)]);
 	}

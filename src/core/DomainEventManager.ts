@@ -6,6 +6,7 @@ import { DomainEvent } from './DomainEvent.js';
 export class DomainEventManager {
 	// time period of each cycle
 	private static CRON_PERIOD_SEC = 10;
+
 	private static handlersMap: Record<string, Array<(event: DomainEvent) => void>> = {};
 	private static initialized = false;
 
