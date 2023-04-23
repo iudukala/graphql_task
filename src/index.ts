@@ -17,11 +17,11 @@ if (DB_URI === null || DB_URI === undefined) throw new Error('database connectio
 // setting flag for using mongodb transactions. (cannot use transactions if not part of replica set)
 FruitRepo.ENABLE_TRANSACTIONS = false;
 
-// starting up domain event manager cron job that checks for events in transactional outbox
-DomainEventManager.init(DB_URI);
-
 // adding trivial event handler for the 'fruit modified' event
 DomainEventManager.register(logEventSummary, FruitMutatedEvent.name);
+
+// starting up domain event manager cron job that checks for events in transactional outbox
+DomainEventManager.init(DB_URI);
 
 // listening for requests
 express()
