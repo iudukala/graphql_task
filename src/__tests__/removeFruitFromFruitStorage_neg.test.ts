@@ -1,16 +1,16 @@
 import { FruitDTO } from '../Fruit/types.js';
+import { CREATE_LEMON_MUTATION } from './data/CREATE_LEMON_MUTATION_STR.js';
+import { MUTATION_NAME } from './data/MUTATION_NAME.js';
 import { perfromQuery } from './helpers/performQuery.js';
 
 describe('removeFruitFromFruitStorage() endpoint test', () => {
-	test('ensure existing fruit amount = 0', async () => {
-		await perfromQuery(
-			`query{
-				findFruit(name: "apple"){
-					amount
-				}
-			}`,
-		).then(result => {
-			expect((result.data?.findFruit as [FruitDTO])[0].amount).toBe(0);
+	test('create valid fruit', async () => {
+		await perfromQuery(CREATE_LEMON_MUTATION).then(result => {
+			const returned = result.data?.[MUTATION_NAME.CREATE] as FruitDTO;
+
+			expect(returned.name).toBe('lemon');
+			expect(returned.limit).toBe(10);
+			expect(returned.amount).toBe(0);
 		});
 	});
 
@@ -18,12 +18,12 @@ describe('removeFruitFromFruitStorage() endpoint test', () => {
 		await perfromQuery(
 			`mutation{
 				storeFruitToFruitStorage(
-					name: "apple", amount: 2){
+					name: "lemon", amount: 5){
 						amount
 				}
 			}`,
 		).then(result => {
-			expect((result.data?.['storeFruitToFruitStorage'] as FruitDTO).amount).toBe(2);
+			expect((result.data?.['storeFruitToFruitStorage'] as FruitDTO).amount).toBe(5);
 		});
 	});
 
@@ -31,7 +31,7 @@ describe('removeFruitFromFruitStorage() endpoint test', () => {
 		await perfromQuery(
 			`mutation{
 				removeFruitFromFruitStorage(
-					name: "apple", amount: 3){
+					name: "lemon", amount: 6){
 						amount
 				}
 			}`,
@@ -43,12 +43,12 @@ describe('removeFruitFromFruitStorage() endpoint test', () => {
 	test('ensure fruit amount was not reduced', async () => {
 		await perfromQuery(
 			`query{
-				findFruit(name: "apple"){
+				findFruit(name: "lemon"){
 					amount
 				}
 			}`,
 		).then(result => {
-			expect((result.data?.findFruit as [FruitDTO])[0].amount).toBe(2);
+			expect((result.data?.findFruit as [FruitDTO])[0].amount).toBe(5);
 		});
 	});
 });

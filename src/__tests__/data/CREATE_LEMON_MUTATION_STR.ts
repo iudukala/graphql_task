@@ -3,6 +3,7 @@ export const CREATE_LEMON_MUTATION = `mutation{
 					name: "lemon", description: "this is a lemon", limit: 10){
 						name
 						limit
+						amount
 						description
 				}
 			}`;
