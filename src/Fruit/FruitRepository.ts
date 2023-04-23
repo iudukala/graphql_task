@@ -61,7 +61,7 @@ export class FruitRepo {
 				});
 				if (updated === null) throw new Error(`update failed for fruit [${fruit.props.name}]`);
 
-				// adding a domain event to outbox to be raised
+				// adding a domain event to transactional outbox (persistence)
 				await fruit.addDomainEvent(
 					new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.UPDATED),
 					session,
@@ -71,6 +71,7 @@ export class FruitRepo {
 			} else {
 				const newFruit: FruitModelType = FruitMapper.toPersistence(fruit);
 				await newFruit.save({ session: session });
+
 				await fruit.addDomainEvent(
 					new FruitMutatedEvent(fruit, FRUIT_MUTATION_EVENT.CREATED),
 					session,

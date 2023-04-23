@@ -11,10 +11,10 @@ export const FRUIT_MUTATION_EVENT = {
 } as const;
 
 export class FruitMutatedEvent implements DomainEvent {
+	eventClass: string;
 	dateTimeOccured: Date;
 	serializedFruit: string;
 	mutationType: keyof typeof FRUIT_MUTATION_EVENT;
-	eventClass: string;
 
 	constructor(fruit: Fruit, mutationType: keyof typeof FRUIT_MUTATION_EVENT) {
 		this.serializedFruit = JSON.stringify(fruit);
