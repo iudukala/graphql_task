@@ -34,7 +34,7 @@ mongoose was selected over what i would have gone with, TypeORM
 
 > Use Jest for your testing
 
-jest used. not having esm support however, caused a significant delay
+jest used. not having esm support however, caused a significant delay. also added test running to github actions
 
 > Use <https://nexusjs.org> to automatically generate your GraphQL schemas
 
