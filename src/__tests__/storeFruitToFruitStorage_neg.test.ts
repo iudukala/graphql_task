@@ -1,28 +1,24 @@
 import { FruitDTO } from '../Fruit/types.js';
+import { CREATE_LEMON_MUTATION } from './data/CREATE_LEMON_MUTATION_STR.js';
+import { MUTATION_NAME } from './data/MUTATION_NAME.js';
 import { perfromQuery } from './helpers/performQuery.js';
 
 describe('storeFruitToFruitStorage() endpoint negative test', () => {
-	test('check existing fruit amount and limit', async () => {
-		await perfromQuery(
-			`query{
-				findFruit(name: "apple"){
-					amount
-					limit
-				}
-			}`,
-		).then(result => {
-			const { amount, limit } = (result.data?.findFruit as [FruitDTO])[0];
-			expect(amount).toBe(0);
-			expect(limit).toBe(10);
+	test('create valid fruit', async () => {
+		await perfromQuery(CREATE_LEMON_MUTATION).then(result => {
+			const returned = result.data?.[MUTATION_NAME.CREATE] as FruitDTO;
+
+			expect(returned.name).toBe('lemon');
+			expect(returned.limit).toBe(10);
+			expect(returned.amount).toBe(0);
 		});
 	});
 
 	test('increment amount beyond limit', async () => {
-		const MUT_NAME = 'storeFruitToFruitStorage';
 		await perfromQuery(
 			`mutation{
-				${MUT_NAME}(
-					name: "apple", amount: 100){
+				${MUTATION_NAME.STORE}(
+					name: "lemon", amount: 11){
 						amount
 				}
 			}`,
@@ -34,13 +30,12 @@ describe('storeFruitToFruitStorage() endpoint negative test', () => {
 	test('ensure fruit amount is unmodified', async () => {
 		await perfromQuery(
 			`query{
-				findFruit(name: "apple"){
+				findFruit(name: "lemon"){
 					amount
 				}
 			}`,
 		).then(result => {
-			const { amount } = (result.data?.findFruit as [FruitDTO])[0];
-			expect(amount).toBe(0);
+			expect((result.data?.findFruit as [FruitDTO])[0].amount).toBe(0);
 		});
 	});
 });
