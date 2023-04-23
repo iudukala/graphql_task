@@ -9,10 +9,8 @@ import { FRUIT_NAME } from '../../globals/FRUIT_NAME.js';
 import { GQLContextType } from '../common/type_GQLContextType.js';
 
 type FruitUpdateArgs = Partial<Omit<FruitDTO, typeof FruitKey.ID | typeof FruitKey.Amount>> & {
-	// [FruitKey.Name]: FruitDTO[typeof FruitKey.Name];
-	[FruitKey.Name]: string;
+	[FruitKey.Name]: FruitDTO[typeof FruitKey.Name];
 };
-
 
 /**
  * mutation for updating the description and/or limit of an existing fruit.
@@ -27,7 +25,7 @@ export const updateFruitForFruitStorage = extendType({
 			args: <Record<keyof FruitUpdateArgs, AllNexusArgsDefs>>{
 				[FruitKey.Name]: nonNull(stringArg()),
 				[FruitKey.Description]: stringArg(),
-				[FruitKey.Limit]: nonNull(intArg()),
+				[FruitKey.Limit]: intArg(),
 			},
 
 			resolve: async (
@@ -37,12 +35,6 @@ export const updateFruitForFruitStorage = extendType({
 			): Promise<FruitDTO> => {
 				const repo = new FruitRepo(context.DB_URI);
 				const target = FruitMapper.toDomain(await repo.findFruitByName(args.name));
-
-				// if (target.props.amount + args.amount > target.props.limit)
-				// 	throw new Error(
-				// 		`specified amount (${args.amount}) increments beyond the limit ` +
-				// 			`(${target.props.limit}). current value: ${target.props.amount}`,
-				// 	);
 
 				const updated = await repo.save(target, {
 					[FruitKey.Description]: args.description
