@@ -39,30 +39,45 @@
 
 ## requirements specified
 
-- All code written should follow Domain Driven Design
+> All code written should follow domain driven design
 
-- When the fruit is created, updated, or deleted; a domain event should be emitted:
-  each mutation event adds an entry to the transaction outbox, a separate collection in persistence. handlers are registerd through the domain events manager for event consumption that run at regular intervals
+domain design pricinciples outlined by Khalil Stemmler in <https://khalilstemmler.com/> and Martin Fowler in <https://martinfowler.com/> have been followed to the best of my ability.
 
-- The description of a fruit can't be beyond 30 letters:
-  ensured by using a value object
+> When the fruit is created, updated, or deleted; a domain event should be emitted:
 
-- The name of a fruit should be unique:
-  ensured through a check performed in a domain service before being committed to persistence
+each mutation event adds an entry to the transaction outbox, a separate collection in persistence. handlers are registerd through the domain events manager for event consumption that run at regular intervals
 
-- The creation of a fruit should be done through a factory:
-  implemented inside Fruit class
+> The description of a fruit can't be beyond 30 letters:
 
-- The fruit should be retrieved through a Repository
+ensured by using a value object in the domain entity `Fruit`
 
-- The fruit should be converted from a database object to a domain object and viceversa through mappers:
-  performed through static functions made available through a class
+> The name of a fruit should be unique:
 
-- Use Mongoose for your ORM:
+ensured through a check performed in a domain service before being committed to persistence
 
-- Use Jest for your testing
+> The creation of a fruit should be done through a factory
 
-- Use <https://nexusjs.org> to automatically generate your GraphQL schemas
+implemented inside Fruit class
+
+> The fruit should be retrieved through a Repository
+
+a repository has been implemented (`FruitRepo`) that handles persistence layer mutations
+
+> The fruit should be converted from a database object to a domain object and viceversa through mappers:
+
+performed through static functions made available through a class
+
+> Use Mongoose for your ORM
+
+mongoose was selected over what i would have gone with, TypeORM
+
+> Use Jest for your testing
+
+jest used. not having esm support however, caused a significant delay
+
+> Use <https://nexusjs.org> to automatically generate your GraphQL schemas
+
+nexusJS used
 
 ## improvements
 
