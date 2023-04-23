@@ -1,13 +1,13 @@
 import cron from 'node-cron';
-import { FruitMutatedEvent } from '../Fruit/events/FruitMutatedEvent.js';
-import { logEventSummary } from '../Fruit/events/logEventSummary.js';
 import { DomainEventModel } from '../infrastructure/persistence/DomainEventModel.js';
 import { connectDB } from '../infrastructure/persistence/connectDB.js';
 import { DomainEvent } from './DomainEvent.js';
 
 export class DomainEventManager {
-	private static CRON_PERIOD_SEC = 3;
+	// time period of each cycle
+	private static CRON_PERIOD_SEC = 10;
 	private static handlersMap: Record<string, Array<(event: DomainEvent) => void>> = {};
+	private static initialized = false;
 
 	public static register(handler: (event: DomainEvent) => void, eventClassName: string): void {
 		if (!Object.prototype.hasOwnProperty.call(DomainEventManager.handlersMap, eventClassName)) {
@@ -17,8 +17,8 @@ export class DomainEventManager {
 		this.handlersMap[eventClassName].push(handler);
 	}
 
-	static init(DB_URI: string) {
-		DomainEventManager.register(logEventSummary, FruitMutatedEvent.name);
+	static init(DB_URI: string): void {
+		if (this.initialized) return;
 
 		cron
 			.schedule(`*/${this.CRON_PERIOD_SEC} * * * * *`, () => {

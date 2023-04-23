@@ -19,7 +19,7 @@ describe('createFruitForFruitStorage() endpoint test', () => {
 		await perfromQuery(
 			`mutation{
 				${createMutName}(
-					name: "lemon", description: "lemony description", limit: 20){
+					name: "lemon", description: "this is a lemon", limit: 10){
 						name
 						amount
 						limit
@@ -29,7 +29,7 @@ describe('createFruitForFruitStorage() endpoint test', () => {
 			const returned = result.data?.[createMutName] as FruitDTO;
 
 			expect(returned.name).toBe('lemon');
-			expect(returned.limit).toBe(20);
+			expect(returned.limit).toBe(10);
 			expect(returned.amount).toBe(0);
 		});
 	});

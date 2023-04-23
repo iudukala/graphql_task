@@ -2,24 +2,38 @@ import { FruitDTO } from '../Fruit/types.js';
 import { perfromQuery } from './helpers/performQuery.js';
 
 describe('createFruitForFruitStorage() endpoint negative test', () => {
-	test('ensure fruit existence', async () => {
+	const MUTATION_NAME = 'createFruitForFruitStorage';
+
+	test("ensure fruit doesn't exist", async () => {
 		await perfromQuery(
 			`query{
-				findFruit(name: "apple"){
+				findFruit(name: "lemon"){
 					name
 				}
 			}`,
 		).then(result => {
-			expect((result.data?.findFruit as [FruitDTO])[0].name).toBe('apple');
+			expect(result.data).toBe(null);
+		});
+	});
+
+	test('attempt to create a valid fruit', async () => {
+		await perfromQuery(
+			`mutation{
+				${MUTATION_NAME}(
+					name: "lemon", description: "this is a lemon", limit: 10){
+						name
+				}
+			}`,
+		).then(result => {
+			expect((result.data?.[MUTATION_NAME] as FruitDTO).name).toBe('lemon');
 		});
 	});
 
 	test('attempt to create a duplicate fruit', async () => {
-		const createMutName = 'createFruitForFruitStorage';
 		await perfromQuery(
 			`mutation{
-				${createMutName}(
-					name: "apple", description: "duplicate apple", limit: 20){
+				${MUTATION_NAME}(
+					name: "lemon", description: "this is a lemon", limit: 10){
 						name
 				}
 			}`,

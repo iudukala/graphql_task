@@ -1,7 +1,7 @@
 import { perfromQuery } from './helpers/performQuery.js';
 
 describe('createFruitForFruitStorage() endpoint test', () => {
-	test('ensure fruit doesn\'t exist', async () => {
+	test("ensure fruit doesn't exist", async () => {
 		await perfromQuery(
 			`query{
 				findFruit(name: "lemon"){
@@ -17,8 +17,8 @@ describe('createFruitForFruitStorage() endpoint test', () => {
 		await perfromQuery(
 			`mutation{
 				createFruitForFruitStorage(
-					name: "lemon", description: "lemony description that exceeds the \
-					thirty character limit for descriptions", limit: 20){
+					name: "lemon", description: "this is a fruit with a very long\
+					description", limit: 20){
 						name
 						amount
 						limit
