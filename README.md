@@ -37,28 +37,33 @@
 
 - nexus does not have great documentation
 
-## progress
+## requirements specified
 
-- [x] All code written should follow Domain Driven Design
+- All code written should follow Domain Driven Design
 
-- [ ] When the fruit is created, updated, or deleted; a domain event should be emitted.
+- When the fruit is created, updated, or deleted; a domain event should be emitted:
+  each mutation event adds an entry to the transaction outbox, a separate collection in persistence. handlers are registerd through the domain events manager for event consumption that run at regular intervals
 
-- [x] The description of a fruit can't be beyond 30 letters
+- The description of a fruit can't be beyond 30 letters:
+  ensured by using a value object
 
-- [x] The name of a fruit should be unique, have a look at using a Domain Service
+- The name of a fruit should be unique:
+  ensured through a check performed in a domain service before being committed to persistence
 
-- [x] The creation of a fruit should be done through a Factory
+- The creation of a fruit should be done through a factory:
+  implemented inside Fruit class
 
-- [x] The fruit should be retrieved through a Repository
+- The fruit should be retrieved through a Repository
 
-- [x] The fruit should be converted from a database object to a domain object and viceversa through mappers
+- The fruit should be converted from a database object to a domain object and viceversa through mappers:
+  performed through static functions made available through a class
 
-- [x] Use Mongoose for your ORM
+- Use Mongoose for your ORM:
 
-- [x] Use Jest for your testing
+- Use Jest for your testing
 
-- [x] Use <https://nexusjs.org> to automatically generate your GraphQL schemas
+- Use <https://nexusjs.org> to automatically generate your GraphQL schemas
 
 ## improvements
 
-- need better immutability
+- better immutability
