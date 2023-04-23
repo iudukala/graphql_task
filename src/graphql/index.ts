@@ -9,3 +9,4 @@ export { createFruitForFruitStorage } from './nexus_operations/createFruitForFru
 export { storeFruitToFruitStorage } from './nexus_operations/storeFruitToFruitStorage.js';
 export { removeFruitFromFruitStorage } from './nexus_operations/removeFruitFromFruitStorage.js';
 export { deleteFruitFromFruitStorage } from './nexus_operations/deleteFruitFromFruitStorage.js';
+export { updateFruitForFruitStorage } from './nexus_operations/updateFruitForFruitStorage.js';

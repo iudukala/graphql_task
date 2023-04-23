@@ -1,5 +1,4 @@
-import { extendType, intArg, nonNull, stringArg } from 'nexus';
-import { AllNexusArgsDefs } from 'nexus/dist/core.js';
+import { extendType, nonNull, stringArg } from 'nexus';
 import { Fruit } from '../../Fruit/Fruit.js';
 import { FruitMapper } from '../../Fruit/FruitMapper.js';
 import { FruitRepo } from '../../Fruit/FruitRepository.js';
@@ -22,16 +21,16 @@ export const updateFruitForFruitStorage = extendType({
 		t.nonNull.field('updateFruitForFruitStorage', {
 			type: FRUIT_NAME,
 
-			args: <Record<keyof FruitUpdateArgs, AllNexusArgsDefs>>{
+			// args: <Record<keyof FruitUpdateArgs, AllNexusArgsDefs>>{
+			args:{
 				[FruitKey.Name]: nonNull(stringArg()),
 				[FruitKey.Description]: nonNull(stringArg()),
-				[FruitKey.Limit]: nonNull(intArg()),
 			},
 
 			resolve: async (
 				_discard,
-				args: FruitUpdateArgs,
-				// args: { name: string; limit: number; description: string },
+				// args: FruitUpdateArgs,
+				args: { name: string; limit: number; description: string },
 				context: GQLContextType,
 			): Promise<FruitDTO> => {
 				const repo = new FruitRepo(context.DB_URI);
