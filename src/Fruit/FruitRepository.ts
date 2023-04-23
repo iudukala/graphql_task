@@ -5,7 +5,7 @@ import { Fruit } from './Fruit.js';
 import { FruitMapper } from './FruitMapper.js';
 import { FruitKey } from './enum_fruitKey.js';
 import { FRUIT_MUTATION_EVENT, FruitMutatedEvent } from './events/FruitMutatedEvent.js';
-import { FruitInternalProps, FruitModelType } from './types.js';
+import { FruitDTO, FruitModelType } from './types.js';
 
 export class FruitRepo {
 	static ENABLE_TRANSACTIONS = false;
@@ -46,10 +46,7 @@ export class FruitRepo {
 	 * @param updateData data to update fruit with (if updating existing fruit)
 	 * @returns  the committed object cast to a form that the nexus resolvers recognize
 	 */
-	save = async (
-		fruit: Fruit,
-		updateData?: Partial<FruitInternalProps>,
-	): Promise<FruitModelType> => {
+	save = async (fruit: Fruit, updateData?: Partial<FruitDTO>): Promise<FruitModelType> => {
 		await connectDB(this.DB_URI);
 		const session: mongoose.mongo.ClientSession | undefined = await startTransaction();
 
