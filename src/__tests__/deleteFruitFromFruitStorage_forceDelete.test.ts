@@ -5,8 +5,6 @@ import { CREATE_LEMON_MUTATION } from './data/CREATE_LEMON_MUTATION_STR.js';
 import { MUTATION_NAME } from './data/MUTATION_NAME.js';
 import { perfromQuery } from './helpers/performQuery.js';
 
-const DELETE_MUTATION = 'deleteFruitFromFruitStorage';
-
 describe('deleteFruitFromFruitStorage(forceDelete: true) endpoint test', () => {
 	test('create valid fruit', async () => {
 		await perfromQuery(CREATE_LEMON_MUTATION).then(result => {

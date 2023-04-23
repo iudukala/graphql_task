@@ -14,14 +14,15 @@ describe('findFruit() query tests', () => {
 		});
 	});
 
-	test('search for an existing fruit', async () => {
+	test('search for a non-existent fruit', async () => {
 		const result = await perfromQuery(
 			`query{
-				findFruit(name: "lemon"){
+				findFruit(name: "not a lemon"){
 					name
 				}
 			}`,
 		);
-		expect((result.data?.findFruit as [FruitDTO])[0].name).toBe('lemon');
+
+		expect(result.data).toBe(null);
 	});
 });
