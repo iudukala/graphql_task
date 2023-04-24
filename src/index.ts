@@ -11,7 +11,7 @@ import { logEventSummary } from './Fruit/events/logEventSummary.js';
 dotenv.config();
 
 // initializing the database connection string
-const DB_URI = process.env['DB_URI_LOCAL'];
+const DB_URI = process.env['DB_URI'];
 if (DB_URI === null || DB_URI === undefined) throw new Error('database connection string empty');
 
 // setting flag for using mongodb transactions. (cannot use transactions if not part of replica set)
