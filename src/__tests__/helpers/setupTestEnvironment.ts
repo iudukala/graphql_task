@@ -2,13 +2,13 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { FruitMapper } from '../../Fruit/FruitMapper.js';
 import { FruitRepo } from '../../Fruit/FruitRepository.js';
-import { DomainEventModel } from '../../infrastructure/persistence/DomainEventModel.js';
+// import { DomainEventModel } from '../../infrastructure/persistence/DomainEventModel.js';
 import { FruitModel } from '../../infrastructure/persistence/FruitModel.js';
 import { connectDB } from '../../infrastructure/persistence/connectDB.js';
 import { fruitSampleData } from '../data/sampleDataFruit.js';
 
 // using a separate local database (without transaction capabilities since mongo instance is not part of replica set) for running tests
-export const TEST_DB_URI_IDENTIFIER: 'DB_URI_LOCAL' | 'DB_URI' = 'DB_URI_LOCAL';
+export const TEST_DB_URI_IDENTIFIER: 'DB_URI_LOCAL' | 'DB_URI' = 'DB_URI';
 
 // no transaction capabilities on local non replica set member
 const ATOMIC_TRANSACTION_FLAG = false;

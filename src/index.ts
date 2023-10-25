@@ -12,6 +12,8 @@ dotenv.config();
 
 // initializing the database connection string
 const DB_URI = process.env['DB_URI'];
+// const DB_URI =
+// 'mongodb+srv://dbuser:41SY2qEEWqAMkSs2@cluster0.lerzwsa.mongodb.net/test?retryWrites=true&w=majority';
 if (DB_URI === null || DB_URI === undefined) throw new Error('database connection string empty');
 
 // setting flag for using mongodb transactions. (cannot use transactions if not part of replica set)
