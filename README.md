@@ -82,3 +82,5 @@ nexusJS used
 ## improvements
 
 - better immutability
+
+- consider implementing both a graphql server and a rest api

@@ -6,6 +6,7 @@ import { DomainEventManager } from './core/DomainEventManager.js';
 import { nexusSchema } from './graphql/schemaConfigNexus.js';
 import { FruitMutatedEvent } from './Fruit/events/FruitMutatedEvent.js';
 import { logEventSummary } from './Fruit/events/logEventSummary.js';
+import { buildSchema } from 'graphql';
 
 // fetching environment variables set in the .env file and initializing the connection string var
 dotenv.config();
@@ -24,6 +25,12 @@ DomainEventManager.register(logEventSummary, FruitMutatedEvent.name);
 
 // starting up domain event manager cron job that checks for events in transactional outbox
 DomainEventManager.init(DB_URI);
+
+const schema = buildSchema(`
+	type Query{
+		hello: String
+	}
+`);
 
 // listening for requests
 express()
