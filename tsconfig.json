@@ -33,9 +33,9 @@
     // jest complains about module not being set properly when trying to use import.meta.url
     // error TS1343: The 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', or 'nodenext'.
 
-    "module": "ES2022",                                  /* Specify what module code is generated. */
+    "module": "NodeNext",                                  /* Specify what module code is generated. */
     "rootDir": "src",                                    /* Specify the root folder within your source files. */
-    "moduleResolution": "nodenext",                      /* Specify how TypeScript looks up a file from a given module specifier. */
+    "moduleResolution": "NodeNext",                      /* Specify how TypeScript looks up a file from a given module specifier. */
     // "baseUrl": "./",                                  /* Specify the base directory to resolve non-relative module names. */
     // "paths": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
