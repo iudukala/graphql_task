@@ -84,3 +84,7 @@ nexusJS used
 - better immutability
 
 - consider implementing both a graphql server and a rest api
+
+- check if helmet js usage is necessary
+
+- currently the best approach seems to be to use graphql-yoga (instead of express-graphql which is deprecated) with express
