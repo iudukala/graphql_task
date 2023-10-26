@@ -6,7 +6,8 @@ import { DomainEventManager } from './core/DomainEventManager.js';
 import { nexusSchema } from './graphql/schemaConfigNexus.js';
 import { FruitMutatedEvent } from './Fruit/events/FruitMutatedEvent.js';
 import { logEventSummary } from './Fruit/events/logEventSummary.js';
-import { buildSchema } from 'graphql';
+// import { buildSchema } from 'graphql';
+import { createSchema, createYoga } from 'graphql-yoga';
 
 // fetching environment variables set in the .env file and initializing the connection string var
 dotenv.config();
@@ -26,27 +27,34 @@ DomainEventManager.register(logEventSummary, FruitMutatedEvent.name);
 // starting up domain event manager cron job that checks for events in transactional outbox
 DomainEventManager.init(DB_URI);
 
-const schema = buildSchema(`
+const schema = createSchema({
+	typeDefs: `
 	type Query{
 		hello: String
 	}
-`);
+`,
+	resolvers: {
+		Query: {
+			hello: () => 'world',
+		},
+	},
+});
 
-
-
+const yoga = createYoga({ schema });
 // listening for requests
-express()
-	.use(
-		'/graphql',
-		graphqlHTTP({
-			schema: nexusSchema,
-			graphiql: true,
-			context: {
-				DB_URI: DB_URI,
-			},
-			pretty: false,
-		}),
-	)
-	.listen(4000);
+// express().use(createYoga({ schema }).graphqlEndpoint, createYoga({ schema }));
+express().use(yoga.graphqlEndpoint, yoga).listen(4000);
+// .use(
+// 	'/graphql',
+// 	graphqlHTTP({
+// 		schema: nexusSchema,
+// 		graphiql: true,
+// 		context: {
+// 			DB_URI: DB_URI,
+// 		},
+// 		pretty: false,
+// 	}),
+// )
+// .listen(4000);
 
 console.log('running on :4000/graphql');
