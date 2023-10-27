@@ -88,3 +88,12 @@ nexusJS used
 - check if helmet js usage is necessary
 
 - currently the best approach seems to be to use graphql-yoga (instead of express-graphql which is deprecated) with express
+
+- Trainer: name, birthday, experience_years
+
+- all entity object keys are lowercase. consistency ensured through const asserted objects
+
+- specify object structure: each object has an id field and a separate object named props that contain the entity's properties.
+
+- each entity object has a
+  - DTO type
