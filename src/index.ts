@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
 import express from 'express';
-import { graphqlHTTP } from 'express-graphql';
+// import { graphqlHTTP } from 'express-graphql';
 import { FruitRepo } from './Fruit/FruitRepository.js';
 import { DomainEventManager } from './core/DomainEventManager.js';
-import { nexusSchema } from './graphql/schemaConfigNexus.js';
+// import { nexusSchema } from './graphql/schemaConfigNexus.js';
 import { FruitMutatedEvent } from './Fruit/events/FruitMutatedEvent.js';
 import { logEventSummary } from './Fruit/events/logEventSummary.js';
 // import { buildSchema } from 'graphql';
@@ -58,3 +58,10 @@ express().use(yoga.graphqlEndpoint, yoga).listen(4000);
 // .listen(4000);
 
 console.log('running on :4000/graphql');
+
+// import { readFileSync } from 'fs';
+
+// // Note: this uses a path relative to the project's
+// // root directory, which is the current working directory
+// // if the server is executed using `npm run`.
+// const typeDefs = readFileSync('./schema.graphql', { encoding: 'utf-8' });

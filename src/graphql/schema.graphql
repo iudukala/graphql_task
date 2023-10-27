@@ -1,0 +1,13 @@
+type Query {
+    hello: String!
+}
+
+type Trainer {
+    name: String!
+    age: Int!
+}
+
+type Gym {
+    name: String!
+    location: String!
+}
