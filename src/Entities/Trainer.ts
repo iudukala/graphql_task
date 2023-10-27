@@ -1,9 +1,12 @@
 import { Entity } from '../core/Entity';
-import { TrainerDTO } from './TrainerDTO';
+import { TrainerPropsDTO } from './TrainerPropsDTO';
 import { TrainerKey } from './TrainerKeys';
+import { DTO } from '../core/DTO';
 
-export class Trainer extends Entity {
-	private constructor(trainerDTO: TrainerDTO) {
-		[TrainerKey.Name]: trainerDTO.name.trim(),
+// the type parameter used by the entity will contain value objects later. using the dto type for now
+export class Trainer extends Entity<TrainerPropsDTO> {
+	private constructor(trainerDTO: DTO<TrainerPropsDTO>) {
+		super(trainerDTO.id, {
+            [TrainerKey.Name]: trainerDTO.name.trim(),
 	}
 }

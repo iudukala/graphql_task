@@ -98,6 +98,7 @@ nexusJS used
 - each entity object has a
   - an assocaited DTO that acts as the intermediary between domain objects and persistence records (and a typescript type for a DTO object)
   - a result of this is that specific DTO props objects never carries an id, since it is stored outside the props object within the general DTO (object structure specified below)
+  - this also removes the necessity of the 
   - an internal props type without the ID
   - the ID specified as it's own property outside the props
 

@@ -1,4 +1,4 @@
-export type TrainerDTO = {
+export type TrainerPropsDTO = {
 	id: string;
 	name: string;
 	birthday: Date;
