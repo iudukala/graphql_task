@@ -7,6 +7,9 @@ import { DTO } from '../core/DTO';
 export class Trainer extends Entity<TrainerPropsDTO> {
 	private constructor(trainerDTO: DTO<TrainerPropsDTO>) {
 		super(trainerDTO.id, {
-            [TrainerKey.Name]: trainerDTO.name.trim(),
+			[TrainerKey.Name]: trainerDTO.props.name.trim(),
+			[TrainerKey.Birthday]: trainerDTO.props.birthday,
+			[TrainerKey.ExperienceYears]: trainerDTO.props.experience_years,
+		});
 	}
 }

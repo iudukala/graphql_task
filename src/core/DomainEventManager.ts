@@ -21,6 +21,7 @@ export class DomainEventManager {
 	static init(DB_URI: string): void {
 		if (this.initialized) return;
 
+		// todo: find alternative to cron
 		cron
 			.schedule(`*/${this.CRON_PERIOD_SEC} * * * * *`, () => {
 				this.dispatchEvents(DB_URI);

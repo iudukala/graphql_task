@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import express from 'express';
+// import express from 'express';
 // import { graphqlHTTP } from 'express-graphql';
 import { FruitRepo } from './Fruit/FruitRepository.js';
 import { DomainEventManager } from './core/DomainEventManager.js';
@@ -7,7 +7,9 @@ import { DomainEventManager } from './core/DomainEventManager.js';
 import { FruitMutatedEvent } from './Fruit/events/FruitMutatedEvent.js';
 import { logEventSummary } from './Fruit/events/logEventSummary.js';
 // import { buildSchema } from 'graphql';
-import { createSchema, createYoga } from 'graphql-yoga';
+// import { createSchema, createYoga } from 'graphql-yoga';
+import { readFileSync } from 'fs';
+import path from 'path';
 
 // fetching environment variables set in the .env file and initializing the connection string var
 dotenv.config();
@@ -27,23 +29,37 @@ DomainEventManager.register(logEventSummary, FruitMutatedEvent.name);
 // starting up domain event manager cron job that checks for events in transactional outbox
 DomainEventManager.init(DB_URI);
 
-const schema = createSchema({
-	typeDefs: `
-	type Query{
-		hello: String
-	}
-`,
-	resolvers: {
-		Query: {
-			hello: () => 'world',
-		},
-	},
-});
+// console.log(readFileSync(path.join('graphql', 'schema.graphql')));
+// console.log(readFileSync(path.resolve(__dirname, './index.txt')).toString());
 
-const yoga = createYoga({ schema });
+// import fs from "node:fs/promises";
+
+// const fileURL = new URL('index.txt', import.meta.url);
+// const fileURL = new URL(path.join('graphql', 'schema.graphql'), import.meta.url);
+const fileURL = new URL('graphql/schema.graphql', import.meta.url);
+console.log(readFileSync(fileURL, 'utf8'));
+
+//  './graphql/schema.graphql'));
+
+// const schema = createSchema({
+// 	typeDefs: readFileSync(path.join('graphql', 'schema.graphql')),
+// 	// , { encoding: 'utf-8' }),
+// 	// 	type Query{
+// 	// 		hello: String
+// 	// 	}
+// 	// `,
+// 	resolvers: {
+// 		Query: {
+// 			hello: () => 'world',
+// 		},
+// 	},
+// });
+
 // listening for requests
 // express().use(createYoga({ schema }).graphqlEndpoint, createYoga({ schema }));
-express().use(yoga.graphqlEndpoint, yoga).listen(4000);
+
+// const yoga = createYoga({ schema });
+// express().use(yoga.graphqlEndpoint, yoga).listen(4000);
 // .use(
 // 	'/graphql',
 // 	graphqlHTTP({
@@ -64,4 +80,6 @@ console.log('running on :4000/graphql');
 // // Note: this uses a path relative to the project's
 // // root directory, which is the current working directory
 // // if the server is executed using `npm run`.
+// const typeDefs = readFileSync('./schema.graphql', { encoding: 'utf-8' });
+
 // const typeDefs = readFileSync('./schema.graphql', { encoding: 'utf-8' });
