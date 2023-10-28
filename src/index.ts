@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-// import express from 'express';
+import express from 'express';
 // import { graphqlHTTP } from 'express-graphql';
 import { FruitRepo } from './Fruit/FruitRepository.js';
 import { DomainEventManager } from './core/DomainEventManager.js';
@@ -7,9 +7,8 @@ import { DomainEventManager } from './core/DomainEventManager.js';
 import { FruitMutatedEvent } from './Fruit/events/FruitMutatedEvent.js';
 import { logEventSummary } from './Fruit/events/logEventSummary.js';
 // import { buildSchema } from 'graphql';
-// import { createSchema, createYoga } from 'graphql-yoga';
+import { createSchema, createYoga } from 'graphql-yoga';
 import { readFileSync } from 'fs';
-import path from 'path';
 
 // fetching environment variables set in the .env file and initializing the connection string var
 dotenv.config();
@@ -36,30 +35,32 @@ DomainEventManager.init(DB_URI);
 
 // const fileURL = new URL('index.txt', import.meta.url);
 // const fileURL = new URL(path.join('graphql', 'schema.graphql'), import.meta.url);
-const fileURL = new URL('graphql/schema.graphql', import.meta.url);
-console.log(readFileSync(fileURL, 'utf8'));
+// const fileURL = new URL('graphql/schema.graphql', import.meta.url);
+console.log(readFileSync(new URL('graphql/schema.graphql', import.meta.url), 'utf8'));
 
 //  './graphql/schema.graphql'));
 
-// const schema = createSchema({
-// 	typeDefs: readFileSync(path.join('graphql', 'schema.graphql')),
-// 	// , { encoding: 'utf-8' }),
-// 	// 	type Query{
-// 	// 		hello: String
-// 	// 	}
-// 	// `,
-// 	resolvers: {
-// 		Query: {
-// 			hello: () => 'world',
-// 		},
-// 	},
-// });
+const schema = createSchema({
+	typeDefs: readFileSync(new URL('graphql/schema.graphql', import.meta.url), 'utf8'),
+	// , { encoding: 'utf-8' }),
+	// 	type Query{
+	// 		hello: String
+	// 	}
+	// `,
+	resolvers: {
+		Query: {
+			hello: () => 'world',
+			second: () => 'import meta works'
+		},
+	},
+});
 
 // listening for requests
 // express().use(createYoga({ schema }).graphqlEndpoint, createYoga({ schema }));
 
-// const yoga = createYoga({ schema });
-// express().use(yoga.graphqlEndpoint, yoga).listen(4000);
+const yoga = createYoga({ schema });
+express().use(yoga.graphqlEndpoint, yoga).listen(4000);
+
 // .use(
 // 	'/graphql',
 // 	graphqlHTTP({

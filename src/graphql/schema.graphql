@@ -2,6 +2,7 @@
 
 type Query {
     hello: String!
+    second: String!
 }
 
 type Trainer {
