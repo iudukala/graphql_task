@@ -121,3 +121,12 @@ nexusJS used
 - since the database is the source of truth for the data, the responsibility of generating the ID falls on to the database, which is fetched back from the server to update the domain object.
 
 - ADD LOGGING; URGENT
+
+## running
+
+```shell
+docker run --name mongo -p 27017:27017 -d mongodb/mongodb-community-server:latest;
+docker exec -it mongo mongosh;
+# or
+mongosh --port 27017;
+```
